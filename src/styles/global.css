@@ -7,6 +7,7 @@
   --color-green: #6f7f63;
   --color-deep-green: #3f4a3c;
   --content-width: 1160px;
+  --image-radius: 12px;
 }
 
 * {
@@ -86,16 +87,16 @@ main {
 }
 
 .hero {
+  align-items: center;
   display: grid;
   gap: clamp(2rem, 5vw, 5rem);
-  grid-template-columns: minmax(0, 0.88fr) minmax(320px, 1.12fr);
+  grid-template-columns: minmax(0, 0.95fr) minmax(280px, 1.05fr);
   min-height: calc(100svh - 4.1rem);
   padding: clamp(2rem, 7vw, 6rem) clamp(1rem, 4vw, 3rem) clamp(4rem, 8vw, 7rem);
 }
 
 .hero-copy {
-  align-self: end;
-  max-width: 36rem;
+  max-width: 34rem;
 }
 
 .eyebrow {
@@ -117,7 +118,7 @@ h2 {
 }
 
 h1 {
-  font-size: clamp(4rem, 10vw, 9rem);
+  font-size: clamp(3.5rem, 7.8vw, 7.2rem);
 }
 
 h2 {
@@ -163,6 +164,7 @@ h2 {
 .hero-image {
   align-self: stretch;
   background: var(--color-light-gray);
+  border-radius: var(--image-radius);
   margin: 0;
   min-height: 32rem;
   overflow: hidden;
@@ -212,6 +214,34 @@ h2 {
   margin-bottom: clamp(2rem, 5vw, 4rem);
 }
 
+h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 4vw, 4rem);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 0.98;
+  margin: 0;
+}
+
+.albums {
+  display: grid;
+  gap: clamp(3rem, 7vw, 6rem);
+}
+
+.album-heading {
+  align-items: end;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 0.8fr) minmax(18rem, 0.6fr);
+  margin-bottom: clamp(1.5rem, 4vw, 3rem);
+}
+
+.album-heading p:last-child {
+  color: color-mix(in srgb, var(--color-charcoal) 72%, var(--color-mid-gray));
+  line-height: 1.7;
+  margin: 0;
+}
+
 .gallery {
   display: grid;
   gap: clamp(0.75rem, 2vw, 1.25rem);
@@ -222,6 +252,7 @@ h2 {
 
 .gallery-item {
   background: var(--color-light-gray);
+  border-radius: var(--image-radius);
   min-height: 100%;
   overflow: hidden;
 }
@@ -244,6 +275,7 @@ h2 {
 .about figure {
   aspect-ratio: 4 / 5;
   background: var(--color-light-gray);
+  border-radius: var(--image-radius);
   margin: 0;
   overflow: hidden;
 }
@@ -291,7 +323,7 @@ footer p {
   max-width: var(--content-width);
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1020px) {
   .hero,
   .about {
     grid-template-columns: 1fr;
@@ -303,6 +335,14 @@ footer p {
 
   .hero-copy {
     align-self: start;
+    max-width: 48rem;
+  }
+}
+
+@media (max-width: 860px) {
+  .album-heading {
+    align-items: start;
+    grid-template-columns: 1fr;
   }
 
   .gallery {
