@@ -1,0 +1,9 @@
+assets/source/instagram/
+/album1/
+/profile_pic.jpg
+node_modules/
+dist/
+.astro/
+*.pyc
+__pycache__/
+.DS_Store
