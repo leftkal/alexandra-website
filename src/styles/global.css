@@ -93,14 +93,14 @@ main {
 .hero {
   align-items: center;
   display: grid;
-  gap: clamp(2rem, 5vw, 5rem);
-  grid-template-columns: minmax(0, 0.95fr) minmax(280px, 1.05fr);
-  min-height: calc(100svh - 4.1rem);
-  padding: clamp(2rem, 7vw, 6rem) clamp(1rem, 4vw, 3rem) clamp(4rem, 8vw, 7rem);
+  gap: clamp(2rem, 4vw, 4rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: calc(100svh - 3.8rem);
+  padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 4vw, 3rem);
 }
 
 .hero-copy {
-  max-width: 34rem;
+  max-width: 36rem;
 }
 
 .eyebrow {
@@ -122,7 +122,7 @@ h2 {
 }
 
 h1 {
-  font-size: clamp(3.5rem, 7.8vw, 7.2rem);
+  font-size: clamp(3.2rem, 6.8vw, 6.4rem);
 }
 
 h2 {
@@ -138,8 +138,8 @@ h2 {
 }
 
 .hero-text {
-  margin: 1.5rem 0 2rem;
-  max-width: 31rem;
+  margin: 1.25rem 0 1.6rem;
+  max-width: 32rem;
 }
 
 .button {
@@ -150,7 +150,7 @@ h2 {
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.14em;
-  padding: 0.95rem 1.3rem;
+  padding: 0.85rem 1.2rem;
   text-transform: uppercase;
   transition: background 180ms ease, color 180ms ease, transform 180ms ease;
 }
@@ -166,11 +166,12 @@ h2 {
 }
 
 .hero-image {
-  align-self: stretch;
+  align-self: center;
   background: var(--color-light-gray);
   border-radius: var(--image-radius);
+  height: min(72svh, 42rem);
   margin: 0;
-  min-height: 32rem;
+  min-height: 26rem;
   overflow: hidden;
 }
 
@@ -306,7 +307,7 @@ h3 {
   align-items: end;
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: minmax(0, 0.8fr) minmax(18rem, 0.6fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   margin-bottom: clamp(1.5rem, 4vw, 3rem);
 }
 
@@ -348,8 +349,8 @@ h3 {
 .about {
   align-items: center;
   display: grid;
-  gap: clamp(2rem, 6vw, 5rem);
-  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
 .about figure {
@@ -357,6 +358,7 @@ h3 {
   background: var(--color-light-gray);
   border-radius: var(--image-radius);
   margin: 0;
+  max-height: 42rem;
   overflow: hidden;
 }
 
@@ -365,32 +367,12 @@ h3 {
   max-width: 38rem;
 }
 
-.bio-details {
+.about p.bio-note {
   border-top: 1px solid var(--color-light-gray);
-  display: grid;
-  gap: 1rem;
-  margin: 2rem 0 0;
-  max-width: 42rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  margin-top: 1.8rem;
+  max-width: 36rem;
   padding: 1.4rem 0 0;
-}
-
-.bio-details div {
-  display: grid;
-  gap: 0.45rem;
-}
-
-.bio-details dt {
-  color: var(--color-green);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.bio-details dd {
-  color: color-mix(in srgb, var(--color-charcoal) 78%, var(--color-mid-gray));
-  line-height: 1.6;
-  margin: 0;
 }
 
 .lightbox {
