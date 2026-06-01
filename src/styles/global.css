@@ -6,7 +6,7 @@
   --color-charcoal: #262a25;
   --color-green: #6f7f63;
   --color-deep-green: #3f4a3c;
-  --content-width: 1160px;
+  --content-width: 1440px;
   --image-radius: 12px;
 }
 
@@ -457,22 +457,34 @@ h3 {
 }
 
 .contact {
+  align-items: end;
   background: var(--color-deep-green);
+  border-radius: var(--image-radius);
   color: var(--color-white);
-  max-width: none;
-  padding-left: max(clamp(1rem, 4vw, 3rem), calc((100vw - var(--content-width)) / 2));
-  padding-right: max(clamp(1rem, 4vw, 3rem), calc((100vw - var(--content-width)) / 2));
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.72fr);
+  margin-bottom: clamp(1rem, 4vw, 3rem);
+  margin-top: clamp(2rem, 5vw, 4rem);
 }
 
 .contact .eyebrow {
   color: var(--color-light-gray);
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+
+.contact h2 {
+  max-width: 54rem;
 }
 
 .contact-actions {
+  align-content: end;
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 2rem;
+  justify-content: flex-end;
+  margin: 0;
 }
 
 .contact .button {
@@ -511,6 +523,15 @@ footer p {
 }
 
 @media (max-width: 860px) {
+  .contact {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+
+  .contact-actions {
+    justify-content: flex-start;
+  }
+
   .album-controls {
     grid-template-columns: auto auto;
   }
