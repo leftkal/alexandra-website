@@ -355,6 +355,34 @@ h3 {
   max-width: 38rem;
 }
 
+.bio-details {
+  border-top: 1px solid var(--color-light-gray);
+  display: grid;
+  gap: 1rem;
+  margin: 2rem 0 0;
+  max-width: 42rem;
+  padding: 1.4rem 0 0;
+}
+
+.bio-details div {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.bio-details dt {
+  color: var(--color-green);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.bio-details dd {
+  color: color-mix(in srgb, var(--color-charcoal) 78%, var(--color-mid-gray));
+  line-height: 1.6;
+  margin: 0;
+}
+
 .contact {
   background: var(--color-deep-green);
   color: var(--color-white);
