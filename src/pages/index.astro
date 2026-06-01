@@ -15,6 +15,8 @@ const photos = [
   '544089634_17957344473003956_5163365635602737228_n.jpg',
   '543984369_17957345421003956_262576140533256651_n.jpg',
 ];
+
+const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 ---
 
 <!doctype html>
@@ -51,7 +53,7 @@ const photos = [
         </div>
         <figure class="hero-image">
           <img
-            src="/images/album1/545231903_17957342184003956_1496422976014836905_n.jpg"
+            src={asset('images/album1/545231903_17957342184003956_1496422976014836905_n.jpg')}
             alt="Featured photograph by Daleria Xplorelens"
           />
         </figure>
@@ -75,11 +77,11 @@ const photos = [
           {photos.map((photo, index) => (
             <a
               class:list={['gallery-item', index % 5 === 0 && 'wide', index % 7 === 0 && 'tall']}
-              href={`/images/album1/${photo}`}
+              href={asset(`images/album1/${photo}`)}
               target="_blank"
               rel="noreferrer"
             >
-              <img src={`/images/album1/${photo}`} alt={`Portfolio photograph ${index + 1}`} loading={index < 3 ? 'eager' : 'lazy'} />
+              <img src={asset(`images/album1/${photo}`)} alt={`Portfolio photograph ${index + 1}`} loading={index < 3 ? 'eager' : 'lazy'} />
             </a>
           ))}
         </div>
@@ -87,7 +89,7 @@ const photos = [
 
       <section id="about" class="about" aria-labelledby="about-title">
         <figure>
-          <img src="/images/profile_pic.jpg" alt="Portrait of Daleria Xplorelens" loading="lazy" />
+          <img src={asset('images/profile_pic.jpg')} alt="Portrait of Daleria Xplorelens" loading="lazy" />
         </figure>
         <div>
           <p class="eyebrow">Behind the Lens</p>
