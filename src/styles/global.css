@@ -26,6 +26,10 @@ body {
   min-width: 320px;
 }
 
+body.preview-open {
+  overflow: hidden;
+}
+
 body::before {
   background: radial-gradient(circle at 15% 20%, rgba(111, 127, 99, 0.16), transparent 32rem);
   content: "";
@@ -321,10 +325,16 @@ h3 {
 }
 
 .gallery-item {
+  appearance: none;
   background: var(--color-light-gray);
   border-radius: var(--image-radius);
+  border: 0;
+  cursor: zoom-in;
+  display: block;
   min-height: 100%;
   overflow: hidden;
+  padding: 0;
+  text-align: inherit;
 }
 
 .gallery-item.wide {
@@ -381,6 +391,87 @@ h3 {
   color: color-mix(in srgb, var(--color-charcoal) 78%, var(--color-mid-gray));
   line-height: 1.6;
   margin: 0;
+}
+
+.lightbox {
+  align-items: center;
+  background: rgba(15, 17, 14, 0.88);
+  backdrop-filter: blur(20px);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  inset: 0;
+  opacity: 0;
+  padding: clamp(1rem, 3vw, 2rem);
+  pointer-events: none;
+  position: fixed;
+  transition: opacity 180ms ease;
+  z-index: 50;
+}
+
+.lightbox.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-frame {
+  align-items: center;
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+  margin: 0;
+  min-width: 0;
+}
+
+.lightbox-frame img {
+  border-radius: var(--image-radius);
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.35);
+  max-height: 82svh;
+  object-fit: contain;
+  width: auto;
+}
+
+.lightbox-frame figcaption {
+  color: var(--color-off-white);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lightbox-close,
+.lightbox-nav {
+  appearance: none;
+  background: rgba(248, 248, 245, 0.12);
+  border: 1px solid rgba(248, 248, 245, 0.32);
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background 180ms ease, transform 180ms ease;
+}
+
+.lightbox-close:hover,
+.lightbox-nav:hover {
+  background: rgba(248, 248, 245, 0.22);
+  transform: translateY(-2px);
+}
+
+.lightbox-close {
+  border-radius: 999px;
+  font-size: 2rem;
+  height: 3rem;
+  line-height: 1;
+  position: absolute;
+  right: clamp(1rem, 3vw, 2rem);
+  top: clamp(1rem, 3vw, 2rem);
+  width: 3rem;
+}
+
+.lightbox-nav {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 1.5rem;
+  height: 3.25rem;
+  justify-content: center;
+  width: 3.25rem;
 }
 
 .contact {
@@ -464,6 +555,23 @@ footer p {
   .section-heading {
     align-items: start;
     display: block;
+  }
+
+  .lightbox {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .lightbox-frame {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .lightbox-nav {
+    margin-top: 1rem;
+  }
+
+  .lightbox-nav.next {
+    justify-self: end;
   }
 }
 

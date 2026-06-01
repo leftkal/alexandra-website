@@ -130,14 +130,17 @@ const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')
 
               <div class="gallery">
                 {album.photos.map((photo, index) => (
-                  <a
+                  <button
                     class:list={['gallery-item', index % 5 === 0 && 'wide', index % 7 === 0 && 'tall']}
-                    href={asset(`images/${album.folder}/${photo}`)}
-                    target="_blank"
-                    rel="noreferrer"
+                    type="button"
+                    data-lightbox-trigger
+                    data-lightbox-album={albumIndex}
+                    data-lightbox-index={index}
+                    data-lightbox-src={asset(`images/${album.folder}/${photo}`)}
+                    data-lightbox-title={album.title}
                   >
                     <img src={asset(`images/${album.folder}/${photo}`)} alt={`${album.title} photograph ${index + 1}`} loading={index < 3 ? 'eager' : 'lazy'} />
-                  </a>
+                  </button>
                 ))}
               </div>
               </article>
@@ -199,8 +202,18 @@ const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')
     <footer>
       <p>© {new Date().getFullYear()} Alexandra Maria Deli</p>
     </footer>
+    <div class="lightbox" data-lightbox aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image preview">
+      <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close preview">&times;</button>
+      <button class="lightbox-nav previous" type="button" data-lightbox-prev aria-label="Previous photograph">&larr;</button>
+      <figure class="lightbox-frame">
+        <img data-lightbox-image alt="Selected photograph preview" />
+        <figcaption data-lightbox-caption></figcaption>
+      </figure>
+      <button class="lightbox-nav next" type="button" data-lightbox-next aria-label="Next photograph">&rarr;</button>
+    </div>
     <script>
       const carousel = document.querySelector('[data-album-carousel]');
+      const lightbox = document.querySelector('[data-lightbox]');
 
       if (carousel) {
         const panels = Array.from(carousel.querySelectorAll('[data-album-panel]'));
@@ -246,6 +259,88 @@ const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')
 
           if (Math.abs(distance) < 45) return;
           showAlbum(distance > 0 ? activeIndex - 1 : activeIndex + 1);
+        });
+      }
+
+      if (lightbox) {
+        const triggers = Array.from(document.querySelectorAll('[data-lightbox-trigger]'));
+        const image = lightbox.querySelector('[data-lightbox-image]');
+        const caption = lightbox.querySelector('[data-lightbox-caption]');
+        const closeButton = lightbox.querySelector('[data-lightbox-close]');
+        const previousButton = lightbox.querySelector('[data-lightbox-prev]');
+        const nextButton = lightbox.querySelector('[data-lightbox-next]');
+        const albums = triggers.reduce((groups, trigger) => {
+          const album = trigger.dataset.lightboxAlbum;
+          if (!groups[album]) groups[album] = [];
+          groups[album].push(trigger);
+          return groups;
+        }, {});
+        let activeAlbum = '0';
+        let activeImage = 0;
+        let lightboxTouchStartX = 0;
+
+        const renderPreview = () => {
+          const album = albums[activeAlbum] ?? [];
+          const trigger = album[activeImage];
+          if (!trigger || !image || !caption) return;
+
+          const title = trigger.dataset.lightboxTitle ?? 'Album';
+          image.src = trigger.dataset.lightboxSrc ?? '';
+          image.alt = `${title} photograph ${activeImage + 1}`;
+          caption.textContent = `${title} / ${activeImage + 1} of ${album.length}`;
+        };
+
+        const openPreview = (trigger) => {
+          activeAlbum = trigger.dataset.lightboxAlbum ?? '0';
+          activeImage = Number(trigger.dataset.lightboxIndex ?? 0);
+          renderPreview();
+          lightbox.classList.add('open');
+          lightbox.setAttribute('aria-hidden', 'false');
+          document.body.classList.add('preview-open');
+          closeButton?.focus();
+        };
+
+        const closePreview = () => {
+          lightbox.classList.remove('open');
+          lightbox.setAttribute('aria-hidden', 'true');
+          document.body.classList.remove('preview-open');
+        };
+
+        const showPreview = (offset) => {
+          const album = albums[activeAlbum] ?? [];
+          activeImage = (activeImage + offset + album.length) % album.length;
+          renderPreview();
+        };
+
+        triggers.forEach((trigger) => {
+          trigger.addEventListener('click', () => openPreview(trigger));
+        });
+
+        closeButton?.addEventListener('click', closePreview);
+        previousButton?.addEventListener('click', () => showPreview(-1));
+        nextButton?.addEventListener('click', () => showPreview(1));
+
+        lightbox.addEventListener('click', (event) => {
+          if (event.target === lightbox) closePreview();
+        });
+
+        lightbox.addEventListener('touchstart', (event) => {
+          lightboxTouchStartX = event.touches[0]?.clientX ?? 0;
+        }, { passive: true });
+
+        lightbox.addEventListener('touchend', (event) => {
+          const touchEndX = event.changedTouches[0]?.clientX ?? lightboxTouchStartX;
+          const distance = touchEndX - lightboxTouchStartX;
+
+          if (Math.abs(distance) < 45) return;
+          showPreview(distance > 0 ? -1 : 1);
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (!lightbox.classList.contains('open')) return;
+          if (event.key === 'Escape') closePreview();
+          if (event.key === 'ArrowLeft') showPreview(-1);
+          if (event.key === 'ArrowRight') showPreview(1);
         });
       }
     </script>
