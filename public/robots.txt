@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://leftkal.github.io/alexandra-website/sitemap-index.xml

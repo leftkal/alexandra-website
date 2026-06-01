@@ -43,7 +43,43 @@ const albums = [
 const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}${path}`;
 const siteUrl = 'https://leftkal.github.io/alexandra-website/';
 const previewImage = `${siteUrl}images/album1/545231903_17957342184003956_1496422976014836905_n.jpg`;
-const pageDescription = 'Alexandra Maria Deli photography portfolio: travel, analog photography, darkroom practice, studio work, and visual storytelling.';
+const pageTitle = 'Alexandra Maria Deli | Photographer in Athens';
+const pageDescription = 'Portfolio of Alexandra Maria Deli, an Athens-based photographer working with travel, analog photography, darkroom practice, studio work, and visual storytelling.';
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${siteUrl}#alexandra-maria-deli`,
+  name: 'Alexandra Maria Deli',
+  jobTitle: 'Photographer',
+  description: pageDescription,
+  url: siteUrl,
+  image: previewImage,
+  email: 'mailto:alexandra.deli069@gmail.com',
+  telephone: '+306955733126',
+  sameAs: ['https://www.instagram.com/daleria_xplorelens/'],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Athens',
+    addressCountry: 'GR',
+  },
+  knowsAbout: [
+    'Photography',
+    'Analog photography',
+    'Darkroom printing',
+    'Travel photography',
+    'Studio photography',
+    'Photo editing',
+  ],
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'University of Europe for Applied Sciences',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Berlin',
+      addressCountry: 'DE',
+    },
+  },
+};
 ---
 
 <!doctype html>
@@ -52,18 +88,20 @@ const pageDescription = 'Alexandra Maria Deli photography portfolio: travel, ana
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={siteUrl} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={siteUrl} />
-    <meta property="og:title" content="Alexandra Maria Deli | Photographer" />
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:image" content={previewImage} />
     <meta property="og:image:alt" content="Black-and-white photograph by Alexandra Maria Deli" />
     <meta property="og:site_name" content="Alexandra Maria Deli" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Alexandra Maria Deli | Photographer" />
+    <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
     <meta name="twitter:image" content={previewImage} />
-    <title>Alexandra Maria Deli | Photographer</title>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <title>{pageTitle}</title>
   </head>
   <body>
     <header class="site-header" aria-label="Main navigation">
