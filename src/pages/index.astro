@@ -16,7 +16,7 @@ const photos = [
   '543984369_17957345421003956_262576140533256651_n.jpg',
 ];
 
-const asset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}${path}`;
 ---
 
 <!doctype html>
