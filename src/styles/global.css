@@ -321,7 +321,7 @@ h2 {
   content: "";
   left: 50%;
   position: absolute;
-  top: 9%;
+  top: 37%;
   transform: translateX(-50%);
   width: 1px;
 }
@@ -332,7 +332,7 @@ h2 {
 }
 
 .focus-wheel-tick.major::before {
-  height: 11%;
+  height: 7%;
 }
 
 .focus-wheel-tick.minor {
@@ -340,7 +340,7 @@ h2 {
 }
 
 .focus-wheel-tick.minor::before {
-  height: 8%;
+  height: 5%;
 }
 
 .focus-wheel-tick.one {
