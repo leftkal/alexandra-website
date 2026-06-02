@@ -201,6 +201,10 @@ h2 {
 .intro {
   border-bottom: 1px solid var(--color-light-gray);
   border-top: 1px solid var(--color-light-gray);
+  display: grid;
+  gap: clamp(2rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.55fr);
+  overflow: hidden;
 }
 
 .intro p {
@@ -210,6 +214,164 @@ h2 {
   line-height: 1.08;
   margin: 0;
   max-width: 54rem;
+}
+
+.focus-wheel {
+  --focus-progress: 0;
+  align-self: center;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  min-height: 18rem;
+  position: relative;
+}
+
+.focus-wheel::before {
+  background: radial-gradient(circle, rgba(111, 127, 99, 0.16), transparent 58%);
+  border-radius: inherit;
+  content: "";
+  filter: blur(12px);
+  inset: 8%;
+  position: absolute;
+}
+
+.focus-wheel-ring {
+  border-radius: 999px;
+  position: absolute;
+}
+
+.focus-wheel-ring.outer {
+  border: 1px solid rgba(63, 74, 60, 0.36);
+  inset: 6%;
+}
+
+.focus-wheel-ring.outer::before {
+  background: repeating-conic-gradient(
+    from -8deg,
+    rgba(63, 74, 60, 0.5) 0deg 1.5deg,
+    transparent 1.5deg 8deg
+  );
+  border-radius: inherit;
+  content: "";
+  inset: 0;
+  mask: radial-gradient(circle, transparent 60%, black 61% 63%, transparent 64%);
+  position: absolute;
+  transform: rotate(calc(var(--focus-progress) * 42deg));
+}
+
+.focus-wheel-ring.middle {
+  border: 1px solid rgba(141, 146, 136, 0.38);
+  inset: 19%;
+  transform: rotate(calc(var(--focus-progress) * -62deg));
+}
+
+.focus-wheel-ring.middle::before {
+  background: conic-gradient(
+    from 20deg,
+    transparent 0deg 52deg,
+    rgba(111, 127, 99, 0.5) 52deg 88deg,
+    transparent 88deg 360deg
+  );
+  border-radius: inherit;
+  content: "";
+  inset: -1px;
+  mask: radial-gradient(circle, transparent 68%, black 69% 72%, transparent 73%);
+  position: absolute;
+}
+
+.focus-wheel-ring.inner {
+  border: 1px solid rgba(63, 74, 60, 0.28);
+  inset: 36%;
+}
+
+.focus-wheel-ring.inner::before,
+.focus-wheel-ring.inner::after {
+  background: var(--color-green);
+  border-radius: 999px;
+  content: "";
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.focus-wheel-ring.inner::before {
+  height: 0.55rem;
+  opacity: calc(0.35 + var(--focus-progress) * 0.65);
+  width: 0.55rem;
+}
+
+.focus-wheel-ring.inner::after {
+  background: transparent;
+  border: 1px solid rgba(111, 127, 99, 0.38);
+  height: calc(1.2rem + var(--focus-progress) * 1.1rem);
+  width: calc(1.2rem + var(--focus-progress) * 1.1rem);
+}
+
+.focus-wheel-tick {
+  background: var(--color-deep-green);
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform-origin: 50% 0;
+}
+
+.focus-wheel-tick.major {
+  height: 2.6rem;
+  opacity: 0.55;
+  transform: rotate(calc(18deg + var(--focus-progress) * 54deg)) translateY(-8.2rem) translateX(-50%);
+  width: 1px;
+}
+
+.focus-wheel-tick.minor {
+  height: 1.8rem;
+  opacity: 0.26;
+  width: 1px;
+}
+
+.focus-wheel-tick.one {
+  transform: rotate(72deg) translateY(-8rem) translateX(-50%);
+}
+
+.focus-wheel-tick.two {
+  transform: rotate(148deg) translateY(-8rem) translateX(-50%);
+}
+
+.focus-wheel-tick.three {
+  transform: rotate(252deg) translateY(-8rem) translateX(-50%);
+}
+
+.focus-wheel-pointer {
+  border-left: 0.45rem solid transparent;
+  border-right: 0.45rem solid transparent;
+  border-top: 0.7rem solid var(--color-green);
+  left: 50%;
+  position: absolute;
+  top: 3%;
+  transform: translateX(-50%);
+}
+
+.focus-wheel-label {
+  color: var(--color-mid-gray);
+  inset: 0;
+  overflow: visible;
+  position: absolute;
+  transform: none;
+}
+
+.focus-wheel-label path {
+  fill: none;
+}
+
+.focus-wheel-label text {
+  fill: currentColor;
+  font-size: 0.22rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.focus-wheel-label textPath {
+  dominant-baseline: middle;
 }
 
 .section-heading {
@@ -508,6 +670,7 @@ footer p {
 
 @media (max-width: 1020px) {
   .hero,
+  .intro,
   .about {
     grid-template-columns: 1fr;
   }
@@ -519,6 +682,13 @@ footer p {
   .hero-copy {
     align-self: start;
     max-width: 48rem;
+  }
+
+  .focus-wheel {
+    justify-self: start;
+    max-width: 24rem;
+    min-height: 14rem;
+    width: min(100%, 24rem);
   }
 }
 
@@ -594,6 +764,10 @@ footer p {
     min-height: 24rem;
   }
 
+  .focus-wheel {
+    min-height: 12rem;
+  }
+
   .gallery {
     grid-auto-rows: 14rem;
     grid-template-columns: 1fr;
@@ -603,5 +777,15 @@ footer p {
   .gallery-item.tall {
     grid-column: auto;
     grid-row: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .focus-wheel,
+  .focus-wheel-ring.middle,
+  .focus-wheel-pointer,
+  .focus-wheel-label {
+    transform: none;
+    transition: none;
   }
 }
