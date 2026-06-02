@@ -310,36 +310,49 @@ h2 {
 }
 
 .focus-wheel-tick {
+  background: transparent;
+  inset: 0;
+  position: absolute;
+  transform-origin: 50% 50%;
+}
+
+.focus-wheel-tick::before {
   background: var(--color-deep-green);
+  content: "";
   left: 50%;
   position: absolute;
-  top: 50%;
-  transform-origin: 50% 0;
+  top: 9%;
+  transform: translateX(-50%);
+  width: 1px;
 }
 
 .focus-wheel-tick.major {
-  height: 2.6rem;
   opacity: 0.55;
-  transform: rotate(calc(18deg + var(--focus-progress) * 54deg)) translateY(-8.2rem) translateX(-50%);
-  width: 1px;
+  transform: rotate(calc(18deg + var(--focus-progress) * 54deg));
+}
+
+.focus-wheel-tick.major::before {
+  height: 11%;
 }
 
 .focus-wheel-tick.minor {
-  height: 1.8rem;
   opacity: 0.26;
-  width: 1px;
+}
+
+.focus-wheel-tick.minor::before {
+  height: 8%;
 }
 
 .focus-wheel-tick.one {
-  transform: rotate(72deg) translateY(-8rem) translateX(-50%);
+  transform: rotate(72deg);
 }
 
 .focus-wheel-tick.two {
-  transform: rotate(148deg) translateY(-8rem) translateX(-50%);
+  transform: rotate(148deg);
 }
 
 .focus-wheel-tick.three {
-  transform: rotate(252deg) translateY(-8rem) translateX(-50%);
+  transform: rotate(252deg);
 }
 
 .focus-wheel-pointer {
@@ -687,7 +700,7 @@ footer p {
   }
 
   .focus-wheel {
-    justify-self: start;
+    justify-self: center;
     max-width: 24rem;
     min-height: 14rem;
     width: min(100%, 24rem);
@@ -769,10 +782,6 @@ footer p {
   .focus-wheel {
     min-height: 12rem;
     width: min(100%, 18rem);
-  }
-
-  .focus-wheel-tick {
-    display: none;
   }
 
   .gallery {
