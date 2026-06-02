@@ -221,8 +221,10 @@ h2 {
   align-self: center;
   aspect-ratio: 1;
   border-radius: 999px;
+  justify-self: center;
   min-height: 18rem;
   position: relative;
+  width: min(100%, 24rem);
 }
 
 .focus-wheel::before {
@@ -766,6 +768,11 @@ footer p {
 
   .focus-wheel {
     min-height: 12rem;
+    width: min(100%, 18rem);
+  }
+
+  .focus-wheel-tick {
+    display: none;
   }
 
   .gallery {
