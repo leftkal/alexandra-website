@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://leftkal.github.io/alexandra-website/sitemap-index.xml
+Sitemap: https://alexandra-maria-deli.gr/sitemap-index.xml
