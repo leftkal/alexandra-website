@@ -266,7 +266,8 @@ const structuredData = {
             Instagram
           </a>
         </div>
-        <form class="contact-form" data-contact-form>
+        <form class="contact-form" action="https://formspree.io/f/xnjykzya" method="POST" data-contact-form>
+          <input type="hidden" name="_subject" value="Photography inquiry from alexandra-maria-deli.gr" />
           <label>
             Name
             <input name="name" type="text" autocomplete="name" required />
@@ -302,8 +303,6 @@ const structuredData = {
       const contactForm = document.querySelector('[data-contact-form]');
 
       contactForm?.addEventListener('submit', (event) => {
-        event.preventDefault();
-
         const form = event.currentTarget;
         if (!(form instanceof HTMLFormElement)) return;
 
@@ -312,21 +311,12 @@ const structuredData = {
         const note = form.querySelector('[data-contact-form-note]');
 
         if (!token) {
+          event.preventDefault();
           note?.removeAttribute('hidden');
           return;
         }
 
         note?.setAttribute('hidden', '');
-
-        const name = String(data.get('name') || '').trim();
-        const contact = String(data.get('email') || '').trim();
-        const message = String(data.get('message') || '').trim();
-        const recipient = [97, 108, 101, 120, 97, 110, 100, 114, 97, 46, 100, 101, 108, 105, 48, 54, 57, 64, 103, 109, 97, 105, 108, 46, 99, 111, 109]
-          .map((code) => String.fromCharCode(code))
-          .join('');
-        const subject = encodeURIComponent('Photography inquiry');
-        const body = encodeURIComponent(`Name: ${name}\nContact: ${contact}\n\n${message}`);
-        window.location.href = ['mai', 'lto'].join('') + `:${recipient}?subject=${subject}&body=${body}`;
       });
 
       const carousel = document.querySelector('[data-album-carousel]');
