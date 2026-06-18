@@ -1,0 +1,168 @@
+---
+export interface Props {
+  heading: string;
+  text?: string;
+}
+
+const { heading, text = 'For projects, prints, and collaborations in Athens and beyond.' } = Astro.props;
+---
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<section id="contact" class="landing-contact" aria-labelledby="landing-contact-title">
+  <div class="landing-contact-copy">
+    <p class="eyebrow">Contact</p>
+    <h2 id="landing-contact-title">{text}</h2>
+    <p>Share a few details about the project, location, and timing.</p>
+    <a class="button secondary" href="https://www.instagram.com/daleria_xplorelens/" target="_blank" rel="noreferrer nofollow">Instagram</a>
+  </div>
+  <form class="landing-contact-form" data-contact-form>
+    <label>
+      Name
+      <input name="name" type="text" autocomplete="name" required />
+    </label>
+    <label>
+      Contact email
+      <input name="email" type="email" autocomplete="email" required />
+    </label>
+    <label>
+      Project
+      <textarea name="message" rows="5" required>{heading}</textarea>
+    </label>
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAADmmpbZjPtxnJITb"></div>
+    <p class="landing-contact-note" data-contact-form-note hidden>Please complete the verification before sending.</p>
+    <button class="button" type="submit">Send inquiry</button>
+  </form>
+</section>
+
+<script>
+  const contactForm = document.querySelector('[data-contact-form]');
+
+  contactForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    if (!(form instanceof HTMLFormElement)) return;
+
+    const data = new FormData(form);
+    const token = String(data.get('cf-turnstile-response') || '').trim();
+    const note = form.querySelector('[data-contact-form-note]');
+
+    if (!token) {
+      note?.removeAttribute('hidden');
+      return;
+    }
+
+    note?.setAttribute('hidden', '');
+
+    const name = String(data.get('name') || '').trim();
+    const contact = String(data.get('email') || '').trim();
+    const message = String(data.get('message') || '').trim();
+    const recipient = [97, 108, 101, 120, 97, 110, 100, 114, 97, 46, 100, 101, 108, 105, 48, 54, 57, 64, 103, 109, 97, 105, 108, 46, 99, 111, 109]
+      .map((code) => String.fromCharCode(code))
+      .join('');
+    const subject = encodeURIComponent('Photography inquiry');
+    const body = encodeURIComponent(`Name: ${name}\nContact: ${contact}\n\n${message}`);
+    window.location.href = ['mai', 'lto'].join('') + `:${recipient}?subject=${subject}&body=${body}`;
+  });
+</script>
+
+<style>
+  .landing-contact {
+    align-items: stretch;
+    background: var(--color-deep-green);
+    border-radius: calc(var(--image-radius) * 1.6);
+    color: var(--color-white);
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.72fr);
+    max-width: calc(var(--content-width) - 6rem);
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem);
+  }
+
+  .landing-contact-copy {
+    align-self: center;
+  }
+
+  .landing-contact .eyebrow {
+    color: var(--color-light-gray);
+  }
+
+  .landing-contact h2 {
+    max-width: 54rem;
+  }
+
+  .landing-contact-copy p:not(.eyebrow) {
+    color: rgba(248, 248, 245, 0.74);
+    font-size: clamp(1rem, 1.5vw, 1.12rem);
+    line-height: 1.7;
+    margin: 1.2rem 0 1.6rem;
+    max-width: 34rem;
+  }
+
+  .landing-contact-form {
+    background: rgba(248, 248, 245, 0.08);
+    border: 1px solid rgba(248, 248, 245, 0.18);
+    border-radius: calc(var(--image-radius) * 1.35);
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  .landing-contact-form label {
+    color: rgba(248, 248, 245, 0.78);
+    display: grid;
+    font-size: 0.72rem;
+    font-weight: 700;
+    gap: 0.45rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .landing-contact-form input,
+  .landing-contact-form textarea {
+    background: rgba(248, 248, 245, 0.94);
+    border: 1px solid transparent;
+    border-radius: calc(var(--image-radius) * 0.8);
+    color: var(--color-charcoal);
+    font: inherit;
+    letter-spacing: 0;
+    padding: 0.9rem 1rem;
+    text-transform: none;
+    width: 100%;
+  }
+
+  .landing-contact-form textarea {
+    resize: vertical;
+  }
+
+  .landing-contact-form input:focus,
+  .landing-contact-form textarea:focus {
+    border-color: var(--color-light-gray);
+    outline: 2px solid rgba(248, 248, 245, 0.32);
+    outline-offset: 2px;
+  }
+
+  .landing-contact-form .button {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .landing-contact-note {
+    color: rgba(248, 248, 245, 0.78);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: -0.25rem 0 0;
+  }
+
+  .landing-contact-note[hidden] {
+    display: none;
+  }
+
+  @media (max-width: 860px) {
+    .landing-contact {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

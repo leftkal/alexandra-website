@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import { landingPages } from '../content/landing-pages';
+import { getPageUrl } from '../utils/url';
 
 const albums = [
   {
@@ -54,8 +56,6 @@ const structuredData = {
   description: pageDescription,
   url: siteUrl,
   image: previewImage,
-  email: 'mailto:alexandra.deli069@gmail.com',
-  telephone: '+306955733126',
   sameAs: ['https://www.instagram.com/daleria_xplorelens/'],
   address: {
     '@type': 'PostalAddress',
@@ -100,6 +100,7 @@ const structuredData = {
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={pageDescription} />
     <meta name="twitter:image" content={previewImage} />
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     <title>{pageTitle}</title>
   </head>
@@ -107,8 +108,10 @@ const structuredData = {
     <header class="site-header" aria-label="Main navigation">
       <a class="brand" href="#top">Alexandra Maria Deli</a>
       <nav>
-        <a href="#work">Work</a>
+        <a href="#top">Home</a>
+        <a href="#work">Albums</a>
         <a href="#about">About</a>
+        <a href="#services">Services</a>
         <a href="#contact">Contact</a>
       </nav>
     </header>
@@ -122,7 +125,7 @@ const structuredData = {
             Alexandra Maria Deli follows quiet traces of place, memory, and light,
             shaping photographs that feel discovered rather than staged.
           </p>
-          <a class="button" href="#work">View selected work</a>
+          <a class="button" href="#work">View albums</a>
         </div>
         <figure class="hero-image">
           <img
@@ -243,16 +246,52 @@ const structuredData = {
         </div>
       </section>
 
+      <section id="services" class="services-preview" aria-labelledby="services-preview-title">
+        <div class="section-heading">
+          <p class="eyebrow">Services</p>
+          <h2 id="services-preview-title">Photography services</h2>
+        </div>
+
+        <div class="services-preview-row" aria-label="Selected photography services">
+          {landingPages.slice(0, 6).map((page) => (
+            <a class="services-preview-card" href={getPageUrl(page.slug)}>
+              <h3>{page.title}</h3>
+              <p>{page.metaDescription}</p>
+              <strong>View service &rarr;</strong>
+            </a>
+          ))}
+        </div>
+        <div class="services-preview-actions">
+          <a class="button secondary" href="/services/">View all services</a>
+        </div>
+      </section>
+
       <section id="contact" class="contact" aria-labelledby="contact-title">
-        <p class="eyebrow">Contact</p>
-        <h2 id="contact-title">For projects, prints, and collaborations in Athens and beyond.</h2>
-        <div class="contact-actions">
-          <a class="button" href="https://www.instagram.com/daleria_xplorelens/" target="_blank" rel="noreferrer">
+        <div class="contact-copy">
+          <p class="eyebrow">Contact</p>
+          <h2 id="contact-title">For projects, prints, and collaborations in Athens and beyond.</h2>
+          <p>Share a few details about the project, location, and timing.</p>
+          <a class="button secondary" href="https://www.instagram.com/daleria_xplorelens/" target="_blank" rel="noreferrer nofollow">
             Instagram
           </a>
-          <a class="button secondary" href="mailto:alexandra.deli069@gmail.com">Email</a>
-          <a class="button secondary" href="tel:+306955733126">Call</a>
         </div>
+        <form class="contact-form" data-contact-form>
+          <label>
+            Name
+            <input name="name" type="text" autocomplete="name" required />
+          </label>
+          <label>
+            Contact email
+            <input name="email" type="email" autocomplete="email" required />
+          </label>
+          <label>
+            Project
+            <textarea name="message" rows="5" required></textarea>
+          </label>
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAADmmpbZjPtxnJITb"></div>
+          <p class="contact-form-note" data-contact-form-note hidden>Please complete the verification before sending.</p>
+          <button class="button" type="submit">Send inquiry</button>
+        </form>
       </section>
     </main>
 
@@ -269,6 +308,36 @@ const structuredData = {
       <button class="lightbox-nav next" type="button" data-lightbox-next aria-label="Next photograph">&rarr;</button>
     </div>
     <script>
+      const contactForm = document.querySelector('[data-contact-form]');
+
+      contactForm?.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const form = event.currentTarget;
+        if (!(form instanceof HTMLFormElement)) return;
+
+        const data = new FormData(form);
+        const token = String(data.get('cf-turnstile-response') || '').trim();
+        const note = form.querySelector('[data-contact-form-note]');
+
+        if (!token) {
+          note?.removeAttribute('hidden');
+          return;
+        }
+
+        note?.setAttribute('hidden', '');
+
+        const name = String(data.get('name') || '').trim();
+        const contact = String(data.get('email') || '').trim();
+        const message = String(data.get('message') || '').trim();
+        const recipient = [97, 108, 101, 120, 97, 110, 100, 114, 97, 46, 100, 101, 108, 105, 48, 54, 57, 64, 103, 109, 97, 105, 108, 46, 99, 111, 109]
+          .map((code) => String.fromCharCode(code))
+          .join('');
+        const subject = encodeURIComponent('Photography inquiry');
+        const body = encodeURIComponent(`Name: ${name}\nContact: ${contact}\n\n${message}`);
+        window.location.href = ['mai', 'lto'].join('') + `:${recipient}?subject=${subject}&body=${body}`;
+      });
+
       const carousel = document.querySelector('[data-album-carousel]');
       const lightbox = document.querySelector('[data-lightbox]');
 

@@ -1,0 +1,269 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { getSiteUrl } from '../utils/url';
+import type { BlogPost } from '../content/blog/config';
+
+export interface Props {
+  post: BlogPost;
+  canonical?: string;
+}
+
+const { post, canonical } = Astro.props;
+const siteUrl = getSiteUrl();
+const pageUrl = canonical || `${siteUrl}/blog/${post.slug}/`;
+const image = post.image ? `${siteUrl}/${post.image}` : `${siteUrl}/images/album1/545231903_17957342184003956_1496422976014836905_n.jpg`;
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title,
+  description: post.description,
+  datePublished: post.date.toISOString(),
+  dateModified: post.date.toISOString(),
+  author: {
+    '@type': 'Person',
+    name: post.author,
+    url: siteUrl,
+  },
+  image,
+  publisher: {
+    '@type': 'Person',
+    name: 'Alexandra Maria Deli',
+    url: siteUrl,
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': pageUrl,
+  },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${siteUrl}/blog/` },
+    { '@type': 'ListItem', position: 3, name: post.title, item: pageUrl },
+  ],
+};
+---
+
+<BaseLayout
+  title={`${post.title} — Alexandra Maria Deli`}
+  description={post.description}
+  canonical={pageUrl}
+  imagePath={post.image}
+  ogTitle={post.title}
+  ogDescription={post.description}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <header class="site-header">
+    <a class="brand" href="/">Alexandra Maria Deli</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/blog">Blog</a>
+      <a href="/#work">Albums</a>
+      <a href="/#about">About</a>
+      <a href="/services/">Services</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="blog-post-main">
+    <article class="blog-post">
+      <header class="blog-post-header">
+        <a class="blog-back-link" href="/blog">&larr; Back to Blog</a>
+        <p class="eyebrow">
+          {post.category && <span class="blog-category">{post.category}</span>}
+          {post.category && post.readingTime && <span class="blog-separator">·</span>}
+          <span>{post.readingTime}</span>
+        </p>
+        <h1>{post.title}</h1>
+        <p class="blog-post-meta">
+          <time datetime={post.date.toISOString()}>
+            {post.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+          <span class="blog-separator">·</span>
+          <span>{post.author}</span>
+        </p>
+      </header>
+
+      <div class="blog-post-content">
+        <slot />
+      </div>
+
+      {post.tags && post.tags.length > 0 && (
+        <footer class="blog-post-footer">
+          <div class="blog-tags">
+            {post.tags.map((tag) => (
+              <span class="blog-tag">{tag}</span>
+            ))}
+          </div>
+        </footer>
+      )}
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; {new Date().getFullYear()} Alexandra Maria Deli &middot; <a href="/">alexandra-maria-deli.gr</a></p>
+  </footer>
+</BaseLayout>
+
+<style>
+  .blog-post-main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 3rem);
+  }
+
+  .blog-back-link {
+    color: var(--color-green);
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 1.5rem;
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+
+  .blog-back-link:hover {
+    color: var(--color-deep-green);
+  }
+
+  .blog-post-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .blog-post-header h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 400;
+    letter-spacing: -0.05em;
+    line-height: 1.05;
+    margin: 0.75rem 0;
+  }
+
+  .blog-separator {
+    color: var(--color-mid-gray);
+    margin: 0 0.5rem;
+  }
+
+  .blog-category {
+    color: var(--color-deep-green);
+    font-weight: 700;
+  }
+
+  .blog-post-meta {
+    color: var(--color-mid-gray);
+    font-size: 0.85rem;
+    margin: 0;
+  }
+
+  .blog-post-content {
+    color: var(--color-charcoal);
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .blog-post-content :global(h2) {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin: 2.5rem 0 1rem;
+  }
+
+  .blog-post-content :global(h3) {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 2rem 0 0.75rem;
+  }
+
+  .blog-post-content :global(p) {
+    margin: 0 0 1.25rem;
+  }
+
+  .blog-post-content :global(img) {
+    border-radius: var(--image-radius);
+    margin: 1.5rem 0;
+    width: 100%;
+  }
+
+  .blog-post-content :global(blockquote) {
+    border-left: 3px solid var(--color-green);
+    color: var(--color-mid-gray);
+    font-style: italic;
+    margin: 1.5rem 0;
+    padding: 0.5rem 1.25rem;
+  }
+
+  .blog-post-content :global(pre) {
+    background: var(--color-off-white);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    overflow-x: auto;
+    padding: 1rem;
+  }
+
+  .blog-post-content :global(code) {
+    font-size: 0.9em;
+  }
+
+  .blog-post-content :global(a) {
+    color: var(--color-green);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .blog-post-content :global(ul),
+  .blog-post-content :global(ol) {
+    margin: 0 0 1.25rem;
+    padding-left: 1.5rem;
+  }
+
+  .blog-post-content :global(li) {
+    margin-bottom: 0.35rem;
+  }
+
+  .blog-post-footer {
+    border-top: 1px solid var(--color-light-gray);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+  }
+
+  .blog-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .blog-tag {
+    background: var(--color-off-white);
+    border-radius: 999px;
+    color: var(--color-deep-green);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.35rem 0.85rem;
+    text-transform: lowercase;
+  }
+
+  .site-footer {
+    color: var(--color-mid-gray);
+    font-size: 0.85rem;
+    padding: 1.5rem clamp(1rem, 4vw, 3rem);
+    text-align: center;
+  }
+
+  .site-footer p {
+    margin: 0 auto;
+    max-width: var(--content-width);
+  }
+</style>

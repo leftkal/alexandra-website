@@ -1,0 +1,90 @@
+---
+import type { FAQ } from '../content/landing-pages';
+
+export interface Props {
+  items: FAQ[];
+  title?: string;
+}
+
+const { items, title = 'Frequently Asked Questions' } = Astro.props;
+---
+
+<section class="faq-section" aria-labelledby="faq-title" itemscope itemtype="https://schema.org/FAQPage">
+  <div class="section-heading">
+    <p class="eyebrow">FAQ</p>
+    <h2 id="faq-title">{title}</h2>
+  </div>
+
+  <div class="faq-list">
+    {items.map((item) => (
+      <details class="faq-item" itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+        <summary itemprop="name">{item.question}</summary>
+        <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer">
+          <p itemprop="text">{item.answer}</p>
+        </div>
+      </details>
+    ))}
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: clamp(4rem, 9vw, 8rem) clamp(1rem, 4vw, 3rem);
+  }
+
+  .faq-section .section-heading {
+    align-items: start;
+    border-top: 1px solid var(--color-light-gray);
+    padding-top: clamp(2rem, 5vw, 4rem);
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 0.85rem;
+    max-width: 58rem;
+  }
+
+  .faq-item {
+    background: rgba(248, 248, 245, 0.7);
+    border: 1px solid rgba(216, 218, 211, 0.92);
+    border-radius: calc(var(--image-radius) * 1.25);
+    padding: 1.1rem 1.35rem;
+    cursor: pointer;
+    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  }
+
+  .faq-item:hover {
+    border-color: var(--color-green);
+    transform: translateY(-1px);
+  }
+
+  .faq-item[open] {
+    background: var(--color-off-white);
+  }
+
+  .faq-item summary {
+    color: var(--color-charcoal);
+    cursor: pointer;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.4;
+    outline: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    color: var(--color-green);
+  }
+
+  .faq-item p {
+    color: color-mix(in srgb, var(--color-charcoal) 78%, var(--color-mid-gray));
+    font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+    line-height: 1.7;
+    margin: 0.75rem 0 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-light-gray);
+  }
+</style>

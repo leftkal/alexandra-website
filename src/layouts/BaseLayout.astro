@@ -1,0 +1,44 @@
+---
+import '../styles/global.css';
+import { getImageUrl } from '../utils/url';
+
+export interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  imagePath?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+}
+
+const { title, description, canonical, imagePath, ogTitle, ogDescription } = Astro.props;
+const defaultImagePath = 'images/album1/545231903_17957342184003956_1496422976014836905_n.jpg';
+const ogImage = imagePath ? getImageUrl(imagePath) : getImageUrl(defaultImagePath);
+const ogTitleFinal = ogTitle || title;
+const ogDescFinal = ogDescription || description;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:title" content={ogTitleFinal} />
+    <meta property="og:description" content={ogDescFinal} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Photograph by Alexandra Maria Deli" />
+    <meta property="og:site_name" content="Alexandra Maria Deli" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitleFinal} />
+    <meta name="twitter:description" content={ogDescFinal} />
+    <meta name="twitter:image" content={ogImage} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

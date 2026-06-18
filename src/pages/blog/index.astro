@@ -1,0 +1,224 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllPosts, blogCategories } from '../../content/blog/config';
+import { getSiteUrl } from '../../utils/url';
+
+const siteUrl = getSiteUrl();
+
+const allPosts = await getAllPosts();
+
+const activeCategory = Astro.url.searchParams.get('category') || undefined;
+const filteredPosts = activeCategory
+  ? allPosts.filter((p) => p.category === activeCategory)
+  : allPosts;
+
+const pageTitle = 'Blog — Alexandra Maria Deli';
+const pageDescription = 'Photography insights, location guides, portrait tips, and behind-the-scenes stories from Alexandra Maria Deli.';
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonical={`${siteUrl}/blog/`}
+>
+  <header class="site-header">
+    <a class="brand" href="/">Alexandra Maria Deli</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/#work">Albums</a>
+      <a href="/#about">About</a>
+      <a href="/services/">Services</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="blog-index-main">
+    <header class="blog-index-header">
+      <h1>Blog</h1>
+      <p class="blog-index-description">
+        Photography insights, location guides, portrait tips, and behind-the-scenes stories.
+      </p>
+    </header>
+
+    <nav class="blog-category-nav" aria-label="Filter by category">
+      <a
+        class:list={['blog-category-link', !activeCategory && 'active']}
+        href="/blog"
+      >All</a>
+      {blogCategories.map((cat) => (
+        <a
+          class:list={['blog-category-link', activeCategory === cat && 'active']}
+          href={`/blog/?category=${encodeURIComponent(cat)}`}
+        >{cat}</a>
+      ))}
+    </nav>
+
+    {filteredPosts.length > 0 ? (
+      <div class="blog-post-list">
+        {filteredPosts.map((post) => (
+          <article class="blog-post-card">
+            <a class="blog-post-card-link" href={`/blog/${post.slug}/`}>
+              {post.category && <p class="blog-post-card-category">{post.category}</p>}
+              <h2 class="blog-post-card-title">{post.title}</h2>
+              <p class="blog-post-card-description">{post.description}</p>
+              <div class="blog-post-card-meta">
+                <time datetime={post.date.toISOString()}>
+                  {post.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </time>
+                <span class="blog-separator">·</span>
+                <span>{post.readingTime}</span>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <p class="blog-empty-state">No posts found in this category.</p>
+    )}
+
+    <!--
+      Pagination is not yet implemented. If the number of posts grows large,
+      add a pagination parameter (e.g., /blog/page/2) and split filteredPosts
+      using a slice based on the current page number. For now, all published
+      posts are displayed on a single page.
+    -->
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; {new Date().getFullYear()} Alexandra Maria Deli &middot; <a href="/">alexandra-maria-deli.gr</a></p>
+  </footer>
+</BaseLayout>
+
+<style>
+  .blog-index-main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 3rem);
+  }
+
+  .blog-index-header {
+    margin-bottom: 2rem;
+  }
+
+  .blog-index-header h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 400;
+    letter-spacing: -0.06em;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .blog-index-description {
+    color: var(--color-mid-gray);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0.75rem 0 0;
+  }
+
+  .blog-category-nav {
+    border-bottom: 1px solid var(--color-light-gray);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+  }
+
+  .blog-category-link {
+    border: 1px solid var(--color-light-gray);
+    border-radius: 999px;
+    color: var(--color-mid-gray);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.4rem 0.9rem;
+    text-decoration: none;
+    transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+  }
+
+  .blog-category-link:hover {
+    border-color: var(--color-green);
+    color: var(--color-deep-green);
+  }
+
+  .blog-category-link.active {
+    background: var(--color-deep-green);
+    border-color: var(--color-deep-green);
+    color: var(--color-white);
+  }
+
+  .blog-post-list {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .blog-post-card {
+    border-bottom: 1px solid var(--color-light-gray);
+    padding-bottom: 1.5rem;
+  }
+
+  .blog-post-card-link {
+    display: block;
+    text-decoration: none;
+  }
+
+  .blog-post-card-category {
+    color: var(--color-green);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin: 0 0 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .blog-post-card-title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    margin: 0 0 0.5rem;
+    transition: color 180ms ease;
+  }
+
+  .blog-post-card-title:hover {
+    color: var(--color-green);
+  }
+
+  .blog-post-card-description {
+    color: var(--color-mid-gray);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin: 0 0 0.75rem;
+  }
+
+  .blog-post-card-meta {
+    color: var(--color-mid-gray);
+    font-size: 0.82rem;
+  }
+
+  .blog-separator {
+    color: var(--color-light-gray);
+    margin: 0 0.4rem;
+  }
+
+  .blog-empty-state {
+    color: var(--color-mid-gray);
+    font-size: 1rem;
+    padding: 2rem 0;
+    text-align: center;
+  }
+
+  .site-footer {
+    color: var(--color-mid-gray);
+    font-size: 0.85rem;
+    padding: 1.5rem clamp(1rem, 4vw, 3rem);
+    text-align: center;
+  }
+
+  .site-footer p {
+    margin: 0 auto;
+    max-width: var(--content-width);
+  }
+</style>

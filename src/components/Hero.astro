@@ -1,0 +1,194 @@
+---
+export interface Props {
+  h1: string;
+  introduction: string;
+  keyword?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+import { getImageUrl } from '../utils/url';
+
+const { h1, introduction, imageSrc, imageAlt = '' } = Astro.props;
+const introParagraphs = introduction.split('\n\n').map((paragraph) => paragraph.trim()).filter(Boolean);
+---
+
+<section class="landing-hero" aria-labelledby="landing-hero-title">
+  <div class="landing-hero-panel">
+    <div class="landing-hero-content">
+      <h1 id="landing-hero-title">{h1}</h1>
+      <div class="landing-hero-intro">
+        {introParagraphs.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+      <div class="landing-hero-actions">
+        <a class="button" href="#contact">Book a session</a>
+        <a class="button secondary" href="/#work">View albums</a>
+      </div>
+    </div>
+  </div>
+  {imageSrc && (
+    <figure class="landing-hero-frame">
+      <img src={getImageUrl(imageSrc)} alt={imageAlt} width="1200" height="1500" fetchpriority="high" />
+    </figure>
+  )}
+</section>
+
+<style>
+  .landing-hero {
+    background: var(--color-charcoal);
+    border-radius: calc(var(--image-radius) * 2.2);
+    color: var(--color-white);
+    display: grid;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.62fr);
+    isolation: isolate;
+    margin: clamp(1rem, 2.5vw, 2rem) auto 0;
+    max-width: calc(var(--content-width) - 6rem);
+    min-height: auto;
+    overflow: hidden;
+    padding: clamp(1rem, 3vw, 2rem);
+    position: relative;
+  }
+
+  .landing-hero::before {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.78), transparent 12%, transparent 88%, rgba(0, 0, 0, 0.72));
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .landing-hero::after {
+    background-image: repeating-linear-gradient(90deg, rgba(248, 248, 245, 0.05) 0 1px, transparent 1px 4rem), repeating-linear-gradient(0deg, rgba(248, 248, 245, 0.025) 0 1px, transparent 1px 0.35rem);
+    content: "";
+    inset: 0;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    position: absolute;
+    z-index: 2;
+  }
+
+  .landing-hero-frame {
+    align-self: stretch;
+    background: #11140f;
+    border: 1px solid rgba(248, 248, 245, 0.18);
+    border-radius: calc(var(--image-radius) * 1.5);
+    box-shadow: inset 0 0 0 0.6rem rgba(0, 0, 0, 0.18), 0 2rem 5rem rgba(0, 0, 0, 0.24);
+    display: grid;
+    place-items: center;
+    margin: 0;
+    min-height: 0;
+    overflow: hidden;
+    padding: clamp(0.65rem, 1.2vw, 0.9rem);
+    position: relative;
+    z-index: 3;
+  }
+
+  .landing-hero-frame::before,
+  .landing-hero-frame::after {
+    background-image: repeating-linear-gradient(0deg, rgba(248, 248, 245, 0.62) 0 0.52rem, transparent 0.52rem 1rem);
+    bottom: 0.75rem;
+    content: "";
+    position: absolute;
+    top: 0.75rem;
+    width: 0.45rem;
+    z-index: 2;
+  }
+
+  .landing-hero-frame::before {
+    left: 0.55rem;
+  }
+
+  .landing-hero-frame::after {
+    right: 0.55rem;
+  }
+
+  .landing-hero-frame img {
+    aspect-ratio: 4 / 5;
+    border-radius: calc(var(--image-radius) * 0.9);
+    filter: grayscale(0.08) contrast(1.04) saturate(0.84);
+    height: 100%;
+    max-height: 38rem;
+    object-fit: cover;
+    object-position: center center;
+    opacity: 0.9;
+    width: 100%;
+  }
+
+  .landing-hero-panel {
+    align-self: center;
+    background: rgba(38, 42, 37, 0.5);
+    border: 1px solid rgba(248, 248, 245, 0.2);
+    border-radius: calc(var(--image-radius) * 1.6);
+    box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.25);
+    padding: clamp(1.5rem, 4vw, 3.2rem);
+    position: relative;
+    z-index: 3;
+  }
+
+  .landing-hero-content {
+    max-width: 860px;
+  }
+
+  .landing-hero h1 {
+    font-size: clamp(3rem, 5.8vw, 6.2rem);
+    line-height: 0.98;
+  }
+
+  .landing-hero-intro {
+    color: rgba(248, 248, 245, 0.82);
+    display: grid;
+    font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+    gap: 0.85rem;
+    line-height: 1.65;
+    margin: 1.5rem 0 1.8rem;
+    max-width: 42rem;
+  }
+
+  .landing-hero-intro p {
+    margin: 0;
+  }
+
+  .landing-hero-intro p:not(:first-child) {
+    color: rgba(248, 248, 245, 0.68);
+    font-size: 0.95em;
+  }
+
+  .landing-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .landing-hero .button {
+    background: var(--color-white);
+    border-color: var(--color-white);
+    color: var(--color-deep-green);
+  }
+
+  .landing-hero .button.secondary {
+    background: transparent;
+    border-color: rgba(248, 248, 245, 0.55);
+    color: var(--color-white);
+  }
+
+  @media (max-width: 920px) {
+    .landing-hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      padding: 0.85rem;
+    }
+
+    .landing-hero-frame {
+      justify-self: center;
+      max-width: min(30rem, 100%);
+      order: -1;
+      width: 100%;
+    }
+
+    .landing-hero-panel {
+      margin-top: 0;
+    }
+  }
+</style>

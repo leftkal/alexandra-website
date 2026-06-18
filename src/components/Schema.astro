@@ -1,0 +1,71 @@
+---
+import { getSiteUrl, getAbsolutePageUrl, getImageUrl } from '../utils/url';
+
+export interface Props {
+  pageTitle: string;
+  pageDescription: string;
+  imagePath: string;
+  slug?: string;
+  schemaType?: 'Photographer' | 'LocalBusiness';
+  keyword?: string;
+}
+
+const { pageTitle, pageDescription, imagePath, slug, schemaType = 'Photographer', keyword } = Astro.props;
+const siteUrl = getSiteUrl();
+const pageUrl = slug ? getAbsolutePageUrl(slug) : siteUrl;
+const image = getImageUrl(imagePath);
+
+const baseSchema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': schemaType,
+  '@id': `${siteUrl}#alexandra-maria-deli`,
+  name: 'Alexandra Maria Deli',
+  jobTitle: 'Photographer',
+  description: pageDescription,
+  url: siteUrl,
+  image,
+  sameAs: ['https://www.instagram.com/daleria_xplorelens/'],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Athens',
+    addressCountry: 'GR',
+  },
+  knowsAbout: [
+    'Photography',
+    'Analog photography',
+    'Portrait photography',
+    'Editorial photography',
+    'Branding photography',
+    'Travel photography',
+  ],
+};
+
+const pageSchema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  '@id': pageUrl,
+  url: pageUrl,
+  name: pageTitle,
+  description: pageDescription,
+  isPartOf: {
+    '@id': siteUrl,
+  },
+  about: {
+    '@id': `${siteUrl}#alexandra-maria-deli`,
+  },
+  ...(keyword ? { keywords: keyword } : {}),
+};
+
+const breadcrumbSchema: Record<string, unknown> = slug ? {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: pageTitle, item: pageUrl },
+  ],
+} : {};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(baseSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
+{slug && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}

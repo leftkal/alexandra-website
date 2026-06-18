@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Page Not Found | Alexandra Maria Deli';
+const description = 'The page you\'re looking for doesn\'t exist. Return to the homepage of Alexandra Maria Deli, an Athens-based photographer.';
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="site-header">
+    <a class="brand" href="/">Alexandra Maria Deli</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/#work">Albums</a>
+      <a href="/#about">About</a>
+      <a href="/services/">Services</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="not-found">
+    <section class="not-found-content">
+      <p class="eyebrow">404</p>
+      <h1>Page not found</h1>
+      <p class="not-found-text">The page you were looking for doesn't exist or has been moved.</p>
+      <a class="button" href="/">Return to the homepage</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; {new Date().getFullYear()} Alexandra Maria Deli</p>
+  </footer>
+</BaseLayout>
+
+<style>
+  .not-found {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    min-height: calc(100svh - 12rem);
+    padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem);
+  }
+
+  .not-found-content {
+    max-width: 32rem;
+    text-align: center;
+  }
+
+  .not-found-content .eyebrow {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .not-found h1 {
+    margin-bottom: 1rem;
+  }
+
+  .not-found-text {
+    color: color-mix(in srgb, var(--color-charcoal) 78%, var(--color-mid-gray));
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.7;
+    margin: 0 0 1.6rem;
+  }
+</style>

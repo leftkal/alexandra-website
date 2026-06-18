@@ -1,0 +1,88 @@
+---
+import LandingPageLayout from '../layouts/LandingPageLayout.astro';
+import Hero from '../components/Hero.astro';
+import FAQ from '../components/FAQ.astro';
+import Gallery from '../components/Gallery.astro';
+import CTA from '../components/CTA.astro';
+import RelatedPages from '../components/RelatedPages.astro';
+import { landingPages, type LandingPage } from '../content/landing-pages';
+import { getCanonicalUrl, getImageUrl } from '../utils/url';
+
+export function getStaticPaths() {
+  return landingPages.map((page: LandingPage) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
+}
+
+export interface Props {
+  page: LandingPage;
+}
+
+const { page } = Astro.props;
+const canonical = getCanonicalUrl(page.slug);
+const heroImage = page.galleryImages[0];
+
+function slugify(text: string): string {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+---
+
+<LandingPageLayout
+  title={page.metaTitle}
+  description={page.metaDescription}
+  canonical={canonical}
+  slug={page.slug}
+  schemaType={page.schemaType}
+  keyword={page.keyword}
+  imagePath={page.socialImage}
+  ogTitle={page.metaTitle}
+  ogDescription={page.metaDescription}
+>
+  <Hero h1={page.h1} introduction={page.introduction} keyword={page.keyword} imageSrc={heroImage?.src} imageAlt={heroImage?.alt} />
+
+  {page.sections.map((section, index) => {
+    const printImage = index % 2 === 1 ? page.galleryImages[Math.floor(index / 2) % page.galleryImages.length] : undefined;
+    return (
+    <>
+      <section class="landing-section" aria-labelledby={`section-${slugify(section.heading)}`}>
+      <div class="landing-section-body">
+        <span class="landing-section-number">{String(index + 1).padStart(2, '0')}</span>
+        <h2 id={`section-${slugify(section.heading)}`}>{section.heading}</h2>
+        <div class="landing-section-copy">
+          {section.body.split('\n\n').map((paragraph) => {
+            const trimmed = paragraph.trim();
+            if (trimmed.startsWith('<')) {
+              return <fragment set:html={trimmed} />;
+            }
+            return <p>{paragraph}</p>;
+          })}
+        </div>
+      </div>
+    </section>
+      {printImage && (
+        <figure class="landing-image-break">
+          <img src={getImageUrl(printImage.src)} alt={printImage.alt} loading="lazy" width={printImage.width || 800} height={printImage.height || 1000} />
+          <figcaption>Frame {String(Math.floor(index / 2) + 1).padStart(2, '0')} / Athens light study</figcaption>
+        </figure>
+      )}
+    </>
+    );
+  })}
+
+  <section class="mid-cta" aria-labelledby="mid-cta-title">
+    <div class="mid-cta-body">
+      <h2 id="mid-cta-title">Ready to book your session?</h2>
+      <p>Use the contact section to share a few details about your project.</p>
+      <a class="button" href="#contact">Get in touch</a>
+    </div>
+  </section>
+
+  <Gallery images={page.galleryImages} />
+
+  <FAQ items={page.faq} />
+
+  <RelatedPages slugs={page.relatedPages} />
+
+  <CTA heading={page.h1} text={page.ctaText} />
+</LandingPageLayout>
