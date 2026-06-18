@@ -36,6 +36,7 @@ const ogDescFinal = ogDescription || description;
     <meta name="twitter:title" content={ogTitleFinal} />
     <meta name="twitter:description" content={ogDescFinal} />
     <meta name="twitter:image" content={ogImage} />
+    <slot name="head" />
     <title>{title}</title>
   </head>
   <body>

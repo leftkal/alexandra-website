@@ -1,116 +1,50 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { landingPages } from '../content/landing-pages';
-import { getCanonicalUrl, getPageUrl } from '../utils/url';
 
-const title = 'Photography Services in Athens | Alexandra Maria Deli';
-const description = 'Explore photography services by Alexandra Maria Deli, including portraits, branding, editorial work, Athens photoshoots, Acropolis sessions, Plaka sessions, and pricing.';
+const title = 'Photography Guides in Athens | Alexandra Maria Deli';
+const description = 'Photography guides by Alexandra Maria Deli have moved to /guides/.';
 ---
 
-<BaseLayout title={title} description={description} canonical={getCanonicalUrl('services')}>
-  <header class="site-header">
-    <a class="brand" href="/">Alexandra Maria Deli</a>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/#work">Albums</a>
-      <a href="/#about">About</a>
-      <a href="/services/">Services</a>
-      <a href="/#contact">Contact</a>
-    </nav>
-  </header>
-
-  <main class="services-main">
-    <section class="services-grid-section" aria-labelledby="services-grid-title">
-      <div class="section-heading">
-        <h1 id="services-grid-title">All Services</h1>
-      </div>
-
-      <div class="services-grid">
-        {landingPages.map((page) => (
-          <a class="service-card" href={getPageUrl(page.slug)}>
-            <h3 class="service-card-title">{page.title}</h3>
-            <p class="service-card-desc">{page.metaDescription}</p>
-            <span class="service-card-link">View service &rarr;</span>
-          </a>
-        ))}
-      </div>
+<BaseLayout title={title} description={description} canonical="https://alexandra-maria-deli.gr/guides/">
+  <meta http-equiv="refresh" content="0; url=/guides/" slot="head" />
+  <meta name="robots" content="noindex, follow" slot="head" />
+  <main class="redirect-page">
+    <section class="redirect-content">
+      <p class="eyebrow">Guides</p>
+      <h1>Photography Guides</h1>
+      <p>This page has moved to <a href="/guides/">/guides/</a>.</p>
+      <a class="button" href="/guides/">View guides</a>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; {new Date().getFullYear()} Alexandra Maria Deli &middot; <a href="/">alexandra-maria-deli.gr</a></p>
-  </footer>
+  <script is:inline>
+    window.location.replace('/guides/');
+  </script>
 </BaseLayout>
 
 <style>
-  .services-main {
-    max-width: var(--content-width);
-    margin: 0 auto;
-  }
-
-  .services-grid-section {
-    max-width: calc(var(--content-width) - 6rem);
-    margin: 0 auto;
-    padding: clamp(3rem, 7vw, 5.5rem) clamp(1rem, 4vw, 3rem) clamp(4rem, 9vw, 8rem);
-  }
-
-  .services-grid-section .section-heading {
-    margin-bottom: clamp(2rem, 5vw, 4rem);
-  }
-
-  .services-grid {
+  .redirect-page {
+    min-height: 70vh;
     display: grid;
-    gap: clamp(1rem, 2vw, 1.5rem);
-    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    place-items: center;
+    padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem);
   }
 
-  .service-card {
-    background: linear-gradient(180deg, rgba(248, 248, 245, 0.86), rgba(239, 239, 232, 0.62));
-    border: 1px solid rgba(216, 218, 211, 0.92);
-    border-radius: calc(var(--image-radius) * 1.3);
-    box-shadow: 0 1rem 2.5rem rgba(38, 42, 37, 0.05);
-    display: flex;
-    flex-direction: column;
-    min-height: 16rem;
-    padding: 1.6rem;
-    text-decoration: none;
-    transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+  .redirect-content {
+    max-width: 42rem;
+    text-align: center;
   }
 
-  .service-card:hover {
-    background: var(--color-off-white);
-    border-color: var(--color-green);
-    transform: translateY(-3px);
+  .redirect-content p:not(.eyebrow) {
+    color: color-mix(in srgb, var(--color-charcoal) 78%, var(--color-mid-gray));
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.7;
+    margin: 1rem 0 1.6rem;
   }
 
-  .service-card-title {
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(1.35rem, 2vw, 1.8rem);
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    line-height: 1.12;
-    margin: 0 0 0.75rem;
-  }
-
-  .service-card-desc {
-    color: color-mix(in srgb, var(--color-charcoal) 72%, var(--color-mid-gray));
-    font-size: 0.9rem;
-    line-height: 1.6;
-    margin: 0 0 1rem;
-  }
-
-  .service-card-link {
+  .redirect-content a:not(.button) {
     color: var(--color-green);
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    margin-top: auto;
-  }
-
-  @media (max-width: 560px) {
-    .services-grid-section {
-      padding-left: 0.85rem;
-      padding-right: 0.85rem;
-    }
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
   }
 </style>

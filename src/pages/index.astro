@@ -46,7 +46,7 @@ const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')
 const siteUrl = 'https://alexandra-maria-deli.gr/';
 const previewImage = `${siteUrl}images/album1/545231903_17957342184003956_1496422976014836905_n.jpg`;
 const pageTitle = 'Alexandra Maria Deli | Photographer in Athens';
-const pageDescription = 'Portfolio of Alexandra Maria Deli, an Athens-based photographer working with travel, analog photography, darkroom practice, studio work, and visual storytelling.';
+const pageDescription = 'Portfolio of Alexandra Maria Deli, an Athens-based photographer working with travel, analog process, portraiture, and visual storytelling.';
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -70,15 +70,6 @@ const structuredData = {
     'Studio photography',
     'Photo editing',
   ],
-  alumniOf: {
-    '@type': 'CollegeOrUniversity',
-    name: 'University of Europe for Applied Sciences',
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Berlin',
-      addressCountry: 'DE',
-    },
-  },
 };
 ---
 
@@ -111,7 +102,7 @@ const structuredData = {
         <a href="#top">Home</a>
         <a href="#work">Albums</a>
         <a href="#about">About</a>
-        <a href="#services">Services</a>
+        <a href="#guides">Guides</a>
         <a href="#contact">Contact</a>
       </nav>
     </header>
@@ -123,7 +114,7 @@ const structuredData = {
           <h1 id="hero-title">Visual stories shaped by light, travel, and film.</h1>
           <p class="hero-text">
             Alexandra Maria Deli follows quiet traces of place, memory, and light,
-            shaping photographs that feel discovered rather than staged.
+            creating photographs with a natural, observant rhythm.
           </p>
           <a class="button" href="#work">View albums</a>
         </div>
@@ -138,9 +129,8 @@ const structuredData = {
       <section class="intro" aria-label="Portfolio introduction">
         <div class="intro-copy">
           <p>
-            Passionate about photography as a visual journey, Alexandra combines a
-            fresh perspective with hands-on darkroom practice, studio experience, and
-            careful post-production.
+            Alexandra approaches photography as a slow visual practice, shaped by
+            travel, analog process, and careful post-production.
           </p>
         </div>
         <div class="focus-wheel" data-focus-wheel aria-hidden="true">
@@ -234,35 +224,35 @@ const structuredData = {
             with small thresholds: a wall, a door, a shadow, a fragment of landscape.
           </p>
           <p>
-            Trained through darkroom work, studio practice, and photographic studies
-            in Berlin, she approaches each frame with patience, restraint, and a sense
-            of narrative tension.
+            Her background includes darkroom work, studio practice, and photographic
+            studies in Berlin. She approaches each frame with patience, restraint,
+            and attention to atmosphere.
           </p>
           <p class="bio-note">
-            Selected background: analog lab practice at Safelight, Bachelor of
-            Photography studies in Berlin, and the black-and-white project
+            Selected background: analog lab practice, photography studies in Berlin,
+            and the black-and-white project
             <em>The Presence Behind the Door</em>.
           </p>
         </div>
       </section>
 
-      <section id="services" class="services-preview" aria-labelledby="services-preview-title">
+      <section id="guides" class="services-preview" aria-labelledby="guides-preview-title">
         <div class="section-heading">
-          <p class="eyebrow">Services</p>
-          <h2 id="services-preview-title">Photography services</h2>
+          <p class="eyebrow">Guides</p>
+          <h2 id="guides-preview-title">Photography guides</h2>
         </div>
 
-        <div class="services-preview-row" aria-label="Selected photography services">
+        <div class="services-preview-row" aria-label="Selected photography guides">
           {landingPages.slice(0, 6).map((page) => (
             <a class="services-preview-card" href={getPageUrl(page.slug)}>
               <h3>{page.title}</h3>
               <p>{page.metaDescription}</p>
-              <strong>View service &rarr;</strong>
+              <strong>Read guide &rarr;</strong>
             </a>
           ))}
         </div>
         <div class="services-preview-actions">
-          <a class="button secondary" href="/services/">View all services</a>
+          <a class="button secondary" href="/guides/">View all guides</a>
         </div>
       </section>
 

@@ -7,7 +7,7 @@ export interface Props {
   title?: string;
 }
 
-const { slugs, title = 'Related Services' } = Astro.props;
+const { slugs, title = 'Related Guides' } = Astro.props;
 
 const related = landingPages.filter((p) => slugs.includes(p.slug));
 ---
