@@ -12,7 +12,7 @@ export interface Props {
 }
 
 const { title, description, canonical, imagePath, ogTitle, ogDescription } = Astro.props;
-const defaultImagePath = 'images/album1/545231903_17957342184003956_1496422976014836905_n.jpg';
+const defaultImagePath = 'images/presence-behind-the-door/R1-00324-0018.jpg';
 const ogImage = imagePath ? getImageUrl(imagePath) : getImageUrl(defaultImagePath);
 const ogTitleFinal = ogTitle || title;
 const ogDescFinal = ogDescription || description;

@@ -11,7 +11,7 @@ export interface Props {
 const { post, canonical } = Astro.props;
 const siteUrl = getSiteUrl();
 const pageUrl = canonical || `${siteUrl}/blog/${post.slug}/`;
-const image = post.image ? `${siteUrl}/${post.image}` : `${siteUrl}/images/album1/545231903_17957342184003956_1496422976014836905_n.jpg`;
+const image = post.image ? `${siteUrl}/${post.image}` : `${siteUrl}/images/presence-behind-the-door/R1-00324-0018.jpg`;
 
 const articleSchema = {
   '@context': 'https://schema.org',
