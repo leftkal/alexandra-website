@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { albums, getAlbumImagePath, type Album } from '../../content/albums';
+import { getSiteUrl } from '../../utils/url';
+
+export function getStaticPaths() {
+  return albums.map((album) => ({
+    params: { slug: album.slug },
+    props: { album },
+  }));
+}
+
+const { album } = Astro.props as { album: Album };
+const siteUrl = getSiteUrl();
+const previewPhoto = album.photos[1] ?? album.photos[0];
+const imagePath = getAlbumImagePath(album, previewPhoto);
+const canonical = `${siteUrl}/albums/${album.slug}/`;
+const title = `${album.title} | Alexandra Maria Deli`;
+const description = `${album.description} View the complete ${album.photos.length}-photograph album by Alexandra Maria Deli.`;
+const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}${path}`;
+---
+
+<BaseLayout title={title} description={description} canonical={canonical} imagePath={imagePath}>
+  <header class="site-header">
+    <a class="brand" href="/">Alexandra Maria Deli</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/#work">Albums</a>
+      <a href="/#about">About</a>
+      <a href="/guides/">Guides</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="album-page">
+    <section class="album-page-hero" aria-labelledby="album-title">
+      <p class="eyebrow">Album</p>
+      <h1 id="album-title">{album.title}</h1>
+      <p>{album.description}</p>
+      <p class="album-page-count">{album.photos.length} photographs</p>
+    </section>
+
+    <section class="album-page-gallery" aria-label={`${album.title} photographs`}>
+      <div class="gallery">
+        {album.photos.map((photo, index) => (
+          <button
+            class:list={['gallery-item', index % 5 === 0 && 'wide', index % 7 === 0 && 'tall']}
+            type="button"
+            data-lightbox-trigger
+            data-lightbox-index={index}
+            data-lightbox-src={asset(getAlbumImagePath(album, photo))}
+            data-lightbox-title={album.title}
+          >
+            <img src={asset(getAlbumImagePath(album, photo))} alt={`${album.title} photograph ${index + 1}`} loading={index < 6 ? 'eager' : 'lazy'} />
+          </button>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; {new Date().getFullYear()} Alexandra Maria Deli &middot; <a href="/">alexandra-maria-deli.gr</a></p>
+  </footer>
+
+  <div class="lightbox" data-lightbox aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image preview">
+    <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close preview">&times;</button>
+    <button class="lightbox-nav previous" type="button" data-lightbox-prev aria-label="Previous photograph">&larr;</button>
+    <figure class="lightbox-frame">
+      <img data-lightbox-image alt="Selected photograph preview" />
+      <figcaption data-lightbox-caption></figcaption>
+    </figure>
+    <button class="lightbox-nav next" type="button" data-lightbox-next aria-label="Next photograph">&rarr;</button>
+  </div>
+
+  <script>
+    const lightbox = document.querySelector('[data-lightbox]');
+
+    if (lightbox) {
+      const triggers = Array.from(document.querySelectorAll('[data-lightbox-trigger]'));
+      const image = lightbox.querySelector('[data-lightbox-image]');
+      const caption = lightbox.querySelector('[data-lightbox-caption]');
+      const closeButton = lightbox.querySelector('[data-lightbox-close]');
+      const previousButton = lightbox.querySelector('[data-lightbox-prev]');
+      const nextButton = lightbox.querySelector('[data-lightbox-next]');
+      let activeImage = 0;
+      let lightboxTouchStartX = 0;
+
+      const renderPreview = () => {
+        const trigger = triggers[activeImage];
+        if (!trigger || !image || !caption) return;
+
+        const title = trigger.dataset.lightboxTitle ?? 'Album';
+        image.src = trigger.dataset.lightboxSrc ?? '';
+        image.alt = `${title} photograph ${activeImage + 1}`;
+        caption.textContent = `${title} / ${activeImage + 1} of ${triggers.length}`;
+      };
+
+      const openPreview = (trigger) => {
+        activeImage = Number(trigger.dataset.lightboxIndex ?? 0);
+        renderPreview();
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('preview-open');
+        closeButton?.focus();
+      };
+
+      const closePreview = () => {
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('preview-open');
+      };
+
+      const showPreview = (offset) => {
+        activeImage = (activeImage + offset + triggers.length) % triggers.length;
+        renderPreview();
+      };
+
+      triggers.forEach((trigger) => {
+        trigger.addEventListener('click', () => openPreview(trigger));
+      });
+
+      closeButton?.addEventListener('click', closePreview);
+      previousButton?.addEventListener('click', () => showPreview(-1));
+      nextButton?.addEventListener('click', () => showPreview(1));
+
+      lightbox.addEventListener('click', (event) => {
+        const target = event.target;
+        const clickedImage = target === image;
+        const clickedControl = target instanceof Element && target.closest('button');
+
+        if (!clickedImage && !clickedControl) closePreview();
+      });
+
+      lightbox.addEventListener('touchstart', (event) => {
+        lightboxTouchStartX = event.touches[0]?.clientX ?? 0;
+      }, { passive: true });
+
+      lightbox.addEventListener('touchend', (event) => {
+        const touchEndX = event.changedTouches[0]?.clientX ?? lightboxTouchStartX;
+        const distance = touchEndX - lightboxTouchStartX;
+
+        if (Math.abs(distance) < 45) return;
+        showPreview(distance > 0 ? -1 : 1);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (!lightbox.classList.contains('open')) return;
+        if (event.key === 'Escape') closePreview();
+        if (event.key === 'ArrowLeft') showPreview(-1);
+        if (event.key === 'ArrowRight') showPreview(1);
+      });
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  .album-page {
+    max-width: var(--content-width);
+  }
+
+  .album-page-hero,
+  .album-page-gallery {
+    padding: clamp(3rem, 7vw, 5.5rem) clamp(1rem, 4vw, 3rem);
+  }
+
+  .album-page-hero {
+    border-bottom: 1px solid var(--color-light-gray);
+    max-width: 64rem;
+  }
+
+  .album-page-hero p:not(.eyebrow) {
+    color: color-mix(in srgb, var(--color-charcoal) 76%, var(--color-mid-gray));
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    line-height: 1.7;
+    margin: 1.25rem 0 0;
+    max-width: 42rem;
+  }
+
+  .album-page-hero .album-page-count {
+    color: var(--color-green);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .album-page-gallery {
+    padding-top: clamp(2rem, 5vw, 4rem);
+  }
+</style>

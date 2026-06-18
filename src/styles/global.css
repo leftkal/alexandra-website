@@ -524,6 +524,24 @@ h3 {
   grid-row: span 2;
 }
 
+.album-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: clamp(1.25rem, 3vw, 2rem);
+}
+
+.album-actions .button {
+  background: transparent;
+  border-color: var(--color-green);
+  color: var(--color-deep-green);
+}
+
+.album-actions .button:hover {
+  background: var(--color-deep-green);
+  border-color: var(--color-deep-green);
+  color: var(--color-white);
+}
+
 .about {
   align-items: center;
   display: grid;
