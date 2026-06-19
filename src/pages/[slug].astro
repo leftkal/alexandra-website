@@ -53,7 +53,7 @@ function slugify(text: string): string {
           {section.body.split('\n\n').map((paragraph) => {
             const trimmed = paragraph.trim();
             if (trimmed.startsWith('<')) {
-              return <fragment set:html={trimmed} />;
+              return <div class="landing-section-html" set:html={trimmed} />;
             }
             return <p>{paragraph}</p>;
           })}
@@ -72,9 +72,9 @@ function slugify(text: string): string {
 
   <section class="mid-cta" aria-labelledby="mid-cta-title">
     <div class="mid-cta-body">
-      <h2 id="mid-cta-title">Ready to book your session?</h2>
-      <p>Use the contact section to share a few details about your project.</p>
-      <a class="button" href="#contact">Get in touch</a>
+      <h2 id="mid-cta-title">Planning a session in Athens?</h2>
+      <p>Share the kind of session you are planning, your preferred date, and how you want to use the images. I will respond with a practical next step.</p>
+      <a class="button" href="#contact">Ask about availability</a>
     </div>
   </section>
 
