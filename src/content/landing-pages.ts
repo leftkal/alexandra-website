@@ -126,7 +126,7 @@ export const landingPages: LandingPage[] = [
     relatedPages: ['portrait-photographer-athens', 'personal-branding-photographer-athens', 'editorial-photographer-athens', 'photoshoot-athens'],
     schemaType: 'Photographer',
     socialImage: 'images/album1/545231903_17957342184003956_1496422976014836905_n.jpg',
-    ctaText: "If you are looking for a photographer in Athens and want help shaping the session around your purpose, send a short note with your idea, timing, and location.",
+    ctaText: "Share your idea, timing, and location, and I will suggest a practical next step.",
   },
   {
     slug: 'portrait-photographer-athens',

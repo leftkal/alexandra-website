@@ -810,8 +810,9 @@ h3 {
 }
 
 .contact-form .button {
+  justify-self: start;
   justify-content: center;
-  width: 100%;
+  width: auto;
 }
 
 .contact-form-note {
