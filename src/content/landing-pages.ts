@@ -223,7 +223,7 @@ export const landingPages: LandingPage[] = [
     relatedPages: ['photographer-athens', 'personal-branding-photographer-athens', 'photoshoot-athens', 'plaka-photoshoot'],
     schemaType: 'Photographer',
     socialImage: 'images/album1/544844732_17957343321003956_6179681169613150223_n.jpg',
-    ctaText: "If you are planning a portrait session in Athens, send a short note with the purpose of the images, your preferred timing, and any locations you have in mind.",
+    ctaText: "Share your portrait needs, timing, and preferred setting.",
   },
   {
     slug: 'personal-branding-photographer-athens',
@@ -319,7 +319,7 @@ export const landingPages: LandingPage[] = [
     ],
     schemaType: 'LocalBusiness',
     socialImage: 'images/album1/546571339_17957343453003956_6976260187363928964_n.jpg',
-    ctaText: "If you need a brand image library for your website, social media, press, or launch, send a short note about your work, where the images will appear, and your preferred timing.",
+    ctaText: "Share your work, image needs, and preferred timing.",
     relatedPages: ['photographer-athens', 'portrait-photographer-athens', 'photoshoot-athens', 'photographer-athens-prices'],
   },
   {
@@ -417,7 +417,7 @@ export const landingPages: LandingPage[] = [
     relatedPages: ['photographer-athens', 'portrait-photographer-athens', 'photoshoot-athens', 'acropolis-photoshoot'],
     schemaType: 'Photographer',
     socialImage: 'images/album1/542865988_17957342607003956_4305994197225772454_n.jpg',
-    ctaText: "If you are planning an editorial project in Athens, share the brief, deadline, intended usage, and any references. I can respond with a practical approach, timeline, and quote.",
+    ctaText: "Share the brief, deadline, usage, and references.",
   },
   {
     slug: 'photoshoot-athens',
@@ -514,7 +514,7 @@ export const landingPages: LandingPage[] = [
     relatedPages: ['photographer-athens', 'acropolis-photoshoot', 'plaka-photoshoot', 'photographer-athens-prices'],
     schemaType: 'LocalBusiness',
     socialImage: 'images/album1/544823803_17957343063003956_3198052180525970656_n.jpg',
-    ctaText: "If you are planning a photoshoot in Athens, send a few details about your date, preferred style, and how you want to use the images. I can suggest the most suitable route, timing, and session length.",
+    ctaText: "Share your date, style, and image use.",
   },
   {
     slug: 'acropolis-photoshoot',
@@ -611,7 +611,7 @@ export const landingPages: LandingPage[] = [
     relatedPages: ['photoshoot-athens', 'plaka-photoshoot', 'photographer-athens', 'editorial-photographer-athens'],
     schemaType: 'LocalBusiness',
     socialImage: 'images/album1/545351514_17957344248003956_4273194522779784991_n.jpg',
-    ctaText: "If you want photographs around the Acropolis, send a note with your preferred date, purpose, number of people, and whether the images are personal or commercial. I can suggest a respectful route and timing.",
+    ctaText: "Share your date, purpose, and group size.",
   },
   {
     slug: 'plaka-photoshoot',
@@ -708,7 +708,7 @@ export const landingPages: LandingPage[] = [
     relatedPages: ['photoshoot-athens', 'acropolis-photoshoot', 'photographer-athens', 'portrait-photographer-athens'],
     schemaType: 'LocalBusiness',
     socialImage: 'images/album1/544145230_17957343375003956_5933756572986482124_n.jpg',
-    ctaText: "If you want a Plaka photoshoot, send a note with your preferred date, style, number of people, and whether you want Plaka only or a longer route with nearby locations.",
+    ctaText: "Share your date, style, and route preference.",
   },
   {
     slug: 'photographer-athens-prices',
@@ -805,7 +805,7 @@ export const landingPages: LandingPage[] = [
     relatedPages: ['photographer-athens', 'portrait-photographer-athens', 'photoshoot-athens', 'personal-branding-photographer-athens'],
     schemaType: 'Photographer',
     socialImage: 'images/album1/543984369_17957345421003956_262576140533256651_n.jpg',
-    ctaText: "If you would like a detailed quote, send a short description of your project, where the images will be used, and your preferred timing.",
+    ctaText: "Share the project, image use, and timing.",
   },
 ];
 
