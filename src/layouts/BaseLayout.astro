@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { getImageUrl } from '../utils/url';
+import { getAbsoluteImageUrl } from '../utils/url';
 
 export interface Props {
   title: string;
@@ -13,7 +13,7 @@ export interface Props {
 
 const { title, description, canonical, imagePath, ogTitle, ogDescription } = Astro.props;
 const defaultImagePath = 'images/presence-behind-the-door/R1-00324-0018.jpg';
-const ogImage = imagePath ? getImageUrl(imagePath) : getImageUrl(defaultImagePath);
+const ogImage = imagePath ? getAbsoluteImageUrl(imagePath) : getAbsoluteImageUrl(defaultImagePath);
 const ogTitleFinal = ogTitle || title;
 const ogDescFinal = ogDescription || description;
 ---

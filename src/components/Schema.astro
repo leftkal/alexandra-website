@@ -1,5 +1,5 @@
 ---
-import { getSiteUrl, getAbsolutePageUrl, getImageUrl } from '../utils/url';
+import { getSiteUrl, getAbsolutePageUrl, getAbsoluteImageUrl } from '../utils/url';
 
 export interface Props {
   pageTitle: string;
@@ -13,7 +13,7 @@ export interface Props {
 const { pageTitle, pageDescription, imagePath, slug, schemaType = 'Photographer', keyword } = Astro.props;
 const siteUrl = getSiteUrl();
 const pageUrl = slug ? getAbsolutePageUrl(slug) : siteUrl;
-const image = getImageUrl(imagePath);
+const image = getAbsoluteImageUrl(imagePath);
 
 const baseSchema: Record<string, unknown> = {
   '@context': 'https://schema.org',

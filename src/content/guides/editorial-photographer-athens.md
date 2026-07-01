@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "image": "images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
+      "image": "/images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
       "alt": "Editorial photograph by Alexandra Maria Deli",
       "caption": "Frame 01 / Athens light study",
       "width": 800,
@@ -38,7 +38,7 @@
     },
     {
       "type": "image",
-      "image": "images/album1/544995829_17957343621003956_1516659409349310951_n.jpg",
+      "image": "/images/album1/544995829_17957343621003956_1516659409349310951_n.jpg",
       "alt": "Editorial travel photograph by Alexandra Maria Deli",
       "caption": "Frame 02 / Athens light study",
       "width": 800,
@@ -56,7 +56,7 @@
     },
     {
       "type": "image",
-      "image": "images/album1/543984369_17957345421003956_262576140533256651_n.jpg",
+      "image": "/images/album1/543984369_17957345421003956_262576140533256651_n.jpg",
       "alt": "Editorial detail shot by Alexandra Maria Deli",
       "caption": "Frame 03 / Athens light study",
       "width": 800,
@@ -74,7 +74,7 @@
     },
     {
       "type": "image",
-      "image": "images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
+      "image": "/images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
       "alt": "Editorial photograph by Alexandra Maria Deli",
       "caption": "Frame 04 / Athens light study",
       "width": 800,
@@ -125,19 +125,19 @@
   ],
   "galleryImages": [
     {
-      "src": "images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
+      "src": "/images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
       "alt": "Editorial photograph by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "images/album1/544995829_17957343621003956_1516659409349310951_n.jpg",
+      "src": "/images/album1/544995829_17957343621003956_1516659409349310951_n.jpg",
       "alt": "Editorial travel photograph by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "images/album1/543984369_17957345421003956_262576140533256651_n.jpg",
+      "src": "/images/album1/543984369_17957345421003956_262576140533256651_n.jpg",
       "alt": "Editorial detail shot by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
@@ -150,11 +150,11 @@
     "acropolis-photoshoot"
   ],
   "schemaType": "Photographer",
-  "socialImage": "images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
+  "socialImage": "/images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
   "ctaText": "Share the brief, deadline, usage, and references.",
   "draft": false,
   "heroImage": {
-    "image": "images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
+    "image": "/images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
     "alt": "Editorial photograph by Alexandra Maria Deli",
     "width": 800,
     "height": 1000
