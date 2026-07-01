@@ -9,36 +9,76 @@
   "keyword": "editorial photographer athens",
   "sections": [
     {
+      "type": "text",
       "heading": "What Editorial Photography Needs to Do",
       "body": "Editorial images usually need to work as a series. A single strong portrait may be useful, but the full set should create rhythm: wide frames, close details, environmental portraits, transitional images, and moments that help the story breathe.\n\nFor a magazine or online publication, the images need to support layout, headline, captions, and pacing. For a brand editorial, they may need to carry both atmosphere and commercial clarity. For an artist profile, they may need to reveal the person, the work, and the space between them.\n\nThe best editorial photography feels intentional without becoming over-explained. It leaves some room for the viewer to enter the story."
     },
     {
+      "type": "text",
       "heading": "Starting with the Brief",
       "body": "A strong editorial session begins before the shoot day. I ask for the purpose of the project, the intended audience, the story angle, references, deadlines, required image count, format needs, and usage requirements.\n\nIf there is an editor, art director, brand lead, stylist, or producer involved, I work from the shared brief so the visual direction is clear. When the brief is still loose, I can help shape a practical shot list and visual mood.\n\nThe brief does not remove spontaneity. It gives us a direction, so that unexpected moments can still serve the story."
     },
     {
+      "type": "image",
+      "image": "images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
+      "alt": "Editorial photograph by Alexandra Maria Deli",
+      "caption": "Frame 01 / Athens light study",
+      "width": 800,
+      "height": 1000
+    },
+    {
+      "type": "text",
       "heading": "Location, Light, and Visual Language",
       "body": "Athens can create many editorial moods. A bright rooftop, a quiet studio, a workshop, a restaurant kitchen, a theatre, a courtyard, a residential street, a hill, or the coastline can each suggest a different narrative.\n\nI plan locations around both meaning and practicality. A location may look beautiful but fail if the light is wrong, the sound is disruptive, the access is complicated, or there is no space for the subject and crew to work comfortably.\n\nLight is central to the final mood. I often work with available light, shaping it with simple tools when needed. I prefer to preserve the character of the location rather than make every project look artificially uniform."
     },
     {
+      "type": "text",
       "heading": "Editorial Portraits",
       "body": "Editorial portraits sit between documentary observation and controlled portraiture. The subject needs to feel present, but the image also needs composition, atmosphere, and a reason for its setting.\n\nFor artists, musicians, chefs, architects, writers, performers, or makers, I often combine portraits with process images and details of the space. These supporting frames help the final story feel richer and give editors more options for layout.\n\nA portrait may be direct and still, or it may be built around movement, work, conversation, or rehearsal. The right approach depends on the story."
     },
     {
+      "type": "image",
+      "image": "images/album1/544995829_17957343621003956_1516659409349310951_n.jpg",
+      "alt": "Editorial travel photograph by Alexandra Maria Deli",
+      "caption": "Frame 02 / Athens light study",
+      "width": 800,
+      "height": 1000
+    },
+    {
+      "type": "text",
       "heading": "Working with Creative Teams",
       "body": "Editorial work is collaborative. I am comfortable working with editors, art directors, stylists, makeup artists, assistants, producers, and brand teams. I am also comfortable working independently on smaller assignments where the production needs to stay light.\n\nClear communication matters on set. I keep the team aware of what we have, what we still need, and where the light or timing may require adjustment. When useful, I can review frames during the shoot so key people can confirm direction before we move on."
     },
     {
+      "type": "text",
       "heading": "Deliverables, Licensing, and Timeline",
       "body": "Editorial deliverables depend on the project. The final set may include high-resolution images, web-ready files, selected black-and-white versions, print preparation, or crops for specific formats.\n\nUsage rights are agreed before the project begins. Editorial use, commercial use, campaign use, territory, duration, exclusivity, and third-party usage all affect the quote. It is better to clarify these terms early so there is no confusion later.\n\nTurnaround depends on the scope, number of final images, and review process. Rush delivery can be discussed when there is a fixed publication or campaign deadline."
     },
     {
+      "type": "image",
+      "image": "images/album1/543984369_17957345421003956_262576140533256651_n.jpg",
+      "alt": "Editorial detail shot by Alexandra Maria Deli",
+      "caption": "Frame 03 / Athens light study",
+      "width": 800,
+      "height": 1000
+    },
+    {
+      "type": "text",
       "heading": "Preparing for an Editorial Shoot in Athens",
       "body": "Planning should cover location access, time of day, weather, wardrobe, props, lighting needs, crew size, transport, permissions, and backup options. If the shoot involves archaeological areas, private interiors, hotels, restaurants, cultural spaces, or public-facing commercial imagery, permit and approval requirements should be discussed early.\n\nAthens can be visually generous, but production days can be affected by heat, traffic, crowds, stairs, narrow streets, and changing light. A good plan protects the shoot from losing energy to avoidable logistics."
     },
     {
+      "type": "text",
       "heading": "Why Athens Works for Editorial Photography",
       "body": "Athens can hold many visual contradictions inside one story. It can feel classical, urban, domestic, coastal, cinematic, intimate, raw, or refined depending on the route and timing.\n\nFor editorial work, this range is useful. A project can move from a quiet interior to a textured street, from pale stone to deep shadow, from a working space to a wider city view. The city allows mood changes without requiring long travel, as long as the day is planned carefully."
+    },
+    {
+      "type": "image",
+      "image": "images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
+      "alt": "Editorial photograph by Alexandra Maria Deli",
+      "caption": "Frame 04 / Athens light study",
+      "width": 800,
+      "height": 1000
     }
   ],
   "faq": [
@@ -112,6 +152,12 @@
   "schemaType": "Photographer",
   "socialImage": "images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
   "ctaText": "Share the brief, deadline, usage, and references.",
-  "draft": false
+  "draft": false,
+  "heroImage": {
+    "image": "images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
+    "alt": "Editorial photograph by Alexandra Maria Deli",
+    "width": 800,
+    "height": 1000
+  }
 }
 ---

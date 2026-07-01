@@ -26,10 +26,27 @@ const guideSchema = z.object({
   h1: z.string(),
   introduction: z.string(),
   keyword: z.string(),
-  sections: z.array(z.object({
-    heading: z.string(),
-    body: z.string(),
-  })).default([]),
+  heroImage: z.object({
+    image: z.string(),
+    alt: z.string(),
+    width: z.number().optional(),
+    height: z.number().optional(),
+  }).optional(),
+  sections: z.array(z.discriminatedUnion('type', [
+    z.object({
+      type: z.literal('text'),
+      heading: z.string(),
+      body: z.string(),
+    }),
+    z.object({
+      type: z.literal('image'),
+      image: z.string(),
+      alt: z.string(),
+      caption: z.string().optional(),
+      width: z.number().optional(),
+      height: z.number().optional(),
+    }),
+  ])).default([]),
   faq: z.array(z.object({
     question: z.string(),
     answer: z.string(),
@@ -58,7 +75,13 @@ const albums = defineCollection({
     slug: z.string(),
     title: z.string(),
     description: z.string(),
-    photos: z.array(z.string()).default([]),
+    photos: z.array(z.union([
+      z.string(),
+      z.object({
+        image: z.string(),
+        alt: z.string().optional(),
+      }),
+    ])).default([]),
     order: z.number().optional(),
     draft: z.boolean().optional(),
   }),

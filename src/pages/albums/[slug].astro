@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import type { Album } from '../../types/albums';
-import { getAlbums, getAlbumImagePath } from '../../utils/albums';
+import { getAlbums, getAlbumImagePath, getAlbumPhotoAlt } from '../../utils/albums';
 import { getSiteUrl } from '../../utils/url';
 
 export async function getStaticPaths() {
@@ -52,9 +52,10 @@ const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')
             data-lightbox-trigger
             data-lightbox-index={index}
             data-lightbox-src={asset(getAlbumImagePath(album, photo))}
-            data-lightbox-title={album.title}
+             data-lightbox-title={album.title}
+             data-lightbox-alt={getAlbumPhotoAlt(album, photo, index)}
           >
-            <img src={asset(getAlbumImagePath(album, photo))} alt={`${album.title} photograph ${index + 1}`} loading={index < 6 ? 'eager' : 'lazy'} />
+            <img src={asset(getAlbumImagePath(album, photo))} alt={getAlbumPhotoAlt(album, photo, index)} loading={index < 6 ? 'eager' : 'lazy'} />
           </button>
         ))}
       </div>
@@ -94,7 +95,7 @@ const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')
 
         const title = trigger.dataset.lightboxTitle ?? 'Album';
         image.src = trigger.dataset.lightboxSrc ?? '';
-        image.alt = `${title} photograph ${activeImage + 1}`;
+        image.alt = trigger.dataset.lightboxAlt ?? `${title} photograph ${activeImage + 1}`;
         caption.textContent = `${title} / ${activeImage + 1} of ${triggers.length}`;
       };
 

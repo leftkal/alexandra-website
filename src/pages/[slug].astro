@@ -23,7 +23,7 @@ export interface Props {
 
 const { page } = Astro.props;
 const canonical = getCanonicalUrl(page.slug);
-const heroImage = page.galleryImages[0];
+const heroImage = page.heroImage ?? (page.galleryImages[0] ? { image: page.galleryImages[0].src, alt: page.galleryImages[0].alt, width: page.galleryImages[0].width, height: page.galleryImages[0].height } : undefined);
 
 function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -41,31 +41,35 @@ function slugify(text: string): string {
   ogTitle={page.metaTitle}
   ogDescription={page.metaDescription}
 >
-  <Hero h1={page.h1} introduction={page.introduction} keyword={page.keyword} imageSrc={heroImage?.src} imageAlt={heroImage?.alt} />
+  <Hero h1={page.h1} introduction={page.introduction} keyword={page.keyword} imageSrc={heroImage?.image} imageAlt={heroImage?.alt} />
 
   {page.sections.map((section, index) => {
-    const printImage = index % 2 === 1 ? page.galleryImages[Math.floor(index / 2) % page.galleryImages.length] : undefined;
+    const textSectionCount = page.sections.slice(0, index + 1).filter((item) => item.type === 'text').length;
     return (
     <>
-      <section class="landing-section" aria-labelledby={`section-${slugify(section.heading)}`}>
-      <div class="landing-section-body">
-        <span class="landing-section-number">{String(index + 1).padStart(2, '0')}</span>
-        <h2 id={`section-${slugify(section.heading)}`}>{section.heading}</h2>
-        <div class="landing-section-copy">
-          {section.body.split('\n\n').map((paragraph) => {
-            const trimmed = paragraph.trim();
-            if (trimmed.startsWith('<')) {
-              return <div class="landing-section-html" set:html={trimmed} />;
-            }
-            return <p>{paragraph}</p>;
-          })}
-        </div>
-      </div>
-    </section>
-      {printImage && (
+      {section.type === 'text' && (() => {
+        return (
+          <section class="landing-section" aria-labelledby={`section-${slugify(section.heading)}`}>
+            <div class="landing-section-body">
+              <span class="landing-section-number">{String(textSectionCount).padStart(2, '0')}</span>
+              <h2 id={`section-${slugify(section.heading)}`}>{section.heading}</h2>
+              <div class="landing-section-copy">
+                {section.body.split('\n\n').map((paragraph) => {
+                  const trimmed = paragraph.trim();
+                  if (trimmed.startsWith('<')) {
+                    return <div class="landing-section-html" set:html={trimmed} />;
+                  }
+                  return <p>{paragraph}</p>;
+                })}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
+      {section.type === 'image' && (
         <figure class="landing-image-break">
-          <img src={getImageUrl(printImage.src)} alt={printImage.alt} loading="lazy" width={printImage.width || 800} height={printImage.height || 1000} />
-          <figcaption>Frame {String(Math.floor(index / 2) + 1).padStart(2, '0')} / Athens light study</figcaption>
+          <img src={getImageUrl(section.image)} alt={section.alt} loading="lazy" width={section.width || 800} height={section.height || 1000} />
+          <figcaption>{section.caption || `Frame ${String(Math.ceil(textSectionCount / 2)).padStart(2, '0')} / Athens light study`}</figcaption>
         </figure>
       )}
     </>

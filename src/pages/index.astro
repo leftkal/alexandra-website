@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { getAlbums, getAlbumImagePath, getAlbumUrl } from '../utils/albums';
+import { getAlbums, getAlbumImagePath, getAlbumPhotoAlt, getAlbumUrl } from '../utils/albums';
 import { getGuides } from '../utils/guides';
 import { getPageUrl } from '../utils/url';
 
@@ -205,8 +205,9 @@ const structuredData = {
                     data-lightbox-index={index}
                     data-lightbox-src={asset(getAlbumImagePath(album, photo))}
                     data-lightbox-title={album.title}
+                    data-lightbox-alt={getAlbumPhotoAlt(album, photo, index)}
                   >
-                    <img src={asset(getAlbumImagePath(album, photo))} alt={`${album.title} photograph ${index + 1}`} loading={index < 3 ? 'eager' : 'lazy'} />
+                    <img src={asset(getAlbumImagePath(album, photo))} alt={getAlbumPhotoAlt(album, photo, index)} loading={index < 3 ? 'eager' : 'lazy'} />
                   </button>
                 ))}
               </div>
@@ -464,7 +465,7 @@ const structuredData = {
 
           const title = trigger.dataset.lightboxTitle ?? 'Album';
           image.src = trigger.dataset.lightboxSrc ?? '';
-          image.alt = `${title} photograph ${activeImage + 1}`;
+          image.alt = trigger.dataset.lightboxAlt ?? `${title} photograph ${activeImage + 1}`;
           caption.textContent = `${title} / ${activeImage + 1} of ${album.length}`;
         };
 

@@ -34,6 +34,7 @@ export async function getGuides(): Promise<LandingPage[]> {
       h1: data.h1,
       introduction: data.introduction,
       keyword: data.keyword,
+      heroImage: data.heroImage,
       sections: data.sections,
       faq: data.faq,
       galleryImages: data.galleryImages,

@@ -1,10 +1,18 @@
 import { getCollection } from 'astro:content';
-import type { Album } from '../types/albums';
+import type { Album, AlbumPhoto } from '../types/albums';
 
 export const getAlbumUrl = (slug: string) => `/albums/${slug}/`;
 
-export const getAlbumImagePath = (album: Album, photo: string) => {
-  const normalized = photo.replace(/^\/+/, '');
+export const getAlbumPhotoImage = (photo: AlbumPhoto) => typeof photo === 'string' ? photo : photo.image;
+
+export const getAlbumPhotoAlt = (album: Album, photo: AlbumPhoto, index: number) => {
+  if (typeof photo !== 'string' && photo.alt) return photo.alt;
+
+  return `${album.title} photograph ${index + 1}`;
+};
+
+export const getAlbumImagePath = (album: Album, photo: AlbumPhoto) => {
+  const normalized = getAlbumPhotoImage(photo).replace(/^\/+/, '');
   if (normalized.startsWith('images/')) return normalized;
 
   return `images/${album.slug}/${normalized}`;
