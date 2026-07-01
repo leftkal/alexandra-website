@@ -1,0 +1,54 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "architect",
+  "agent": {
+    "architect": {
+      "description": "Primary orchestrator for architecture, planning, review, and delegation to specialist subagents.",
+      "mode": "primary",
+      "model": "openai/gpt-5.5",
+      "variant": "high"
+    },
+    "builder": {
+      "description": "Implements Astro pages, components, layouts, routes, and UI changes.",
+      "mode": "all",
+      "model": "openai/gpt-5.5",
+      "variant": "low"
+    },
+    "debugger": {
+      "description": "Fixes build errors, runtime bugs, TypeScript issues, and broken layouts.",
+      "mode": "all",
+      "model": "openai/gpt-5.5",
+      "variant": "low"
+    },
+    "refactorer": {
+      "description": "Performs safe cleanup, deduplication, component extraction, and naming improvements.",
+      "mode": "all",
+      "model": "nvidia/qwen/qwen3.5-397b-a17b"
+    },
+    "seo": {
+      "description": "Optimizes titles, descriptions, OpenGraph, JSON-LD, and SEO content structure.",
+      "mode": "all",
+      "model": "nvidia/qwen/qwen3.5-397b-a17b"
+    },
+    "accessibility": {
+      "description": "Reviews keyboard behavior, semantics, ARIA, alt text, and WCAG 2.1 AA issues.",
+      "mode": "all",
+      "model": "nvidia/qwen/qwen3.5-397b-a17b"
+    },
+    "content": {
+      "description": "Writes concise photography portfolio copy, CTAs, bios, captions, and guide text.",
+      "mode": "all",
+      "model": "nvidia/qwen/qwen3.5-397b-a17b"
+    },
+    "performance": {
+      "description": "Optimizes images, lazy loading, responsive assets, bundle size, and Lighthouse issues.",
+      "mode": "all",
+      "model": "nvidia/qwen/qwen3.5-397b-a17b"
+    },
+    "vision": {
+      "description": "Reviews images for alt text, visual accessibility, composition, and photo metadata needs.",
+      "mode": "all",
+      "model": "nvidia/qwen/qwen3.5-397b-a17b"
+    }
+  }
+}
