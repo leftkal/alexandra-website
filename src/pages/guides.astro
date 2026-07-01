@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { landingPages } from '../content/landing-pages';
+import { getGuides } from '../utils/guides';
 import { getCanonicalUrl, getPageUrl } from '../utils/url';
 
 const title = 'Photography Guides in Athens | Alexandra Maria Deli';
 const description = 'Explore photography guides by Alexandra Maria Deli, including portraits, branding, editorial work, Athens photoshoots, Acropolis sessions, Plaka sessions, and pricing.';
+const guides = await getGuides();
 ---
 
 <BaseLayout title={title} description={description} canonical={getCanonicalUrl('guides')}>
@@ -26,7 +27,7 @@ const description = 'Explore photography guides by Alexandra Maria Deli, includi
       </div>
 
       <div class="guides-grid">
-        {landingPages.map((page) => (
+        {guides.map((page) => (
           <a class="guide-card" href={getPageUrl(page.slug)}>
             <h3 class="guide-card-title">{page.title}</h3>
             <p class="guide-card-desc">{page.metaDescription}</p>

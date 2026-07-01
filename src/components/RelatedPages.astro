@@ -1,6 +1,6 @@
 ---
 import { getPageUrl } from '../utils/url';
-import { landingPages } from '../content/landing-pages';
+import { getGuides } from '../utils/guides';
 
 export interface Props {
   slugs: string[];
@@ -9,7 +9,8 @@ export interface Props {
 
 const { slugs, title = 'Related Guides' } = Astro.props;
 
-const related = landingPages.filter((p) => slugs.includes(p.slug));
+const guides = await getGuides();
+const related = guides.filter((p) => slugs.includes(p.slug));
 ---
 
 {related.length > 0 && (

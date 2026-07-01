@@ -18,4 +18,38 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+const guideSchema = z.object({
+  slug: z.string(),
+  title: z.string(),
+  metaTitle: z.string(),
+  metaDescription: z.string(),
+  h1: z.string(),
+  introduction: z.string(),
+  keyword: z.string(),
+  sections: z.array(z.object({
+    heading: z.string(),
+    body: z.string(),
+  })).default([]),
+  faq: z.array(z.object({
+    question: z.string(),
+    answer: z.string(),
+  })).default([]),
+  galleryImages: z.array(z.object({
+    src: z.string(),
+    alt: z.string(),
+    width: z.number().optional(),
+    height: z.number().optional(),
+  })).default([]),
+  relatedPages: z.array(z.string()).default([]),
+  schemaType: z.enum(['Photographer', 'LocalBusiness']).default('Photographer'),
+  socialImage: z.string().optional(),
+  ctaText: z.string().optional(),
+  draft: z.boolean().optional(),
+});
+
+const guides = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/guides' }),
+  schema: guideSchema,
+});
+
+export const collections = { blog, guides };

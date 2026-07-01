@@ -1,9 +1,10 @@
 ---
 import '../styles/global.css';
 import { albums, getAlbumImagePath, getAlbumUrl } from '../content/albums';
-import { landingPages } from '../content/landing-pages';
+import { getGuides } from '../utils/guides';
 import { getPageUrl } from '../utils/url';
 
+const guides = await getGuides();
 const albumPreviewLimit = 10;
 const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}${path}`;
 const siteUrl = 'https://alexandra-maria-deli.gr/';
@@ -251,7 +252,7 @@ const structuredData = {
         </div>
 
         <div class="services-preview-row" aria-label="Selected photography guides">
-          {landingPages.slice(0, 6).map((page) => (
+          {guides.slice(0, 6).map((page) => (
             <a class="services-preview-card" href={getPageUrl(page.slug)}>
               <h3>{page.title}</h3>
               <p>{page.metaDescription}</p>

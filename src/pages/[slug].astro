@@ -5,11 +5,13 @@ import FAQ from '../components/FAQ.astro';
 import Gallery from '../components/Gallery.astro';
 import CTA from '../components/CTA.astro';
 import RelatedPages from '../components/RelatedPages.astro';
-import { landingPages, type LandingPage } from '../content/landing-pages';
+import type { LandingPage } from '../types/guides';
+import { getGuides } from '../utils/guides';
 import { getCanonicalUrl, getImageUrl } from '../utils/url';
 
-export function getStaticPaths() {
-  return landingPages.map((page: LandingPage) => ({
+export async function getStaticPaths() {
+  const guides = await getGuides();
+  return guides.map((page: LandingPage) => ({
     params: { slug: page.slug },
     props: { page },
   }));

@@ -1,0 +1,55 @@
+backend:
+  name: github
+  repo: leftkal/alexandra-website
+  branch: main
+  base_url: https://decap-github-auth.leftkal.workers.dev
+  auth_endpoint: auth
+
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: guides
+    label: Guides
+    folder: src/content/guides
+    create: true
+    format: frontmatter
+    extension: md
+    slug: "{{slug}}"
+    fields:
+      - { name: slug, label: Slug, widget: string, hint: "URL path without slashes, e.g. portrait-photographer-athens" }
+      - { name: title, label: Title, widget: string }
+      - { name: metaTitle, label: Meta title, widget: string }
+      - { name: metaDescription, label: Meta description, widget: text }
+      - { name: h1, label: H1, widget: string }
+      - { name: introduction, label: Introduction, widget: text }
+      - { name: keyword, label: Keyword, widget: string }
+      - name: sections
+        label: Sections
+        widget: list
+        summary: "{{fields.heading}}"
+        fields:
+          - { name: heading, label: Heading, widget: string }
+          - { name: body, label: Body, widget: text }
+      - name: faq
+        label: FAQ
+        widget: list
+        summary: "{{fields.question}}"
+        fields:
+          - { name: question, label: Question, widget: string }
+          - { name: answer, label: Answer, widget: text }
+      - name: galleryImages
+        label: Gallery images
+        widget: list
+        summary: "{{fields.alt}}"
+        required: false
+        fields:
+          - { name: src, label: Source, widget: image }
+          - { name: alt, label: Alt text, widget: string }
+          - { name: width, label: Width, widget: number, required: false, value_type: int }
+          - { name: height, label: Height, widget: number, required: false, value_type: int }
+      - { name: relatedPages, label: Related pages, widget: list, required: false, field: { name: slug, label: Slug, widget: string } }
+      - { name: schemaType, label: Schema type, widget: select, options: [Photographer, LocalBusiness], default: Photographer }
+      - { name: socialImage, label: Social image, widget: image, required: false }
+      - { name: ctaText, label: CTA text, widget: text, required: false }
+      - { name: draft, label: Draft, widget: boolean, required: false, default: false }
