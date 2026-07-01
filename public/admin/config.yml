@@ -5,8 +5,8 @@ backend:
   base_url: https://decap-github-auth.leftkal.workers.dev
   auth_endpoint: auth
 
-media_folder: public/images/uploads
-public_folder: /images/uploads
+media_folder: public/images
+public_folder: /images
 
 collections:
   - name: guides
@@ -39,7 +39,8 @@ collections:
           - { name: question, label: Question, widget: string }
           - { name: answer, label: Answer, widget: text }
       - name: galleryImages
-        label: Gallery images
+        label: Hero, section break, and gallery images
+        hint: "Choose existing album/site images. The first image is used as the guide hero image; later images are used between sections and in the gallery."
         widget: list
         summary: "{{fields.alt}}"
         required: false
@@ -52,4 +53,22 @@ collections:
       - { name: schemaType, label: Schema type, widget: select, options: [Photographer, LocalBusiness], default: Photographer }
       - { name: socialImage, label: Social image, widget: image, required: false }
       - { name: ctaText, label: CTA text, widget: text, required: false }
+      - { name: draft, label: Draft, widget: boolean, required: false, default: false }
+  - name: albums
+    label: Albums
+    folder: src/content/albums
+    create: true
+    format: frontmatter
+    extension: md
+    slug: "{{slug}}"
+    fields:
+      - { name: slug, label: Slug, widget: string, hint: "URL path without slashes, e.g. the-presence-behind-the-door" }
+      - { name: title, label: Title, widget: string }
+      - { name: description, label: Description, widget: text }
+      - { name: order, label: Order, widget: number, required: false, value_type: int, hint: "Lower numbers appear first." }
+      - name: photos
+        label: Photos
+        widget: list
+        summary: "{{fields.image}}"
+        field: { name: image, label: Image, widget: image }
       - { name: draft, label: Draft, widget: boolean, required: false, default: false }

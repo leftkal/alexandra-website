@@ -52,4 +52,16 @@ const guides = defineCollection({
   schema: guideSchema,
 });
 
-export const collections = { blog, guides };
+const albums = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/albums' }),
+  schema: z.object({
+    slug: z.string(),
+    title: z.string(),
+    description: z.string(),
+    photos: z.array(z.string()).default([]),
+    order: z.number().optional(),
+    draft: z.boolean().optional(),
+  }),
+});
+
+export const collections = { blog, guides, albums };

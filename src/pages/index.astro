@@ -1,10 +1,11 @@
 ---
 import '../styles/global.css';
-import { albums, getAlbumImagePath, getAlbumUrl } from '../content/albums';
+import { getAlbums, getAlbumImagePath, getAlbumUrl } from '../utils/albums';
 import { getGuides } from '../utils/guides';
 import { getPageUrl } from '../utils/url';
 
 const guides = await getGuides();
+const albums = await getAlbums();
 const albumPreviewLimit = 10;
 const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}${path}`;
 const siteUrl = 'https://alexandra-maria-deli.gr/';

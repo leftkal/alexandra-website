@@ -1,9 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { albums, getAlbumImagePath, type Album } from '../../content/albums';
+import type { Album } from '../../types/albums';
+import { getAlbums, getAlbumImagePath } from '../../utils/albums';
 import { getSiteUrl } from '../../utils/url';
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  const albums = await getAlbums();
+
   return albums.map((album) => ({
     params: { slug: album.slug },
     props: { album },
