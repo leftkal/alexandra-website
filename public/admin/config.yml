@@ -9,6 +9,67 @@ media_folder: public/images/cms
 public_folder: /images/cms
 
 collections:
+  - name: homepage
+    label: Homepage
+    files:
+      - name: home
+        label: Homepage
+        file: src/content/homepage/home.md
+        format: frontmatter
+        fields:
+          - { name: pageTitle, label: Page title for Google, widget: string, hint: "The title people may see in Google and when sharing the homepage." }
+          - { name: pageDescription, label: Short page description for Google, widget: text, hint: "One or two calm sentences describing the whole website." }
+          - { name: previewImage, label: Image for sharing, widget: image, hint: "Shown when the homepage is shared. Choose a strong image from the media library." }
+          - { name: previewImageAlt, label: Image description, widget: string, hint: "Briefly describe the image for visitors using screen readers." }
+          - name: hero
+            label: Top welcome section
+            widget: object
+            fields:
+              - { name: eyebrow, label: Small text above the title, widget: string }
+              - { name: title, label: Main homepage title, widget: string }
+              - { name: text, label: Intro sentence, widget: text }
+              - { name: buttonText, label: Button text, widget: string }
+              - { name: imageLabel, label: Contact sheet description, widget: string, hint: "Describe the group of photos in the top section." }
+              - { name: projectLabel, label: Contact sheet project name, widget: string }
+              - { name: caption, label: Caption under the contact sheet, widget: string, hint: "Short caption shown under the photo strip." }
+              - name: frames
+                label: Contact sheet photos
+                hint: "Add the top section photos. Drag to change their order; the first photo appears large first. Keep frame numbers short, like 18 or 04."
+                widget: list
+                summary: "Frame {{fields.number}}"
+                fields:
+                  - { name: image, label: Photo, widget: image, hint: "Choose an image from the media library." }
+                  - { name: number, label: Frame number, widget: string }
+                  - { name: alt, label: Photo description, widget: string, hint: "Describe what is visible in the photo." }
+          - { name: introText, label: Short introduction, widget: text, hint: "The paragraph below the top section." }
+          - { name: albumsEyebrow, label: Small text above albums, widget: string }
+          - { name: albumsTitle, label: Albums section title, widget: string }
+          - name: about
+            label: About Alexandra section
+            widget: object
+            fields:
+              - { name: image, label: Portrait photo, widget: image, hint: "Choose Alexandra's portrait from the media library." }
+              - { name: imageAlt, label: Portrait description, widget: string }
+              - { name: eyebrow, label: Small text above about title, widget: string }
+              - { name: title, label: About section title, widget: string }
+              - name: paragraphs
+                label: About paragraphs
+                hint: "Add one paragraph at a time. Drag to change the order."
+                widget: list
+                field: { name: paragraph, label: Paragraph, widget: text }
+              - { name: note, label: Short background note, widget: text, hint: "A brief final note about Alexandra's background or current work." }
+          - { name: guidesEyebrow, label: Small text above guides, widget: string }
+          - { name: guidesTitle, label: Guides section title, widget: string }
+          - { name: guidesButtonText, label: Guides button text, widget: string }
+          - name: contact
+            label: Contact section
+            widget: object
+            fields:
+              - { name: eyebrow, label: Small text above contact title, widget: string }
+              - { name: title, label: Contact section title, widget: string }
+              - { name: text, label: Contact intro sentence, widget: text }
+              - { name: buttonText, label: Social button text, widget: string }
+              - { name: buttonUrl, label: Social page link, widget: string, hint: "Use Alexandra's public social profile link. Do not add phone numbers or email addresses here." }
   - name: guides
     label: Guides
     folder: src/content/guides
@@ -17,26 +78,26 @@ collections:
     extension: md
     slug: "{{slug}}"
     fields:
-      - { name: slug, label: Slug, widget: string, hint: "URL path without slashes, e.g. portrait-photographer-athens" }
-      - { name: title, label: Title, widget: string }
-      - { name: metaTitle, label: Meta title, widget: string }
-      - { name: metaDescription, label: Meta description, widget: text }
-      - { name: h1, label: H1, widget: string }
-      - { name: introduction, label: Introduction, widget: text }
-      - { name: keyword, label: Keyword, widget: string }
+      - { name: slug, label: Page address, widget: string, hint: "The final part of the page link, without spaces or slashes. Example: portrait-photographer-athens" }
+      - { name: title, label: Guide card title, widget: string, hint: "Shown on guide cards and links." }
+      - { name: metaTitle, label: Page title for Google, widget: string, hint: "The title people may see in Google and browser tabs." }
+      - { name: metaDescription, label: Short page description for Google, widget: text, hint: "One or two useful sentences about this guide." }
+      - { name: h1, label: Main page heading, widget: string }
+      - { name: introduction, label: Opening paragraph, widget: text }
+      - { name: keyword, label: Main search phrase, widget: string, hint: "A natural phrase this guide is about, for example: portrait photographer Athens." }
       - name: heroImage
-        label: Hero image
+        label: Top image
         hint: "Main image at the top of the guide."
         widget: object
         required: false
         fields:
-          - { name: image, label: Image, widget: image }
+          - { name: image, label: Image, widget: image, hint: "Choose a strong image for the top of the guide." }
           - { name: alt, label: Image description, widget: string }
-          - { name: width, label: Width, widget: number, required: false, value_type: int }
-          - { name: height, label: Height, widget: number, required: false, value_type: int }
+          - { name: width, label: Image width, widget: number, required: false, value_type: int, hint: "Optional. Leave empty if unsure." }
+          - { name: height, label: Image height, widget: number, required: false, value_type: int, hint: "Optional. Leave empty if unsure." }
       - name: sections
-        label: Page sections
-        hint: "Add text sections and image breaks, then drag to reorder them."
+        label: Text sections and photos
+        hint: "Build the page with text and image blocks. Drag blocks to change their order."
         widget: list
         types:
           - name: text
@@ -44,41 +105,42 @@ collections:
             widget: object
             summary: "{{fields.heading}}"
             fields:
-              - { name: heading, label: Heading, widget: string }
+              - { name: heading, label: Section heading, widget: string }
               - { name: body, label: Text, widget: text }
           - name: image
             label: Image between sections
             widget: object
             summary: "{{fields.alt}}"
             fields:
-              - { name: image, label: Image, widget: image }
+              - { name: image, label: Image, widget: image, hint: "Choose an image to place between text sections." }
               - { name: alt, label: Image description, widget: string }
               - { name: caption, label: Caption, widget: string, required: false }
-              - { name: width, label: Width, widget: number, required: false, value_type: int }
-              - { name: height, label: Height, widget: number, required: false, value_type: int }
+              - { name: width, label: Image width, widget: number, required: false, value_type: int, hint: "Optional. Leave empty if unsure." }
+              - { name: height, label: Image height, widget: number, required: false, value_type: int, hint: "Optional. Leave empty if unsure." }
       - name: faq
-        label: FAQ
+        label: Questions and answers
+        hint: "Optional helpful questions for visitors. Drag to change their order."
         widget: list
         summary: "{{fields.question}}"
         fields:
           - { name: question, label: Question, widget: string }
           - { name: answer, label: Answer, widget: text }
       - name: galleryImages
-        label: Additional gallery images
-        hint: "Optional extra images shown in the gallery near the bottom of the guide."
+        label: Extra gallery photos
+        hint: "Optional photos shown near the bottom of the guide. Drag to change their order."
         widget: list
         summary: "{{fields.alt}}"
         required: false
         fields:
-          - { name: src, label: Image, widget: image }
+          - { name: src, label: Photo, widget: image }
           - { name: alt, label: Image description, widget: string }
-          - { name: width, label: Width, widget: number, required: false, value_type: int }
-          - { name: height, label: Height, widget: number, required: false, value_type: int }
-      - { name: relatedPages, label: Related pages, widget: list, required: false, field: { name: slug, label: Slug, widget: string } }
-      - { name: schemaType, label: Schema type, widget: select, options: [Photographer, LocalBusiness], default: Photographer }
-      - { name: socialImage, label: Social image, widget: image, required: false }
-      - { name: ctaText, label: CTA text, widget: text, required: false }
-      - { name: draft, label: Draft, widget: boolean, required: false, default: false }
+          - { name: width, label: Image width, widget: number, required: false, value_type: int, hint: "Optional. Leave empty if unsure." }
+          - { name: height, label: Image height, widget: number, required: false, value_type: int, hint: "Optional. Leave empty if unsure." }
+      - { name: relatedPages, label: Related guide pages, widget: list, required: false, hint: "Optional. Add page addresses for guides visitors may also like.", field: { name: slug, label: Page address, widget: string } }
+      - { name: schemaType, label: Page type for Google, widget: select, options: [Photographer, LocalBusiness], default: Photographer, hint: "Usually leave this as Photographer." }
+      - { name: socialImage, label: Image for sharing, widget: image, required: false, hint: "Optional image shown when this guide is shared." }
+      - { name: ctaText, label: Closing invitation text, widget: text, required: false, hint: "Optional short invitation near the end of the guide." }
+      - { name: draft, label: Hide this page for now, widget: boolean, required: false, default: false, hint: "Turn on while the page is unfinished." }
   - name: albums
     label: Albums
     folder: src/content/albums
@@ -87,16 +149,16 @@ collections:
     extension: md
     slug: "{{slug}}"
     fields:
-      - { name: slug, label: Slug, widget: string, hint: "URL path without slashes, e.g. the-presence-behind-the-door" }
-      - { name: title, label: Title, widget: string }
-      - { name: description, label: Description, widget: text }
-      - { name: order, label: Order, widget: number, required: false, value_type: int, hint: "Lower numbers appear first." }
+      - { name: slug, label: Album page address, widget: string, hint: "The final part of the album link, without spaces or slashes. Example: the-presence-behind-the-door" }
+      - { name: title, label: Album title, widget: string }
+      - { name: description, label: Album description, widget: text, hint: "A short calm description of this body of work." }
+      - { name: order, label: Display order, widget: number, required: false, value_type: int, hint: "Lower numbers appear first. Leave empty if unsure." }
       - name: photos
-        label: Album photos
+        label: Photos in this album
         hint: "Add photos from the media library. Drag to change their order."
         widget: list
         summary: "{{fields.image}}"
         fields:
-          - { name: image, label: Photo, widget: image }
-          - { name: alt, label: Photo description, widget: string, required: false }
-      - { name: draft, label: Draft, widget: boolean, required: false, default: false }
+          - { name: image, label: Photo, widget: image, hint: "Choose a photo from the media library." }
+          - { name: alt, label: Photo description, widget: string, required: false, hint: "Optional, but helpful. Briefly describe what is visible." }
+      - { name: draft, label: Hide this album for now, widget: boolean, required: false, default: false, hint: "Turn on while the album is unfinished." }

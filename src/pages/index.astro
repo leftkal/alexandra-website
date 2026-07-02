@@ -1,17 +1,23 @@
 ---
 import '../styles/global.css';
+import { getEntry } from 'astro:content';
 import { getAlbums, getAlbumImagePath, getAlbumPhotoAlt, getAlbumUrl } from '../utils/albums';
 import { getGuides } from '../utils/guides';
 import { getPageUrl } from '../utils/url';
 
+const homepage = await getEntry('homepage', 'home');
+if (!homepage) throw new Error('Homepage content is missing.');
+const home = homepage.data;
 const guides = await getGuides();
 const albums = await getAlbums();
 const albumPreviewLimit = 10;
-const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}${path}`;
+const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}${path.replace(/^\/+/, '')}`;
 const siteUrl = 'https://alexandra-maria-deli.gr/';
-const previewImage = `${siteUrl}images/cms/presence-behind-the-door-R1-00324-0018.jpg`;
-const pageTitle = 'Alexandra Maria Deli | Photographer in Athens';
-const pageDescription = 'Portfolio of Alexandra Maria Deli, an Athens-based photographer working with travel, analog process, portraiture, and visual storytelling.';
+const previewImage = new URL(home.previewImage.replace(/^\/+/, ''), siteUrl).toString();
+const pageTitle = home.pageTitle;
+const pageDescription = home.pageDescription;
+const heroFrames = home.hero.frames;
+const mainHeroFrame = heroFrames[0];
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Person',
@@ -50,7 +56,7 @@ const structuredData = {
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:image" content={previewImage} />
-    <meta property="og:image:alt" content="Black-and-white photograph by Alexandra Maria Deli" />
+    <meta property="og:image:alt" content={home.previewImageAlt} />
     <meta property="og:site_name" content="Alexandra Maria Deli" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
@@ -75,65 +81,51 @@ const structuredData = {
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow">Travel / Analog / Stories</p>
-          <h1 id="hero-title">Visual stories shaped by light, travel, and film.</h1>
-          <p class="hero-text">
-            Alexandra Maria Deli follows quiet traces of place, memory, and light,
-            creating photographs with a natural, observant rhythm.
-          </p>
-          <a class="button" href="#work">View albums</a>
+          <p class="eyebrow">{home.hero.eyebrow}</p>
+          <h1 id="hero-title">{home.hero.title}</h1>
+          <p class="hero-text">{home.hero.text}</p>
+          <a class="button" href="#work">{home.hero.buttonText}</a>
         </div>
-        <figure class="hero-image" aria-label="Featured black-and-white photograph with contact strip by Alexandra Maria Deli" data-hero-film>
+        <figure class="hero-image" aria-label={home.hero.imageLabel} data-hero-film>
           <div class="contact-sheet-meta" aria-hidden="true">
             <span>AMD / R1</span>
-            <span>Presence Behind the Door</span>
+            <span>{home.hero.projectLabel}</span>
           </div>
           <div class="hero-film-layout">
             <div class="contact-frame contact-frame-featured" data-hero-main-frame>
               <img
-                src={asset('images/cms/presence-behind-the-door-R1-00324-0018.jpg')}
-                alt="Black-and-white frame from The Presence Behind the Door by Alexandra Maria Deli"
+                src={mainHeroFrame ? asset(mainHeroFrame.image) : ''}
+                alt={mainHeroFrame?.alt ?? home.previewImageAlt}
                 data-hero-main-image
               />
-              <span aria-hidden="true">18</span>
+              <span aria-hidden="true">{mainHeroFrame?.number ?? ''}</span>
             </div>
             <div class="contact-strip" aria-label="Choose featured frame">
-              {[
-                ['R1-00324-0018.jpg', '18'],
-                ['R1-07338-0004.jpg', '04'],
-                ['R1-02795-0022.jpg', '22'],
-                ['R1-06481-0028.jpg', '28'],
-                ['R1-06811-0006.jpg', '06'],
-                ['R1-01818-0005.jpg', '05'],
-                ['R1-07337-0031.jpg', '31'],
-                ['R1-02798-0026.jpg', '26'],
-              ].map(([fileName, frameNumber], index) => (
+              {heroFrames.map((frame, index) => (
                 <button
                   class="contact-frame contact-frame-small"
                   type="button"
-                  aria-label={`Show frame ${frameNumber} as featured photograph`}
+                  aria-label={`Show frame ${frame.number} as featured photograph`}
                   aria-pressed={index === 0 ? 'true' : 'false'}
                   data-hero-frame
-                  data-hero-src={asset(`images/cms/presence-behind-the-door-${fileName}`)}
-                  data-hero-alt={`Black-and-white frame ${frameNumber} from The Presence Behind the Door by Alexandra Maria Deli`}
-                  data-hero-number={frameNumber}
+                  data-hero-src={asset(frame.image)}
+                  data-hero-alt={frame.alt}
+                  data-hero-number={frame.number}
                 >
-                  <img src={asset(`images/cms/presence-behind-the-door-${fileName}`)} alt="" loading="eager" />
-                  <span aria-hidden="true">{frameNumber}</span>
+                  <img src={asset(frame.image)} alt="" loading="eager" />
+                  <span aria-hidden="true">{frame.number}</span>
                 </button>
               ))}
             </div>
           </div>
-          <figcaption>Selected frames from <em>The Presence Behind the Door</em>.</figcaption>
+          <figcaption>{home.hero.caption}</figcaption>
         </figure>
       </section>
 
       <section class="intro" aria-label="Portfolio introduction">
         <div class="intro-copy">
           <p>
-            Passionate about photography as a visual journey, Alexandra combines a
-            fresh perspective with hands-on darkroom practice, studio experience,
-            and careful post-production.
+            {home.introText}
           </p>
         </div>
         <div class="focus-wheel" data-focus-wheel aria-hidden="true">
@@ -158,8 +150,8 @@ const structuredData = {
 
       <section id="work" class="work" aria-labelledby="work-title">
         <div class="section-heading">
-          <p class="eyebrow">Selected Work</p>
-          <h2 id="work-title">Albums</h2>
+          <p class="eyebrow">{home.albumsEyebrow}</p>
+          <h2 id="work-title">{home.albumsTitle}</h2>
         </div>
 
         <div class="album-shell" data-album-carousel>
@@ -224,33 +216,20 @@ const structuredData = {
 
       <section id="about" class="about" aria-labelledby="about-title">
         <figure>
-          <img src={asset('images/cms/profile-pic.jpg')} alt="Portrait of Alexandra Maria Deli" loading="lazy" />
+          <img src={asset(home.about.image)} alt={home.about.imageAlt} loading="lazy" />
         </figure>
         <div>
-          <p class="eyebrow">Behind the Lens</p>
-          <h2 id="about-title">A quiet practice between travel, film, and atmosphere.</h2>
-          <p>
-            Alexandra is an Athens-based photographer whose work moves between
-            travel, analog process, and intimate observation. Her images often begin
-            with small thresholds: a wall, a door, a shadow, a fragment of landscape.
-          </p>
-          <p>
-            Her background includes darkroom work, studio practice, and photographic
-            studies in Berlin. She approaches each frame with patience, restraint,
-            and attention to atmosphere.
-          </p>
-          <p class="bio-note">
-            Selected background: analog lab practice, photography studies in Berlin,
-            and the black-and-white project
-            <em>The Presence Behind the Door</em>.
-          </p>
+          <p class="eyebrow">{home.about.eyebrow}</p>
+          <h2 id="about-title">{home.about.title}</h2>
+          {home.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+          <p class="bio-note">{home.about.note}</p>
         </div>
       </section>
 
       <section id="guides" class="services-preview" aria-labelledby="guides-preview-title">
         <div class="section-heading">
-          <p class="eyebrow">Guides</p>
-          <h2 id="guides-preview-title">Photography guides</h2>
+          <p class="eyebrow">{home.guidesEyebrow}</p>
+          <h2 id="guides-preview-title">{home.guidesTitle}</h2>
         </div>
 
         <div class="services-preview-row" aria-label="Selected photography guides">
@@ -263,17 +242,17 @@ const structuredData = {
           ))}
         </div>
         <div class="services-preview-actions">
-          <a class="button secondary" href="/guides/">View all guides</a>
+          <a class="button secondary" href="/guides/">{home.guidesButtonText}</a>
         </div>
       </section>
 
       <section id="contact" class="contact" aria-labelledby="contact-title">
         <div class="contact-copy">
-          <p class="eyebrow">Contact</p>
-          <h2 id="contact-title">For projects, prints, and collaborations in Athens and beyond.</h2>
-          <p>Share a few details about the project, location, and timing.</p>
-          <a class="button secondary" href="https://www.instagram.com/daleria_xplorelens/" target="_blank" rel="noreferrer nofollow">
-            Instagram
+          <p class="eyebrow">{home.contact.eyebrow}</p>
+          <h2 id="contact-title">{home.contact.title}</h2>
+          <p>{home.contact.text}</p>
+          <a class="button secondary" href={home.contact.buttonUrl} target="_blank" rel="noreferrer nofollow">
+            {home.contact.buttonText}
           </a>
         </div>
         <form class="contact-form" action="https://turnstile-worker.leftkal.workers.dev" method="POST" data-contact-form>

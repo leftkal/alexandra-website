@@ -87,4 +87,49 @@ const albums = defineCollection({
   }),
 });
 
-export const collections = { blog, guides, albums };
+const homepage = defineCollection({
+  loader: glob({ pattern: 'home.md', base: './src/content/homepage' }),
+  schema: z.object({
+    pageTitle: z.string(),
+    pageDescription: z.string(),
+    previewImage: z.string(),
+    previewImageAlt: z.string(),
+    hero: z.object({
+      eyebrow: z.string(),
+      title: z.string(),
+      text: z.string(),
+      buttonText: z.string(),
+      imageLabel: z.string(),
+      projectLabel: z.string(),
+      caption: z.string(),
+      frames: z.array(z.object({
+        image: z.string(),
+        number: z.string(),
+        alt: z.string(),
+      })).default([]),
+    }),
+    introText: z.string(),
+    albumsEyebrow: z.string(),
+    albumsTitle: z.string(),
+    about: z.object({
+      image: z.string(),
+      imageAlt: z.string(),
+      eyebrow: z.string(),
+      title: z.string(),
+      paragraphs: z.array(z.string()).default([]),
+      note: z.string(),
+    }),
+    guidesEyebrow: z.string(),
+    guidesTitle: z.string(),
+    guidesButtonText: z.string(),
+    contact: z.object({
+      eyebrow: z.string(),
+      title: z.string(),
+      text: z.string(),
+      buttonText: z.string(),
+      buttonUrl: z.string().url(),
+    }),
+  }),
+});
+
+export const collections = { blog, guides, albums, homepage };
