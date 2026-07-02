@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/544844732_17957343321003956_6179681169613150223_n.jpg",
+      "image": "/images/cms/athens-portfolio-544844732-17957343321003956-6179681169613150223-n.jpg",
       "alt": "Portrait photograph by Alexandra Maria Deli",
       "caption": "Frame 01 / Athens light study",
       "width": 800,
@@ -38,7 +38,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/544823803_17957343063003956_3198052180525970656_n.jpg",
+      "image": "/images/cms/athens-portfolio-544823803-17957343063003956-3198052180525970656-n.jpg",
       "alt": "Environmental portrait by Alexandra Maria Deli",
       "caption": "Frame 02 / Athens light study",
       "width": 800,
@@ -56,7 +56,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/545351514_17957344248003956_4273194522779784991_n.jpg",
+      "image": "/images/cms/athens-portfolio-545351514-17957344248003956-4273194522779784991-n.jpg",
       "alt": "Studio portrait photograph by Alexandra Maria Deli",
       "caption": "Frame 03 / Athens light study",
       "width": 800,
@@ -74,7 +74,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/544844732_17957343321003956_6179681169613150223_n.jpg",
+      "image": "/images/cms/athens-portfolio-544844732-17957343321003956-6179681169613150223-n.jpg",
       "alt": "Portrait photograph by Alexandra Maria Deli",
       "caption": "Frame 04 / Athens light study",
       "width": 800,
@@ -125,19 +125,19 @@
   ],
   "galleryImages": [
     {
-      "src": "/images/album1/544844732_17957343321003956_6179681169613150223_n.jpg",
+      "src": "/images/cms/athens-portfolio-544844732-17957343321003956-6179681169613150223-n.jpg",
       "alt": "Portrait photograph by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "/images/album1/544823803_17957343063003956_3198052180525970656_n.jpg",
+      "src": "/images/cms/athens-portfolio-544823803-17957343063003956-3198052180525970656-n.jpg",
       "alt": "Environmental portrait by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "/images/album1/545351514_17957344248003956_4273194522779784991_n.jpg",
+      "src": "/images/cms/athens-portfolio-545351514-17957344248003956-4273194522779784991-n.jpg",
       "alt": "Studio portrait photograph by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
@@ -150,11 +150,11 @@
     "plaka-photoshoot"
   ],
   "schemaType": "Photographer",
-  "socialImage": "/images/album1/544844732_17957343321003956_6179681169613150223_n.jpg",
+  "socialImage": "/images/cms/athens-portfolio-544844732-17957343321003956-6179681169613150223-n.jpg",
   "ctaText": "Share your portrait needs, timing, and preferred setting.",
   "draft": false,
   "heroImage": {
-    "image": "/images/album1/544844732_17957343321003956_6179681169613150223_n.jpg",
+    "image": "/images/cms/athens-portfolio-544844732-17957343321003956-6179681169613150223-n.jpg",
     "alt": "Portrait photograph by Alexandra Maria Deli",
     "width": 800,
     "height": 1000

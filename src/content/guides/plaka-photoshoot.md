@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
+      "image": "/images/cms/athens-portfolio-542865988-17957342607003956-4305994197225772454-n.jpg",
       "alt": "Plaka photoshoot by Alexandra Maria Deli",
       "caption": "Frame 01 / Athens light study",
       "width": 800,
@@ -38,7 +38,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/544145230_17957343375003956_5933756572986482124_n.jpg",
+      "image": "/images/cms/athens-portfolio-544145230-17957343375003956-5933756572986482124-n.jpg",
       "alt": "Plaka street photography by Alexandra Maria Deli",
       "caption": "Frame 02 / Athens light study",
       "width": 800,
@@ -56,7 +56,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/544123387_17957342838003956_7079444052374342043_n.jpg",
+      "image": "/images/cms/athens-portfolio-544123387-17957342838003956-7079444052374342043-n.jpg",
       "alt": "Neoclassical detail photograph by Alexandra Maria Deli",
       "caption": "Frame 03 / Athens light study",
       "width": 800,
@@ -74,7 +74,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
+      "image": "/images/cms/athens-portfolio-542865988-17957342607003956-4305994197225772454-n.jpg",
       "alt": "Plaka photoshoot by Alexandra Maria Deli",
       "caption": "Frame 04 / Athens light study",
       "width": 800,
@@ -125,19 +125,19 @@
   ],
   "galleryImages": [
     {
-      "src": "/images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
+      "src": "/images/cms/athens-portfolio-542865988-17957342607003956-4305994197225772454-n.jpg",
       "alt": "Plaka photoshoot by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "/images/album1/544145230_17957343375003956_5933756572986482124_n.jpg",
+      "src": "/images/cms/athens-portfolio-544145230-17957343375003956-5933756572986482124-n.jpg",
       "alt": "Plaka street photography by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "/images/album1/544123387_17957342838003956_7079444052374342043_n.jpg",
+      "src": "/images/cms/athens-portfolio-544123387-17957342838003956-7079444052374342043-n.jpg",
       "alt": "Neoclassical detail photograph by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
@@ -150,11 +150,11 @@
     "portrait-photographer-athens"
   ],
   "schemaType": "LocalBusiness",
-  "socialImage": "/images/album1/544145230_17957343375003956_5933756572986482124_n.jpg",
+  "socialImage": "/images/cms/athens-portfolio-544145230-17957343375003956-5933756572986482124-n.jpg",
   "ctaText": "Share your date, style, and route preference.",
   "draft": false,
   "heroImage": {
-    "image": "/images/album1/542865988_17957342607003956_4305994197225772454_n.jpg",
+    "image": "/images/cms/athens-portfolio-542865988-17957342607003956-4305994197225772454-n.jpg",
     "alt": "Plaka photoshoot by Alexandra Maria Deli",
     "width": 800,
     "height": 1000

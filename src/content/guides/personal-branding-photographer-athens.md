@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/544145230_17957343375003956_5933756572986482124_n.jpg",
+      "image": "/images/cms/athens-portfolio-544145230-17957343375003956-5933756572986482124-n.jpg",
       "alt": "Branding photograph by Alexandra Maria Deli",
       "caption": "Frame 01 / Athens light study",
       "width": 800,
@@ -38,7 +38,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/546571339_17957343453003956_6976260187363928964_n.jpg",
+      "image": "/images/cms/athens-portfolio-546571339-17957343453003956-6976260187363928964-n.jpg",
       "alt": "Workspace detail by Alexandra Maria Deli",
       "caption": "Frame 02 / Athens light study",
       "width": 800,
@@ -56,7 +56,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/544089634_17957344473003956_5163365635602737228_n.jpg",
+      "image": "/images/cms/athens-portfolio-544089634-17957344473003956-5163365635602737228-n.jpg",
       "alt": "Process photograph by Alexandra Maria Deli",
       "caption": "Frame 03 / Athens light study",
       "width": 800,
@@ -74,7 +74,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/544145230_17957343375003956_5933756572986482124_n.jpg",
+      "image": "/images/cms/athens-portfolio-544145230-17957343375003956-5933756572986482124-n.jpg",
       "alt": "Branding photograph by Alexandra Maria Deli",
       "caption": "Frame 04 / Athens light study",
       "width": 800,
@@ -125,26 +125,26 @@
   ],
   "galleryImages": [
     {
-      "src": "/images/album1/544145230_17957343375003956_5933756572986482124_n.jpg",
+      "src": "/images/cms/athens-portfolio-544145230-17957343375003956-5933756572986482124-n.jpg",
       "alt": "Branding photograph by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "/images/album1/546571339_17957343453003956_6976260187363928964_n.jpg",
+      "src": "/images/cms/athens-portfolio-546571339-17957343453003956-6976260187363928964-n.jpg",
       "alt": "Workspace detail by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "/images/album1/544089634_17957344473003956_5163365635602737228_n.jpg",
+      "src": "/images/cms/athens-portfolio-544089634-17957344473003956-5163365635602737228-n.jpg",
       "alt": "Process photograph by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
     }
   ],
   "schemaType": "LocalBusiness",
-  "socialImage": "/images/album1/546571339_17957343453003956_6976260187363928964_n.jpg",
+  "socialImage": "/images/cms/athens-portfolio-546571339-17957343453003956-6976260187363928964-n.jpg",
   "ctaText": "Share your work, image needs, and preferred timing.",
   "relatedPages": [
     "photographer-athens",
@@ -154,7 +154,7 @@
   ],
   "draft": false,
   "heroImage": {
-    "image": "/images/album1/544145230_17957343375003956_5933756572986482124_n.jpg",
+    "image": "/images/cms/athens-portfolio-544145230-17957343375003956-5933756572986482124-n.jpg",
     "alt": "Branding photograph by Alexandra Maria Deli",
     "width": 800,
     "height": 1000

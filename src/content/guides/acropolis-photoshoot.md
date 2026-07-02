@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/545351514_17957344248003956_4273194522779784991_n.jpg",
+      "image": "/images/cms/athens-portfolio-545351514-17957344248003956-4273194522779784991-n.jpg",
       "alt": "Acropolis photoshoot by Alexandra Maria Deli",
       "caption": "Frame 01 / Athens light study",
       "width": 800,
@@ -38,7 +38,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/544089634_17957344473003956_5163365635602737228_n.jpg",
+      "image": "/images/cms/athens-portfolio-544089634-17957344473003956-5163365635602737228-n.jpg",
       "alt": "Athenian light photograph by Alexandra Maria Deli",
       "caption": "Frame 02 / Athens light study",
       "width": 800,
@@ -56,7 +56,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/546523041_17957342757003956_2372337750703247383_n.jpg",
+      "image": "/images/cms/athens-portfolio-546523041-17957342757003956-2372337750703247383-n.jpg",
       "alt": "Architectural portrait by Alexandra Maria Deli",
       "caption": "Frame 03 / Athens light study",
       "width": 800,
@@ -74,7 +74,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/545351514_17957344248003956_4273194522779784991_n.jpg",
+      "image": "/images/cms/athens-portfolio-545351514-17957344248003956-4273194522779784991-n.jpg",
       "alt": "Acropolis photoshoot by Alexandra Maria Deli",
       "caption": "Frame 04 / Athens light study",
       "width": 800,
@@ -125,19 +125,19 @@
   ],
   "galleryImages": [
     {
-      "src": "/images/album1/545351514_17957344248003956_4273194522779784991_n.jpg",
+      "src": "/images/cms/athens-portfolio-545351514-17957344248003956-4273194522779784991-n.jpg",
       "alt": "Acropolis photoshoot by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "/images/album1/544089634_17957344473003956_5163365635602737228_n.jpg",
+      "src": "/images/cms/athens-portfolio-544089634-17957344473003956-5163365635602737228-n.jpg",
       "alt": "Athenian light photograph by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "/images/album1/546523041_17957342757003956_2372337750703247383_n.jpg",
+      "src": "/images/cms/athens-portfolio-546523041-17957342757003956-2372337750703247383-n.jpg",
       "alt": "Architectural portrait by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
@@ -150,11 +150,11 @@
     "editorial-photographer-athens"
   ],
   "schemaType": "LocalBusiness",
-  "socialImage": "/images/album1/545351514_17957344248003956_4273194522779784991_n.jpg",
+  "socialImage": "/images/cms/athens-portfolio-545351514-17957344248003956-4273194522779784991-n.jpg",
   "ctaText": "Share your date, purpose, and group size.",
   "draft": false,
   "heroImage": {
-    "image": "/images/album1/545351514_17957344248003956_4273194522779784991_n.jpg",
+    "image": "/images/cms/athens-portfolio-545351514-17957344248003956-4273194522779784991-n.jpg",
     "alt": "Acropolis photoshoot by Alexandra Maria Deli",
     "width": 800,
     "height": 1000

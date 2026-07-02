@@ -5,8 +5,8 @@ backend:
   base_url: https://decap-github-auth.leftkal.workers.dev
   auth_endpoint: auth
 
-media_folder: public/images
-public_folder: /images
+media_folder: public/images/cms
+public_folder: /images/cms
 
 collections:
   - name: guides

@@ -1,6 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import { getSiteUrl } from '../utils/url';
+import { getAbsoluteImageUrl, getSiteUrl } from '../utils/url';
 import type { BlogPost } from '../content/blog/config';
 
 export interface Props {
@@ -11,7 +11,7 @@ export interface Props {
 const { post, canonical } = Astro.props;
 const siteUrl = getSiteUrl();
 const pageUrl = canonical || `${siteUrl}/blog/${post.slug}/`;
-const image = post.image ? `${siteUrl}/${post.image}` : `${siteUrl}/images/presence-behind-the-door/R1-00324-0018.jpg`;
+const image = post.image ? getAbsoluteImageUrl(post.image) : getAbsoluteImageUrl('images/cms/presence-behind-the-door-R1-00324-0018.jpg');
 
 const articleSchema = {
   '@context': 'https://schema.org',

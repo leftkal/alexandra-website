@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/544995829_17957343621003956_1516659409349310951_n.jpg",
+      "image": "/images/cms/athens-portfolio-544995829-17957343621003956-1516659409349310951-n.jpg",
       "alt": "Portfolio photograph by Alexandra Maria Deli",
       "caption": "Frame 01 / Athens light study",
       "width": 800,
@@ -38,7 +38,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/546571339_17957343453003956_6976260187363928964_n.jpg",
+      "image": "/images/cms/athens-portfolio-546571339-17957343453003956-6976260187363928964-n.jpg",
       "alt": "Detail photograph by Alexandra Maria Deli",
       "caption": "Frame 02 / Athens light study",
       "width": 800,
@@ -56,7 +56,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/543984369_17957345421003956_262576140533256651_n.jpg",
+      "image": "/images/cms/athens-portfolio-543984369-17957345421003956-262576140533256651-n.jpg",
       "alt": "Black and white photograph by Alexandra Maria Deli",
       "caption": "Frame 03 / Athens light study",
       "width": 800,
@@ -74,7 +74,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/544995829_17957343621003956_1516659409349310951_n.jpg",
+      "image": "/images/cms/athens-portfolio-544995829-17957343621003956-1516659409349310951-n.jpg",
       "alt": "Portfolio photograph by Alexandra Maria Deli",
       "caption": "Frame 04 / Athens light study",
       "width": 800,
@@ -125,19 +125,19 @@
   ],
   "galleryImages": [
     {
-      "src": "/images/album1/544995829_17957343621003956_1516659409349310951_n.jpg",
+      "src": "/images/cms/athens-portfolio-544995829-17957343621003956-1516659409349310951-n.jpg",
       "alt": "Portfolio photograph by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "/images/album1/546571339_17957343453003956_6976260187363928964_n.jpg",
+      "src": "/images/cms/athens-portfolio-546571339-17957343453003956-6976260187363928964-n.jpg",
       "alt": "Detail photograph by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "/images/album1/543984369_17957345421003956_262576140533256651_n.jpg",
+      "src": "/images/cms/athens-portfolio-543984369-17957345421003956-262576140533256651-n.jpg",
       "alt": "Black and white photograph by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
@@ -150,11 +150,11 @@
     "personal-branding-photographer-athens"
   ],
   "schemaType": "Photographer",
-  "socialImage": "/images/album1/543984369_17957345421003956_262576140533256651_n.jpg",
+  "socialImage": "/images/cms/athens-portfolio-543984369-17957345421003956-262576140533256651-n.jpg",
   "ctaText": "Share the project, image use, and timing.",
   "draft": false,
   "heroImage": {
-    "image": "/images/album1/544995829_17957343621003956_1516659409349310951_n.jpg",
+    "image": "/images/cms/athens-portfolio-544995829-17957343621003956-1516659409349310951-n.jpg",
     "alt": "Portfolio photograph by Alexandra Maria Deli",
     "width": 800,
     "height": 1000

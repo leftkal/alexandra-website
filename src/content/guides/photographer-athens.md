@@ -20,7 +20,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/545231903_17957342184003956_1496422976014836905_n.jpg",
+      "image": "/images/cms/athens-portfolio-545231903-17957342184003956-1496422976014836905-n.jpg",
       "alt": "Featured photograph by Alexandra Maria Deli — Athens photographer portfolio highlight",
       "caption": "Frame 01 / Athens light study",
       "width": 800,
@@ -38,7 +38,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/544123387_17957342838003956_7079444052374342043_n.jpg",
+      "image": "/images/cms/athens-portfolio-544123387-17957342838003956-7079444052374342043-n.jpg",
       "alt": "Street scene photograph by Alexandra Maria Deli — Athens street photography in Plaka",
       "caption": "Frame 02 / Athens light study",
       "width": 800,
@@ -56,7 +56,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/546523041_17957342757003956_2372337750703247383_n.jpg",
+      "image": "/images/cms/athens-portfolio-546523041-17957342757003956-2372337750703247383-n.jpg",
       "alt": "Architectural detail photograph by Alexandra Maria Deli",
       "caption": "Frame 03 / Athens light study",
       "width": 800,
@@ -74,7 +74,7 @@
     },
     {
       "type": "image",
-      "image": "/images/album1/545231903_17957342184003956_1496422976014836905_n.jpg",
+      "image": "/images/cms/athens-portfolio-545231903-17957342184003956-1496422976014836905-n.jpg",
       "alt": "Featured photograph by Alexandra Maria Deli — Athens photographer portfolio highlight",
       "caption": "Frame 04 / Athens light study",
       "width": 800,
@@ -125,19 +125,19 @@
   ],
   "galleryImages": [
     {
-      "src": "/images/album1/545231903_17957342184003956_1496422976014836905_n.jpg",
+      "src": "/images/cms/athens-portfolio-545231903-17957342184003956-1496422976014836905-n.jpg",
       "alt": "Featured photograph by Alexandra Maria Deli — Athens photographer portfolio highlight",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "/images/album1/544123387_17957342838003956_7079444052374342043_n.jpg",
+      "src": "/images/cms/athens-portfolio-544123387-17957342838003956-7079444052374342043-n.jpg",
       "alt": "Street scene photograph by Alexandra Maria Deli — Athens street photography in Plaka",
       "width": 800,
       "height": 1000
     },
     {
-      "src": "/images/album1/546523041_17957342757003956_2372337750703247383_n.jpg",
+      "src": "/images/cms/athens-portfolio-546523041-17957342757003956-2372337750703247383-n.jpg",
       "alt": "Architectural detail photograph by Alexandra Maria Deli",
       "width": 800,
       "height": 1000
@@ -150,11 +150,11 @@
     "photoshoot-athens"
   ],
   "schemaType": "Photographer",
-  "socialImage": "/images/album1/545231903_17957342184003956_1496422976014836905_n.jpg",
+  "socialImage": "/images/cms/athens-portfolio-545231903-17957342184003956-1496422976014836905-n.jpg",
   "ctaText": "Share your idea, timing, and location, and I will suggest a practical next step.",
   "draft": false,
   "heroImage": {
-    "image": "/images/album1/545231903_17957342184003956_1496422976014836905_n.jpg",
+    "image": "/images/cms/athens-portfolio-545231903-17957342184003956-1496422976014836905-n.jpg",
     "alt": "Featured photograph by Alexandra Maria Deli — Athens photographer portfolio highlight",
     "width": 800,
     "height": 1000
