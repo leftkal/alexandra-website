@@ -72,7 +72,6 @@ const structuredData = {
       <h1 id="album-title">{album.title}</h1>
       <p>{album.description}</p>
       <p class="album-page-count">{album.photos.length} photographs</p>
-      <p class="album-page-copyright">{copyright.albumNotice} <a href="/copyright/">Image use &amp; copyright</a></p>
     </section>
 
     <section class="album-page-gallery" aria-label={`${album.title} photographs`}>
@@ -84,13 +83,17 @@ const structuredData = {
             data-lightbox-trigger
             data-lightbox-index={index}
             data-lightbox-src={asset(getAlbumImagePath(album, photo))}
-             data-lightbox-title={album.title}
-             data-lightbox-alt={getAlbumPhotoAlt(album, photo, index)}
+            data-lightbox-title={album.title}
+            data-lightbox-alt={getAlbumPhotoAlt(album, photo, index)}
           >
             <img src={asset(getAlbumImagePath(album, photo))} alt={getAlbumPhotoAlt(album, photo, index)} loading={index < 6 ? 'eager' : 'lazy'} />
           </button>
         ))}
       </div>
+    </section>
+
+    <section class="album-page-usage" aria-label="Image use and copyright">
+      <p class="album-page-copyright">{copyright.albumNotice} <a href="/copyright/">Image use &amp; copyright</a></p>
     </section>
   </main>
 
@@ -195,7 +198,8 @@ const structuredData = {
   }
 
   .album-page-hero,
-  .album-page-gallery {
+  .album-page-gallery,
+  .album-page-usage {
     padding: clamp(3rem, 7vw, 5.5rem) clamp(1rem, 4vw, 3rem);
   }
 
@@ -220,13 +224,18 @@ const structuredData = {
     text-transform: uppercase;
   }
 
-  .album-page-hero .album-page-copyright {
-    border-left: 2px solid var(--color-light-gray);
+  .album-page-usage {
+    padding-top: 0;
+  }
+
+  .album-page-copyright {
+    border-top: 1px solid var(--color-light-gray);
     color: var(--color-mid-gray);
     font-size: 0.9rem;
     line-height: 1.6;
-    margin-top: 1.5rem;
-    padding-left: 1rem;
+    margin: 0;
+    max-width: 52rem;
+    padding-top: 1.5rem;
   }
 
   .album-page-copyright a {
