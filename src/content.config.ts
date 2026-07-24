@@ -132,4 +132,16 @@ const homepage = defineCollection({
   }),
 });
 
-export const collections = { blog, guides, albums, homepage };
+const copyright = defineCollection({
+  loader: glob({ pattern: 'image-use.md', base: './src/content/copyright' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    intro: z.string(),
+    albumNotice: z.string(),
+    usageTerms: z.string(),
+    copyrightHolder: z.string(),
+  }),
+});
+
+export const collections = { blog, guides, albums, homepage, copyright };

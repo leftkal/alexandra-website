@@ -9,6 +9,21 @@ media_folder: public/images/cms
 public_folder: /images/cms
 
 collections:
+  - name: copyright
+    label: Copyright & image use
+    files:
+      - name: image_use
+        label: Copyright & image use
+        file: src/content/copyright/image-use.md
+        format: frontmatter
+        fields:
+          - { name: title, label: Page title, widget: string }
+          - { name: description, label: Short page description for Google, widget: text, hint: "One calm sentence describing this copyright page." }
+          - { name: intro, label: Opening text, widget: text, hint: "Shown near the top of the public copyright page." }
+          - { name: albumNotice, label: Album page notice, widget: text, hint: "Small notice shown on each album page." }
+          - { name: usageTerms, label: Short image-use rules for search engines, widget: text, hint: "A short plain-language version of the image-use rules. Do not add phone numbers or email addresses." }
+          - { name: copyrightHolder, label: Copyright holder, widget: string }
+          - { name: body, label: Page body, widget: markdown, hint: "Main public text. Keep it calm, clear, and factual." }
   - name: homepage
     label: Homepage
     files:

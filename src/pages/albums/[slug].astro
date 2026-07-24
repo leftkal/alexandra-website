@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
 import type { Album } from '../../types/albums';
 import { getAlbums, getAlbumImagePath, getAlbumPhotoAlt } from '../../utils/albums';
-import { getSiteUrl } from '../../utils/url';
+import { getAbsoluteImageUrl, getSiteUrl } from '../../utils/url';
 
 export async function getStaticPaths() {
   const albums = await getAlbums();
@@ -14,6 +15,9 @@ export async function getStaticPaths() {
 }
 
 const { album } = Astro.props as { album: Album };
+const copyrightEntry = await getEntry('copyright', 'image-use');
+if (!copyrightEntry) throw new Error('Copyright content is missing.');
+const copyright = copyrightEntry.data;
 const siteUrl = getSiteUrl();
 const previewPhoto = album.photos[1] ?? album.photos[0];
 const imagePath = getAlbumImagePath(album, previewPhoto);
@@ -21,9 +25,36 @@ const canonical = `${siteUrl}/albums/${album.slug}/`;
 const title = `${album.title} | Alexandra Maria Deli`;
 const description = `${album.description} View the complete ${album.photos.length}-photograph album by Alexandra Maria Deli.`;
 const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}${path}`;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'ImageGallery',
+  '@id': `${canonical}#gallery`,
+  name: album.title,
+  description: album.description,
+  url: canonical,
+  copyrightHolder: {
+    '@type': 'Person',
+    name: copyright.copyrightHolder,
+  },
+  copyrightNotice: `© ${new Date().getFullYear()} ${copyright.copyrightHolder}. All rights reserved.`,
+  usageInfo: copyright.usageTerms,
+  hasPart: album.photos.map((photo, index) => ({
+    '@type': 'ImageObject',
+    contentUrl: getAbsoluteImageUrl(getAlbumImagePath(album, photo)),
+    name: `${album.title} photograph ${index + 1}`,
+    caption: getAlbumPhotoAlt(album, photo, index),
+    copyrightHolder: {
+      '@type': 'Person',
+      name: copyright.copyrightHolder,
+    },
+    usageInfo: copyright.usageTerms,
+  })),
+};
 ---
 
 <BaseLayout title={title} description={description} canonical={canonical} imagePath={imagePath}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
   <header class="site-header">
     <a class="brand" href="/">Alexandra Maria Deli</a>
     <nav>
@@ -41,6 +72,7 @@ const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')
       <h1 id="album-title">{album.title}</h1>
       <p>{album.description}</p>
       <p class="album-page-count">{album.photos.length} photographs</p>
+      <p class="album-page-copyright">{copyright.albumNotice} <a href="/copyright/">Image use &amp; copyright</a></p>
     </section>
 
     <section class="album-page-gallery" aria-label={`${album.title} photographs`}>
@@ -63,7 +95,7 @@ const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')
   </main>
 
   <footer>
-    <p>&copy; {new Date().getFullYear()} Alexandra Maria Deli &middot; <a href="/">alexandra-maria-deli.gr</a></p>
+    <p>&copy; {new Date().getFullYear()} Alexandra Maria Deli &middot; <a href="/copyright/">Image use &amp; copyright</a></p>
   </footer>
 
   <div class="lightbox" data-lightbox aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image preview">
@@ -186,6 +218,20 @@ const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
+  }
+
+  .album-page-hero .album-page-copyright {
+    border-left: 2px solid var(--color-light-gray);
+    color: var(--color-mid-gray);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-top: 1.5rem;
+    padding-left: 1rem;
+  }
+
+  .album-page-copyright a {
+    color: var(--color-deep-green);
+    font-weight: 700;
   }
 
   .album-page-gallery {
