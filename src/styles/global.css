@@ -317,6 +317,7 @@ button.contact-frame {
 .about figure img {
   height: 100%;
   object-fit: cover;
+  object-position: center center;
   transition: scale 500ms ease;
   width: 100%;
 }
