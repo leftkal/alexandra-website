@@ -757,6 +757,7 @@ h3 {
   top: 50%;
   transform: translate(-50%, -50%);
   transition: opacity 160ms ease;
+  z-index: 1;
 }
 
 .lightbox.loading .lightbox-frame::before {
@@ -794,6 +795,7 @@ h3 {
   color: var(--color-white);
   cursor: pointer;
   transition: background 180ms ease, transform 180ms ease;
+  z-index: 2;
 }
 
 .lightbox-close:hover,

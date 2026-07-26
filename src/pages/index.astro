@@ -446,6 +446,28 @@ const structuredData = {
         let activeImage = 0;
         let lightboxTouchStartX = 0;
         let lightboxLoadId = 0;
+        const loadingDelay = 120;
+
+        const preloadImage = (src) => {
+          if (!src) return Promise.reject();
+          return new Promise((resolve, reject) => {
+            const loader = new Image();
+            loader.onload = resolve;
+            loader.onerror = reject;
+            loader.src = src;
+          });
+        };
+
+        const preloadNeighbors = () => {
+          const album = albums[activeAlbum] ?? [];
+          if (album.length < 2) return;
+
+          [activeImage - 1, activeImage + 1].forEach((index) => {
+            const trigger = album[(index + album.length) % album.length];
+            const src = trigger?.dataset.lightboxSrc ?? '';
+            if (src) void preloadImage(src).catch(() => {});
+          });
+        };
 
         const renderPreview = () => {
           const album = albums[activeAlbum] ?? [];
@@ -459,22 +481,28 @@ const structuredData = {
           const requestId = lightboxLoadId + 1;
           lightboxLoadId = requestId;
 
-          lightbox.classList.add('loading');
-          image.removeAttribute('src');
           image.alt = alt;
-          caption.textContent = 'Loading photograph…';
-
-          image.onload = () => {
+          const showLoading = window.setTimeout(() => {
             if (requestId !== lightboxLoadId) return;
+            lightbox.classList.add('loading');
+            image.removeAttribute('src');
+            caption.textContent = 'Loading photograph…';
+          }, loadingDelay);
+
+          preloadImage(src).then(() => {
+            if (requestId !== lightboxLoadId) return;
+            window.clearTimeout(showLoading);
+            image.src = src;
             lightbox.classList.remove('loading');
             caption.textContent = captionText;
-          };
-          image.onerror = () => {
+            preloadNeighbors();
+          }).catch(() => {
             if (requestId !== lightboxLoadId) return;
+            window.clearTimeout(showLoading);
+            image.removeAttribute('src');
             lightbox.classList.remove('loading');
             caption.textContent = 'This photograph could not be loaded.';
-          };
-          image.src = src;
+          });
         };
 
         const openPreview = (trigger) => {
@@ -488,6 +516,7 @@ const structuredData = {
         };
 
         const closePreview = () => {
+          lightboxLoadId += 1;
           lightbox.classList.remove('open');
           lightbox.classList.remove('loading');
           lightbox.setAttribute('aria-hidden', 'true');
