@@ -199,7 +199,7 @@ const structuredData = {
                     data-lightbox-trigger
                     data-lightbox-album={albumIndex}
                     data-lightbox-index={index}
-                    data-lightbox-src={getImageUrl(getAlbumImagePath(album, photo))}
+                    data-lightbox-src={getWebpImageUrl(getAlbumImagePath(album, photo)) ?? getImageUrl(getAlbumImagePath(album, photo))}
                     data-lightbox-title={album.title}
                     data-lightbox-alt={getAlbumPhotoAlt(album, photo, index)}
                   >
@@ -445,6 +445,7 @@ const structuredData = {
         let activeAlbum = '0';
         let activeImage = 0;
         let lightboxTouchStartX = 0;
+        let lightboxLoadId = 0;
 
         const renderPreview = () => {
           const album = albums[activeAlbum] ?? [];
@@ -452,9 +453,28 @@ const structuredData = {
           if (!trigger || !image || !caption) return;
 
           const title = trigger.dataset.lightboxTitle ?? 'Album';
-          image.src = trigger.dataset.lightboxSrc ?? '';
-          image.alt = trigger.dataset.lightboxAlt ?? `${title} photograph ${activeImage + 1}`;
-          caption.textContent = `${title} / ${activeImage + 1} of ${album.length}`;
+          const src = trigger.dataset.lightboxSrc ?? '';
+          const alt = trigger.dataset.lightboxAlt ?? `${title} photograph ${activeImage + 1}`;
+          const captionText = `${title} / ${activeImage + 1} of ${album.length}`;
+          const requestId = lightboxLoadId + 1;
+          lightboxLoadId = requestId;
+
+          lightbox.classList.add('loading');
+          image.removeAttribute('src');
+          image.alt = alt;
+          caption.textContent = 'Loading photograph…';
+
+          image.onload = () => {
+            if (requestId !== lightboxLoadId) return;
+            lightbox.classList.remove('loading');
+            caption.textContent = captionText;
+          };
+          image.onerror = () => {
+            if (requestId !== lightboxLoadId) return;
+            lightbox.classList.remove('loading');
+            caption.textContent = 'This photograph could not be loaded.';
+          };
+          image.src = src;
         };
 
         const openPreview = (trigger) => {
@@ -469,6 +489,7 @@ const structuredData = {
 
         const closePreview = () => {
           lightbox.classList.remove('open');
+          lightbox.classList.remove('loading');
           lightbox.setAttribute('aria-hidden', 'true');
           document.body.classList.remove('preview-open');
         };

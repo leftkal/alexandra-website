@@ -739,7 +739,29 @@ h3 {
   gap: 1rem;
   justify-items: center;
   margin: 0;
+  min-height: min(52svh, 34rem);
   min-width: 0;
+  position: relative;
+}
+
+.lightbox-frame::before {
+  color: rgba(248, 248, 245, 0.72);
+  content: "";
+  font-size: 0.8rem;
+  font-weight: 700;
+  left: 50%;
+  letter-spacing: 0.16em;
+  opacity: 0;
+  position: absolute;
+  text-transform: uppercase;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 160ms ease;
+}
+
+.lightbox.loading .lightbox-frame::before {
+  content: "Loading";
+  opacity: 1;
 }
 
 .lightbox-frame img {
@@ -748,7 +770,13 @@ h3 {
   max-height: min(78svh, calc(100svh - 9rem));
   max-width: min(100%, calc(100vw - clamp(2rem, 6vw, 4rem)));
   object-fit: contain;
+  opacity: 1;
+  transition: opacity 160ms ease;
   width: auto;
+}
+
+.lightbox.loading .lightbox-frame img {
+  opacity: 0;
 }
 
 .lightbox-frame figcaption {

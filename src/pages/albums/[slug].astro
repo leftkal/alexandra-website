@@ -4,7 +4,7 @@ import { getEntry } from 'astro:content';
 import Picture from '../../components/Picture.astro';
 import type { Album } from '../../types/albums';
 import { getAlbums, getAlbumImagePath, getAlbumPhotoAlt } from '../../utils/albums';
-import { getAbsoluteImageUrl, getImageUrl, getSiteUrl } from '../../utils/url';
+import { getAbsoluteImageUrl, getImageUrl, getSiteUrl, getWebpImageUrl } from '../../utils/url';
 
 export async function getStaticPaths() {
   const albums = await getAlbums();
@@ -82,7 +82,7 @@ const structuredData = {
             type="button"
             data-lightbox-trigger
             data-lightbox-index={index}
-            data-lightbox-src={getImageUrl(getAlbumImagePath(album, photo))}
+            data-lightbox-src={getWebpImageUrl(getAlbumImagePath(album, photo)) ?? getImageUrl(getAlbumImagePath(album, photo))}
             data-lightbox-title={album.title}
             data-lightbox-alt={getAlbumPhotoAlt(album, photo, index)}
           >
@@ -123,15 +123,35 @@ const structuredData = {
       const nextButton = lightbox.querySelector('[data-lightbox-next]');
       let activeImage = 0;
       let lightboxTouchStartX = 0;
+      let lightboxLoadId = 0;
 
       const renderPreview = () => {
         const trigger = triggers[activeImage];
         if (!trigger || !image || !caption) return;
 
         const title = trigger.dataset.lightboxTitle ?? 'Album';
-        image.src = trigger.dataset.lightboxSrc ?? '';
-        image.alt = trigger.dataset.lightboxAlt ?? `${title} photograph ${activeImage + 1}`;
-        caption.textContent = `${title} / ${activeImage + 1} of ${triggers.length}`;
+        const src = trigger.dataset.lightboxSrc ?? '';
+        const alt = trigger.dataset.lightboxAlt ?? `${title} photograph ${activeImage + 1}`;
+        const captionText = `${title} / ${activeImage + 1} of ${triggers.length}`;
+        const requestId = lightboxLoadId + 1;
+        lightboxLoadId = requestId;
+
+        lightbox.classList.add('loading');
+        image.removeAttribute('src');
+        image.alt = alt;
+        caption.textContent = 'Loading photograph…';
+
+        image.onload = () => {
+          if (requestId !== lightboxLoadId) return;
+          lightbox.classList.remove('loading');
+          caption.textContent = captionText;
+        };
+        image.onerror = () => {
+          if (requestId !== lightboxLoadId) return;
+          lightbox.classList.remove('loading');
+          caption.textContent = 'This photograph could not be loaded.';
+        };
+        image.src = src;
       };
 
       const openPreview = (trigger) => {
@@ -145,6 +165,7 @@ const structuredData = {
 
       const closePreview = () => {
         lightbox.classList.remove('open');
+        lightbox.classList.remove('loading');
         lightbox.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('preview-open');
       };
