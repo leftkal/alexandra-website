@@ -1051,6 +1051,7 @@ footer p {
 
   .lightbox {
     grid-template-columns: 1fr 1fr;
+    padding: 1.25rem;
   }
 
   .lightbox-frame {
@@ -1059,11 +1060,18 @@ footer p {
   }
 
   .lightbox-nav {
+    height: 3.6rem;
     margin-top: 1rem;
+    width: 3.6rem;
   }
 
   .lightbox-nav.next {
     justify-self: end;
+  }
+
+  .lightbox-close {
+    height: 3.4rem;
+    width: 3.4rem;
   }
 }
 
@@ -1147,14 +1155,32 @@ footer p {
   }
 
   .gallery {
+    gap: 1rem;
     grid-auto-rows: 14rem;
     grid-template-columns: 1fr;
+  }
+
+  .album .gallery-item:nth-child(n + 7) {
+    display: none;
+  }
+
+  .album-page-gallery .gallery {
+    gap: clamp(1.15rem, 5vw, 1.65rem);
+    grid-auto-rows: clamp(18rem, 82vw, 30rem);
+  }
+
+  .album-page-gallery .gallery-item:nth-child(3n + 2) {
+    min-height: clamp(20rem, 92vw, 34rem);
   }
 
   .gallery-item.wide,
   .gallery-item.tall {
     grid-column: auto;
     grid-row: auto;
+  }
+
+  .lightbox-frame img {
+    max-height: 72svh;
   }
 }
 
