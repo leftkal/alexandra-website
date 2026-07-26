@@ -1,9 +1,10 @@
 ---
 import '../styles/global.css';
 import { getEntry } from 'astro:content';
+import Picture from '../components/Picture.astro';
 import { getAlbums, getAlbumImagePath, getAlbumPhotoAlt, getAlbumUrl } from '../utils/albums';
 import { getGuides } from '../utils/guides';
-import { getPageUrl } from '../utils/url';
+import { getImageUrl, getPageUrl, getWebpImageUrl } from '../utils/url';
 
 const homepage = await getEntry('homepage', 'home');
 if (!homepage) throw new Error('Homepage content is missing.');
@@ -11,7 +12,6 @@ const home = homepage.data;
 const guides = await getGuides();
 const albums = await getAlbums();
 const albumPreviewLimit = 10;
-const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}${path.replace(/^\/+/, '')}`;
 const siteUrl = 'https://alexandra-maria-deli.gr/';
 const previewImage = new URL(home.previewImage.replace(/^\/+/, ''), siteUrl).toString();
 const pageTitle = home.pageTitle;
@@ -93,11 +93,14 @@ const structuredData = {
           </div>
           <div class="hero-film-layout">
             <div class="contact-frame contact-frame-featured" data-hero-main-frame>
-              <img
-                src={mainHeroFrame ? asset(mainHeroFrame.image) : ''}
-                alt={mainHeroFrame?.alt ?? home.previewImageAlt}
-                data-hero-main-image
-              />
+              <picture>
+                {mainHeroFrame && getWebpImageUrl(mainHeroFrame.image) && <source srcset={getWebpImageUrl(mainHeroFrame.image)} type="image/webp" data-hero-main-source />}
+                <img
+                  src={mainHeroFrame ? getImageUrl(mainHeroFrame.image) : ''}
+                  alt={mainHeroFrame?.alt ?? home.previewImageAlt}
+                  data-hero-main-image
+                />
+              </picture>
               <span aria-hidden="true">{mainHeroFrame?.number ?? ''}</span>
             </div>
             <div class="contact-strip" aria-label="Choose featured frame">
@@ -108,11 +111,12 @@ const structuredData = {
                   aria-label={`Show frame ${frame.number} as featured photograph`}
                   aria-pressed={index === 0 ? 'true' : 'false'}
                   data-hero-frame
-                  data-hero-src={asset(frame.image)}
+                  data-hero-src={getImageUrl(frame.image)}
+                  data-hero-webp-src={getWebpImageUrl(frame.image) ?? ''}
                   data-hero-alt={frame.alt}
                   data-hero-number={frame.number}
                 >
-                  <img src={asset(frame.image)} alt="" loading="eager" />
+                  <Picture src={frame.image} alt="" loading="eager" />
                   <span aria-hidden="true">{frame.number}</span>
                 </button>
               ))}
@@ -195,11 +199,11 @@ const structuredData = {
                     data-lightbox-trigger
                     data-lightbox-album={albumIndex}
                     data-lightbox-index={index}
-                    data-lightbox-src={asset(getAlbumImagePath(album, photo))}
+                    data-lightbox-src={getImageUrl(getAlbumImagePath(album, photo))}
                     data-lightbox-title={album.title}
                     data-lightbox-alt={getAlbumPhotoAlt(album, photo, index)}
                   >
-                    <img src={asset(getAlbumImagePath(album, photo))} alt={getAlbumPhotoAlt(album, photo, index)} loading={index < 3 ? 'eager' : 'lazy'} />
+                    <Picture src={getAlbumImagePath(album, photo)} alt={getAlbumPhotoAlt(album, photo, index)} loading={index < 3 ? 'eager' : 'lazy'} />
                   </button>
                 ))}
               </div>
@@ -216,7 +220,7 @@ const structuredData = {
 
       <section id="about" class="about" aria-labelledby="about-title">
         <figure>
-          <img src={asset(home.about.image)} alt={home.about.imageAlt} loading="lazy" />
+          <Picture src={home.about.image} alt={home.about.imageAlt} loading="lazy" />
         </figure>
         <div>
           <p class="eyebrow">{home.about.eyebrow}</p>
@@ -345,6 +349,7 @@ const structuredData = {
 
       if (heroFilm) {
         const mainImage = heroFilm.querySelector('[data-hero-main-image]');
+        const mainSource = heroFilm.querySelector('[data-hero-main-source]');
         const mainFrame = heroFilm.querySelector('[data-hero-main-frame]');
         const frames = Array.from(heroFilm.querySelectorAll('[data-hero-frame]'));
 
@@ -357,6 +362,10 @@ const structuredData = {
 
             mainImage.src = src;
             mainImage.alt = frame.dataset.heroAlt || 'Black-and-white photograph by Alexandra Maria Deli';
+            if (mainSource instanceof HTMLSourceElement) {
+              const webpSrc = frame.dataset.heroWebpSrc;
+              if (webpSrc) mainSource.srcset = webpSrc;
+            }
             if (mainFrame instanceof HTMLElement && frame.dataset.heroNumber) {
               const label = mainFrame.querySelector('span');
               if (label) label.textContent = frame.dataset.heroNumber;

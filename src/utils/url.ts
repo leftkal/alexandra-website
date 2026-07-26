@@ -30,6 +30,16 @@ export function getImageUrl(path: string): string {
   return normalizePublicImagePath(path);
 }
 
+export function getWebpImageUrl(path: string): string | undefined {
+  if (/^https?:\/\//.test(path)) return undefined;
+
+  const imagePath = normalizePublicImagePath(path);
+  const match = imagePath.match(/^\/images\/cms\/(.+)\.jpe?g$/i);
+  if (!match) return undefined;
+
+  return `/images/generated/${match[1]}.webp`;
+}
+
 export function getAbsoluteImageUrl(path: string): string {
   if (/^https?:\/\//.test(path)) return path;
 

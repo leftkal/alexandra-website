@@ -53,6 +53,10 @@ img {
   max-width: 100%;
 }
 
+picture {
+  display: contents;
+}
+
 .site-header {
   align-items: center;
   backdrop-filter: blur(18px);

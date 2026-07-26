@@ -7,7 +7,7 @@ export interface Props {
   imageAlt?: string;
 }
 
-import { getImageUrl } from '../utils/url';
+import Picture from './Picture.astro';
 
 const { h1, introduction, imageSrc, imageAlt = '' } = Astro.props;
 const introParagraphs = introduction.split('\n\n').map((paragraph) => paragraph.trim()).filter(Boolean);
@@ -28,7 +28,7 @@ const introParagraphs = introduction.split('\n\n').map((paragraph) => paragraph.
   </div>
   {imageSrc && (
     <figure class="landing-hero-frame">
-      <img src={getImageUrl(imageSrc)} alt={imageAlt} width="1200" height="1500" fetchpriority="high" />
+      <Picture src={imageSrc} alt={imageAlt} width="1200" height="1500" fetchpriority="high" />
     </figure>
   )}
 </section>
@@ -104,7 +104,7 @@ const introParagraphs = introduction.split('\n\n').map((paragraph) => paragraph.
     right: 0.55rem;
   }
 
-  .landing-hero-frame img {
+  .landing-hero-frame :global(img) {
     aspect-ratio: 4 / 5;
     border-radius: calc(var(--image-radius) * 0.9);
     filter: grayscale(0.08) contrast(1.04) saturate(0.84);

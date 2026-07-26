@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getEntry } from 'astro:content';
+import Picture from '../../components/Picture.astro';
 import type { Album } from '../../types/albums';
 import { getAlbums, getAlbumImagePath, getAlbumPhotoAlt } from '../../utils/albums';
-import { getAbsoluteImageUrl, getSiteUrl } from '../../utils/url';
+import { getAbsoluteImageUrl, getImageUrl, getSiteUrl } from '../../utils/url';
 
 export async function getStaticPaths() {
   const albums = await getAlbums();
@@ -24,7 +25,6 @@ const imagePath = getAlbumImagePath(album, previewPhoto);
 const canonical = `${siteUrl}/albums/${album.slug}/`;
 const title = `${album.title} | Alexandra Maria Deli`;
 const description = `${album.description} View the complete ${album.photos.length}-photograph album by Alexandra Maria Deli.`;
-const asset = (path: string) => `${import.meta.env.BASE_URL.replace(/\/?$/, '/')}${path}`;
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'ImageGallery',
@@ -82,11 +82,11 @@ const structuredData = {
             type="button"
             data-lightbox-trigger
             data-lightbox-index={index}
-            data-lightbox-src={asset(getAlbumImagePath(album, photo))}
+            data-lightbox-src={getImageUrl(getAlbumImagePath(album, photo))}
             data-lightbox-title={album.title}
             data-lightbox-alt={getAlbumPhotoAlt(album, photo, index)}
           >
-            <img src={asset(getAlbumImagePath(album, photo))} alt={getAlbumPhotoAlt(album, photo, index)} loading={index < 6 ? 'eager' : 'lazy'} />
+            <Picture src={getAlbumImagePath(album, photo)} alt={getAlbumPhotoAlt(album, photo, index)} loading={index < 6 ? 'eager' : 'lazy'} />
           </button>
         ))}
       </div>
