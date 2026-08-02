@@ -2,13 +2,12 @@
 import LandingPageLayout from '../layouts/LandingPageLayout.astro';
 import Hero from '../components/Hero.astro';
 import FAQ from '../components/FAQ.astro';
-import Gallery from '../components/Gallery.astro';
 import CTA from '../components/CTA.astro';
 import RelatedPages from '../components/RelatedPages.astro';
 import Picture from '../components/Picture.astro';
 import type { LandingPage } from '../types/guides';
 import { getGuides } from '../utils/guides';
-import { getCanonicalUrl } from '../utils/url';
+import { getCanonicalUrl, getImageUrl, getWebpImageUrl } from '../utils/url';
 
 export async function getStaticPaths() {
   const guides = await getGuides();
@@ -25,6 +24,8 @@ export interface Props {
 const { page } = Astro.props;
 const canonical = getCanonicalUrl(page.slug);
 const heroImage = page.heroImage ?? (page.galleryImages[0] ? { image: page.galleryImages[0].src, alt: page.galleryImages[0].alt, width: page.galleryImages[0].width, height: page.galleryImages[0].height } : undefined);
+const selectedWorkFeature = page.galleryImages[0];
+const selectedWorkStrip = page.galleryImages.slice(0, 5);
 
 function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -77,15 +78,99 @@ function slugify(text: string): string {
     );
   })}
 
-  <section class="mid-cta" aria-labelledby="mid-cta-title">
+  <section class:list={["mid-cta", "guide-featured-work", { "guide-featured-work-empty": !selectedWorkFeature }]} aria-labelledby="mid-cta-title">
     <div class="mid-cta-body">
       <h2 id="mid-cta-title">Planning a session in Athens?</h2>
       <p>Share the kind of session you are planning, your preferred date, and how you want to use the images. I will respond with a practical next step.</p>
       <a class="button" href="#contact">Ask about availability</a>
     </div>
+
+    {selectedWorkFeature && (
+      <div class="guide-selected-work" aria-labelledby="guide-selected-work-title">
+        <div class="guide-selected-work-heading">
+          <p class="eyebrow">Portfolio</p>
+          <h2 id="guide-selected-work-title">Selected Work</h2>
+        </div>
+
+        <figure class="guide-film" aria-label="Selected Athens photography frames">
+          <div class="contact-sheet-meta" aria-hidden="true">
+            <span>AMD / Guide</span>
+            <span>Selected frames</span>
+          </div>
+          <div class="guide-film-layout" data-guide-film>
+            <div class="contact-frame contact-frame-featured guide-film-featured">
+              <picture>
+                {getWebpImageUrl(selectedWorkFeature.src) && <source srcset={getWebpImageUrl(selectedWorkFeature.src)} type="image/webp" data-guide-featured-source />}
+                <img src={getImageUrl(selectedWorkFeature.src)} alt={selectedWorkFeature.alt} loading="lazy" width={selectedWorkFeature.width || 900} height={selectedWorkFeature.height || 1100} data-guide-featured-image />
+              </picture>
+              <span aria-hidden="true">01</span>
+            </div>
+
+            {selectedWorkStrip.length > 0 && (
+              <div class="contact-strip guide-film-strip" aria-label="More selected frames">
+                {selectedWorkStrip.map((img, index) => (
+                  <button
+                    class="contact-frame contact-frame-small guide-film-strip-frame"
+                    type="button"
+                    aria-label={`Show selected frame ${String(index + 1).padStart(2, '0')}`}
+                    aria-pressed={index === 0 ? 'true' : 'false'}
+                    data-guide-film-frame
+                    data-guide-src={getImageUrl(img.src)}
+                    data-guide-webp-src={getWebpImageUrl(img.src) ?? ''}
+                    data-guide-alt={img.alt}
+                    data-guide-number={String(index + 1).padStart(2, '0')}
+                  >
+                    <Picture src={img.src} alt={img.alt} loading="lazy" width={img.width || 320} height={img.height || 420} />
+                    <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          <figcaption>View more selected work on the <a href="/">homepage</a>, or browse selected <a href="/#work">albums</a> directly.</figcaption>
+        </figure>
+
+        <div class="landing-gallery-links">
+          <a class="button" href="/">Visit portfolio</a>
+          <a class="button secondary" href="/#work">Browse albums</a>
+        </div>
+      </div>
+    )}
   </section>
 
-  <Gallery images={page.galleryImages} />
+  <script>
+    document.querySelectorAll('[data-guide-film]').forEach((film) => {
+      const featuredImage = film.querySelector('[data-guide-featured-image]');
+      const featuredSource = film.querySelector('[data-guide-featured-source]');
+      const featuredNumber = film.querySelector('.guide-film-featured span');
+      const frames = Array.from(film.querySelectorAll('[data-guide-film-frame]'));
+
+      frames.forEach((frame) => {
+        frame.addEventListener('click', () => {
+          if (!(frame instanceof HTMLButtonElement) || !(featuredImage instanceof HTMLImageElement)) return;
+
+          const src = frame.dataset.guideSrc;
+          if (!src) return;
+
+          if (featuredSource instanceof HTMLSourceElement) {
+            const webpSrc = frame.dataset.guideWebpSrc;
+            if (webpSrc) featuredSource.srcset = webpSrc;
+          }
+
+          featuredImage.src = src;
+          featuredImage.alt = frame.dataset.guideAlt || 'Selected work by Alexandra Maria Deli';
+
+          if (featuredNumber && frame.dataset.guideNumber) featuredNumber.textContent = frame.dataset.guideNumber;
+
+          frames.forEach((item) => {
+            const isActive = item === frame;
+            item.classList.toggle('active', isActive);
+            item.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+          });
+        });
+      });
+    });
+  </script>
 
   <FAQ items={page.faq} />
 

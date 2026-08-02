@@ -1298,6 +1298,94 @@ footer p {
   color: var(--color-deep-green);
 }
 
+.guide-featured-work {
+  align-items: stretch;
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2.25rem);
+  grid-template-columns: minmax(18rem, 0.82fr) minmax(0, 1.18fr);
+}
+
+.guide-featured-work-empty {
+  display: block;
+}
+
+.guide-featured-work .mid-cta-body {
+  align-content: center;
+  display: grid;
+  min-height: 100%;
+}
+
+.guide-selected-work {
+  min-width: 0;
+}
+
+.guide-selected-work-heading {
+  margin-bottom: clamp(1rem, 2vw, 1.35rem);
+}
+
+.guide-selected-work-heading h2 {
+  color: var(--color-deep-green);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 0.98;
+}
+
+.guide-film {
+  background:
+    radial-gradient(circle at 72% 18%, rgba(248, 248, 245, 0.18), transparent 14rem),
+    linear-gradient(135deg, rgba(38, 42, 37, 0.96), rgba(63, 74, 60, 0.9)),
+    var(--color-off-white);
+  border: 1px solid rgba(38, 42, 37, 0.24);
+  border-radius: calc(var(--image-radius) + 10px);
+  box-shadow: 0 1.5rem 4rem rgba(38, 42, 37, 0.16);
+  color: var(--color-off-white);
+  display: grid;
+  gap: 0.85rem;
+  margin: 0 0 1.25rem;
+  overflow: hidden;
+  padding: clamp(0.8rem, 1.6vw, 1.1rem);
+}
+
+.guide-film-layout {
+  display: grid;
+  gap: clamp(0.75rem, 1.5vw, 1rem);
+  grid-template-columns: minmax(0, 1fr) minmax(4.5rem, 0.25fr);
+  min-height: clamp(20rem, 42vw, 34rem);
+}
+
+.guide-film-featured picture,
+.guide-film-strip-frame picture {
+  min-height: 0;
+}
+
+.guide-film-featured img,
+.guide-film-strip-frame img {
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transition: scale 500ms ease;
+  width: 100%;
+}
+
+.guide-film:hover img {
+  scale: 1.025;
+}
+
+.guide-film-strip {
+  grid-auto-rows: minmax(5rem, 1fr);
+}
+
+.guide-film figcaption {
+  color: color-mix(in srgb, var(--color-off-white) 78%, var(--color-mid-gray));
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.guide-film figcaption a {
+  color: var(--color-off-white);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
 .landing-section {
   max-width: var(--content-width);
   margin: 0 auto;
@@ -1433,6 +1521,14 @@ footer p {
 }
 
 @media (max-width: 780px) {
+  .guide-featured-work {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-featured-work .mid-cta-body {
+    min-height: auto;
+  }
+
   .landing-section-body {
     grid-template-columns: 1fr;
   }
@@ -1458,5 +1554,22 @@ footer p {
   .mid-cta {
     padding-left: 0.85rem;
     padding-right: 0.85rem;
+  }
+
+  .guide-film-layout {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .guide-film-featured {
+    min-height: clamp(18rem, 88vw, 28rem);
+  }
+
+  .guide-film-strip {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(7rem, 32vw);
+    grid-auto-rows: clamp(7rem, 34vw, 10rem);
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 }
