@@ -146,6 +146,7 @@
   "relatedPages": [
     "photographer-athens",
     "acropolis-photoshoot",
+    "pet-photography-athens",
     "plaka-photoshoot",
     "photographer-athens-prices"
   ],

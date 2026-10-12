@@ -4,6 +4,7 @@ import type { LandingPage } from '../types/guides';
 const guideOrder = [
   'photographer-athens',
   'portrait-photographer-athens',
+  'pet-photography-athens',
   'personal-branding-photographer-athens',
   'editorial-photographer-athens',
   'photoshoot-athens',

@@ -147,6 +147,7 @@
     "photographer-athens",
     "portrait-photographer-athens",
     "photoshoot-athens",
+    "pet-photography-athens",
     "personal-branding-photographer-athens"
   ],
   "schemaType": "Photographer",

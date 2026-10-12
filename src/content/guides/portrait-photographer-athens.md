@@ -146,6 +146,7 @@
   "relatedPages": [
     "photographer-athens",
     "personal-branding-photographer-athens",
+    "pet-photography-athens",
     "photoshoot-athens",
     "plaka-photoshoot"
   ],

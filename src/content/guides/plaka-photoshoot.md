@@ -147,6 +147,7 @@
     "photoshoot-athens",
     "acropolis-photoshoot",
     "photographer-athens",
+    "pet-photography-athens",
     "portrait-photographer-athens"
   ],
   "schemaType": "LocalBusiness",
