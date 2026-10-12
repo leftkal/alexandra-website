@@ -322,6 +322,10 @@ button.contact-frame {
   width: 100%;
 }
 
+.contact-frame[data-image-fit="contain"] img {
+  object-fit: contain;
+}
+
 .hero-image:hover img,
 .gallery-item:hover img {
   scale: 1.035;

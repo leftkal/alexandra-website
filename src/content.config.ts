@@ -106,6 +106,7 @@ const homepage = defineCollection({
         image: z.string(),
         number: z.string(),
         alt: z.string(),
+        objectFit: z.enum(['cover', 'contain']).default('cover'),
       })).default([]),
     }),
     introText: z.string(),

@@ -92,7 +92,7 @@ const structuredData = {
             <span>{home.hero.projectLabel}</span>
           </div>
           <div class="hero-film-layout">
-            <div class="contact-frame contact-frame-featured" data-hero-main-frame>
+            <div class="contact-frame contact-frame-featured" data-image-fit={mainHeroFrame?.objectFit ?? 'cover'} data-hero-main-frame>
               <picture>
                 {mainHeroFrame && getWebpImageUrl(mainHeroFrame.image) && <source srcset={getWebpImageUrl(mainHeroFrame.image)} type="image/webp" data-hero-main-source />}
                 <img
@@ -115,6 +115,8 @@ const structuredData = {
                   data-hero-webp-src={getWebpImageUrl(frame.image) ?? ''}
                   data-hero-alt={frame.alt}
                   data-hero-number={frame.number}
+                  data-hero-fit={frame.objectFit}
+                  data-image-fit={frame.objectFit}
                 >
                   <Picture src={frame.image} alt="" loading="eager" />
                   <span aria-hidden="true">{frame.number}</span>
@@ -369,6 +371,7 @@ const structuredData = {
             if (mainFrame instanceof HTMLElement && frame.dataset.heroNumber) {
               const label = mainFrame.querySelector('span');
               if (label) label.textContent = frame.dataset.heroNumber;
+              mainFrame.dataset.imageFit = frame.dataset.heroFit || 'cover';
             }
 
             frames.forEach((item) => {
