@@ -22,14 +22,17 @@ hero:
       number: "22"
       alt: Black-and-white frame 22 from The Presence Behind the Door by Alexandra Maria Deli
       objectFit: contain
+      objectPosition: center 40%
     - image: /images/cms/presence-behind-the-door-R1-06481-0028.jpg
       number: "28"
       alt: Black-and-white frame 28 from The Presence Behind the Door by Alexandra Maria Deli
       objectFit: contain
+      objectPosition: center 40%
     - image: /images/cms/presence-behind-the-door-R1-06811-0006.jpg
       number: "06"
       alt: Black-and-white frame 06 from The Presence Behind the Door by Alexandra Maria Deli
       objectFit: contain
+      objectPosition: center 40%
     - image: /images/cms/presence-behind-the-door-R1-01818-0005.jpg
       number: "05"
       alt: Black-and-white frame 05 from The Presence Behind the Door by Alexandra Maria Deli

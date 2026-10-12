@@ -92,7 +92,13 @@ const structuredData = {
             <span>{home.hero.projectLabel}</span>
           </div>
           <div class="hero-film-layout">
-            <div class="contact-frame contact-frame-featured" data-image-fit={mainHeroFrame?.objectFit ?? 'cover'} data-hero-main-frame>
+            <div
+              class="contact-frame contact-frame-featured"
+              data-image-fit={mainHeroFrame?.objectFit ?? 'cover'}
+              data-image-position={mainHeroFrame?.objectPosition ?? 'center center'}
+              style={`--image-position: ${mainHeroFrame?.objectPosition ?? 'center center'}`}
+              data-hero-main-frame
+            >
               <picture>
                 {mainHeroFrame && getWebpImageUrl(mainHeroFrame.image) && <source srcset={getWebpImageUrl(mainHeroFrame.image)} type="image/webp" data-hero-main-source />}
                 <img
@@ -116,7 +122,10 @@ const structuredData = {
                   data-hero-alt={frame.alt}
                   data-hero-number={frame.number}
                   data-hero-fit={frame.objectFit}
+                  data-hero-position={frame.objectPosition}
                   data-image-fit={frame.objectFit}
+                  data-image-position={frame.objectPosition}
+                  style={`--image-position: ${frame.objectPosition}`}
                 >
                   <Picture src={frame.image} alt="" loading="eager" />
                   <span aria-hidden="true">{frame.number}</span>
@@ -372,6 +381,8 @@ const structuredData = {
               const label = mainFrame.querySelector('span');
               if (label) label.textContent = frame.dataset.heroNumber;
               mainFrame.dataset.imageFit = frame.dataset.heroFit || 'cover';
+              mainFrame.dataset.imagePosition = frame.dataset.heroPosition || 'center center';
+              mainFrame.style.setProperty('--image-position', frame.dataset.heroPosition || 'center center');
             }
 
             frames.forEach((item) => {
