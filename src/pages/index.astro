@@ -204,6 +204,12 @@ const structuredData = {
                 <p>{album.description}</p>
               </div>
 
+              {album.photos[0] && (
+                <a class="mobile-album-cover" href={getAlbumUrl(album.slug)} aria-label={`View full album: ${album.title}`}>
+                  <Picture src={getAlbumImagePath(album, album.photos[0])} alt={getAlbumPhotoAlt(album, album.photos[0], 0)} loading={albumIndex === 0 ? 'eager' : 'lazy'} />
+                </a>
+              )}
+
               <div class="gallery">
                 {album.photos.slice(0, albumPreviewLimit).map((photo, index) => (
                   <button
@@ -431,15 +437,18 @@ const structuredData = {
         dots.forEach((dot, index) => dot.addEventListener('click', () => showAlbum(index)));
 
         swipeArea?.addEventListener('keydown', (event) => {
+          if (mobileAlbumPreview.matches) return;
           if (event.key === 'ArrowLeft') showAlbum(activeIndex - 1);
           if (event.key === 'ArrowRight') showAlbum(activeIndex + 1);
         });
 
         swipeArea?.addEventListener('touchstart', (event) => {
+          if (mobileAlbumPreview.matches) return;
           touchStartX = event.touches[0]?.clientX ?? 0;
         }, { passive: true });
 
         swipeArea?.addEventListener('touchend', (event) => {
+          if (mobileAlbumPreview.matches) return;
           const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX;
           const distance = touchEndX - touchStartX;
 
