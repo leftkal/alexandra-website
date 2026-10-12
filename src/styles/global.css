@@ -216,16 +216,6 @@ h2 {
 
 .contact-strip {
   background:
-    repeating-linear-gradient(
-      to bottom,
-      rgba(248, 248, 245, 0.58) 0 0.38rem,
-      transparent 0.38rem 1.05rem
-    ) left 0.22rem top 0.7rem / 0.28rem calc(100% - 1.4rem) no-repeat,
-    repeating-linear-gradient(
-      to bottom,
-      rgba(248, 248, 245, 0.58) 0 0.38rem,
-      transparent 0.38rem 1.05rem
-    ) right 0.22rem top 0.7rem / 0.28rem calc(100% - 1.4rem) no-repeat,
     linear-gradient(90deg, rgba(248, 248, 245, 0.08), transparent 18% 82%, rgba(248, 248, 245, 0.08)),
     rgba(0, 0, 0, 0.28);
   border: 1px solid rgba(248, 248, 245, 0.12);
@@ -238,6 +228,25 @@ h2 {
   position: relative;
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.hero-contact-strip-content {
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(248, 248, 245, 0.58) 0 0.38rem,
+      transparent 0.38rem 1.05rem
+    ) left 0.22rem top 0.7rem / 0.28rem calc(100% - 1.4rem) no-repeat,
+    repeating-linear-gradient(
+      to bottom,
+      rgba(248, 248, 245, 0.58) 0 0.38rem,
+      transparent 0.38rem 1.05rem
+    ) right 0.22rem top 0.7rem / 0.28rem calc(100% - 1.4rem) no-repeat;
+  display: grid;
+  gap: inherit;
+  grid-auto-rows: inherit;
+  min-height: max-content;
+  padding: inherit;
 }
 
 .contact-strip::-webkit-scrollbar {
@@ -1155,16 +1164,6 @@ footer p {
 
   .contact-strip {
     background:
-      repeating-linear-gradient(
-        to right,
-        rgba(248, 248, 245, 0.58) 0 0.38rem,
-        transparent 0.38rem 1.05rem
-      ) left 0.7rem top 0.22rem / calc(100% - 1.4rem) 0.28rem no-repeat,
-      repeating-linear-gradient(
-        to right,
-        rgba(248, 248, 245, 0.58) 0 0.38rem,
-        transparent 0.38rem 1.05rem
-      ) left 0.7rem bottom 0.22rem / calc(100% - 1.4rem) 0.28rem no-repeat,
       linear-gradient(90deg, rgba(248, 248, 245, 0.08), transparent 18% 82%, rgba(248, 248, 245, 0.08)),
       rgba(0, 0, 0, 0.28);
     gap: 0.55rem;
@@ -1176,6 +1175,26 @@ footer p {
     overflow-x: auto;
     overflow-y: hidden;
     padding: 0.55rem 1rem;
+  }
+
+  .hero-contact-strip-content {
+    background:
+      repeating-linear-gradient(
+        to right,
+        rgba(248, 248, 245, 0.58) 0 0.38rem,
+        transparent 0.38rem 1.05rem
+      ) left 0.7rem top 0.22rem / calc(100% - 1.4rem) 0.28rem no-repeat,
+      repeating-linear-gradient(
+        to right,
+        rgba(248, 248, 245, 0.58) 0 0.38rem,
+        transparent 0.38rem 1.05rem
+      ) left 0.7rem bottom 0.22rem / calc(100% - 1.4rem) 0.28rem no-repeat;
+    grid-auto-columns: inherit;
+    grid-auto-flow: inherit;
+    grid-auto-rows: inherit;
+    grid-template-columns: inherit;
+    min-height: auto;
+    min-width: max-content;
   }
 
   .contact-strip::before,

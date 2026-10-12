@@ -109,28 +109,30 @@ const structuredData = {
               </picture>
               <span aria-hidden="true">{mainHeroFrame?.number ?? ''}</span>
             </div>
-            <div class="contact-strip" aria-label="Choose featured frame">
-              {heroFrames.map((frame, index) => (
-                <button
-                  class="contact-frame contact-frame-small"
-                  type="button"
-                  aria-label={`Show frame ${frame.number} as featured photograph`}
-                  aria-pressed={index === 0 ? 'true' : 'false'}
-                  data-hero-frame
-                  data-hero-src={getImageUrl(frame.image)}
-                  data-hero-webp-src={getWebpImageUrl(frame.image) ?? ''}
-                  data-hero-alt={frame.alt}
-                  data-hero-number={frame.number}
-                  data-hero-fit={frame.objectFit}
-                  data-hero-position={frame.objectPosition}
-                  data-image-fit={frame.objectFit}
-                  data-image-position={frame.objectPosition}
-                  style={`--image-position: ${frame.objectPosition}`}
-                >
-                  <Picture src={frame.image} alt="" loading="eager" />
-                  <span aria-hidden="true">{frame.number}</span>
-                </button>
-              ))}
+            <div class="contact-strip hero-contact-strip" aria-label="Choose featured frame">
+              <div class="hero-contact-strip-content">
+                {heroFrames.map((frame, index) => (
+                  <button
+                    class="contact-frame contact-frame-small"
+                    type="button"
+                    aria-label={`Show frame ${frame.number} as featured photograph`}
+                    aria-pressed={index === 0 ? 'true' : 'false'}
+                    data-hero-frame
+                    data-hero-src={getImageUrl(frame.image)}
+                    data-hero-webp-src={getWebpImageUrl(frame.image) ?? ''}
+                    data-hero-alt={frame.alt}
+                    data-hero-number={frame.number}
+                    data-hero-fit={frame.objectFit}
+                    data-hero-position={frame.objectPosition}
+                    data-image-fit={frame.objectFit}
+                    data-image-position={frame.objectPosition}
+                    style={`--image-position: ${frame.objectPosition}`}
+                  >
+                    <Picture src={frame.image} alt="" loading="eager" />
+                    <span aria-hidden="true">{frame.number}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
           <figcaption>{home.hero.caption}</figcaption>
