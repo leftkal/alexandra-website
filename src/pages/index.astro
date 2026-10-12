@@ -220,11 +220,9 @@ const structuredData = {
                   </button>
                 ))}
               </div>
-              {album.photos.length > albumPreviewLimit && (
-                <div class="album-actions">
-                  <a class="button secondary" href={getAlbumUrl(album.slug)}>View full album</a>
-                </div>
-              )}
+              <div class="album-actions">
+                <a class="button secondary" href={getAlbumUrl(album.slug)}>View full album</a>
+              </div>
               </article>
             ))}
           </div>
@@ -404,16 +402,18 @@ const structuredData = {
         const previous = carousel.querySelector('[data-album-prev]');
         const next = carousel.querySelector('[data-album-next]');
         const swipeArea = carousel.querySelector('.albums');
+        const mobileAlbumPreview = window.matchMedia('(max-width: 560px)');
         let activeIndex = 0;
         let touchStartX = 0;
 
         const showAlbum = (index) => {
           activeIndex = (index + panels.length) % panels.length;
+          const showAllAlbums = mobileAlbumPreview.matches;
 
           panels.forEach((panel, panelIndex) => {
             const isActive = panelIndex === activeIndex;
             panel.classList.toggle('active', isActive);
-            panel.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+            panel.setAttribute('aria-hidden', showAllAlbums || isActive ? 'false' : 'true');
           });
 
           dots.forEach((dot, dotIndex) => {
@@ -422,6 +422,9 @@ const structuredData = {
             dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
           });
         };
+
+        mobileAlbumPreview.addEventListener('change', () => showAlbum(activeIndex));
+        showAlbum(activeIndex);
 
         previous?.addEventListener('click', () => showAlbum(activeIndex - 1));
         next?.addEventListener('click', () => showAlbum(activeIndex + 1));

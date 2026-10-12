@@ -1229,14 +1229,42 @@ footer p {
     width: min(100%, 18rem);
   }
 
-  .gallery {
-    gap: 1rem;
-    grid-auto-rows: 14rem;
-    grid-template-columns: 1fr;
+  .album-controls {
+    display: none;
   }
 
-  .album .gallery-item:nth-child(n + 7) {
-    display: none;
+  .albums {
+    display: grid;
+    gap: clamp(2.5rem, 12vw, 4rem);
+    touch-action: pan-y;
+  }
+
+  .album,
+  .album.active {
+    display: block;
+  }
+
+  .album-heading {
+    margin-bottom: 1.15rem;
+  }
+
+  .album .gallery {
+    gap: 0.85rem;
+    grid-auto-columns: minmax(72vw, 20rem);
+    grid-auto-flow: column;
+    grid-auto-rows: clamp(18rem, 82vw, 26rem);
+    grid-template-columns: none;
+    margin-inline: -1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    padding: 0 1rem 0.85rem;
+    scroll-padding-inline: 1rem;
+    scroll-snap-type: inline mandatory;
+  }
+
+  .album .gallery-item {
+    scroll-snap-align: start;
   }
 
   .album-page-gallery .gallery {
@@ -1252,6 +1280,16 @@ footer p {
   .gallery-item.tall {
     grid-column: auto;
     grid-row: auto;
+  }
+
+  .album-actions {
+    justify-content: stretch;
+    margin-top: 0.85rem;
+  }
+
+  .album-actions .button {
+    justify-content: center;
+    width: 100%;
   }
 
   .lightbox-frame img {
