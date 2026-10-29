@@ -54,7 +54,6 @@ photos:
   - image: /images/cms/brownie-photoshoot-72-.jpg
   - image: /images/cms/brownie-photoshoot-73-.jpg
   - image: /images/cms/brownie-photoshoot-74-.jpg
-  - image: /images/cms/brownie-photoshoot-75-.jpg
   - image: /images/cms/brownie-photoshoot-76-.jpg
   - image: /images/cms/brownie-photoshoot-79-.jpg
   - image: /images/cms/brownie-photoshoot-78-.jpg
