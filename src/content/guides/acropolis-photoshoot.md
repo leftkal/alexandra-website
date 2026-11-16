@@ -19,7 +19,7 @@ introduction: >-
   This guide explains what to consider before booking an Acropolis-area session: where to shoot, when to go, what to wear, what to bring, and when permits may need to be discussed.
 keyword: acropolis photoshoot athens
 heroImage:
-  image: /images/cms/dsc04199-copy.jpg
+  image: /images/cms/portraits-athens-5-.jpg
   alt: Acropolis photoshoot by Alexandra Maria Deli
   width: 800
   height: 1000
@@ -51,7 +51,7 @@ sections:
 
       For editorial or branding work, the Acropolis can communicate place, history, scale, and cultural context. The key is to use it with restraint and respect.
   - type: image
-    image: /images/cms/dsc04219-copy-3.jpg
+    image: /images/cms/portraits-athens-13-.jpg
     alt: Acropolis photoshoot by Alexandra Maria Deli
     caption: Frame 01 / Athens light study
     width: 800
