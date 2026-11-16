@@ -9,5 +9,7 @@ description: Film photography has a beauty of its own. The grain, the
 photos:
   - image: /images/cms/deli_alexandra-maria-3.jpg
   - image: /images/cms/deli_alexandra-maria-2.jpg
+  - image: /images/cms/r1-03590-0008.jpg
+  - image: /images/cms/deli_alexandra-maria-1.jpg
 draft: false
 ---
