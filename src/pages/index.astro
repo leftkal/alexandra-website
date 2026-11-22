@@ -182,6 +182,7 @@ const structuredData = {
                     type="button"
                     role="tab"
                     aria-selected={index === 0 ? 'true' : 'false'}
+                    tabindex={index === 0 ? 0 : -1}
                     aria-controls={album.slug}
                     data-album-dot={index}
                   >
@@ -193,9 +194,10 @@ const structuredData = {
             </div>
           )}
 
-          <div class="albums" tabindex="0" aria-live="polite">
+          {albums.length > 1 && <span class="sr-only" aria-live="polite" aria-atomic="true" data-album-announcement></span>}
+          <div class="albums" tabindex={albums.length > 1 ? '0' : undefined} role={albums.length > 1 ? 'region' : undefined} aria-roledescription={albums.length > 1 ? 'carousel' : undefined} aria-label={albums.length > 1 ? 'Albums; use left and right arrow keys to change albums' : undefined}>
             {albums.map((album, albumIndex) => (
-              <article class:list={['album', albumIndex === 0 && 'active']} id={album.slug} data-album-panel={albumIndex} aria-hidden={albumIndex === 0 ? 'false' : 'true'}>
+              <article class:list={['album', albumIndex === 0 && 'active']} id={album.slug} data-album-panel={albumIndex} aria-hidden={albumIndex === 0 ? 'false' : 'true'} inert={albumIndex !== 0}>
               <div class="album-heading">
                 <div>
                   <p class="eyebrow">{album.photos.length} photographs</p>
@@ -408,51 +410,68 @@ const structuredData = {
         const previous = carousel.querySelector('[data-album-prev]');
         const next = carousel.querySelector('[data-album-next]');
         const swipeArea = carousel.querySelector('.albums');
-        const mobileAlbumPreview = window.matchMedia('(max-width: 560px)');
+        const announcement = carousel.querySelector('[data-album-announcement]');
         let activeIndex = 0;
         let touchStartX = 0;
+        let touchStartY = 0;
 
         const showAlbum = (index) => {
           activeIndex = (index + panels.length) % panels.length;
-          const showAllAlbums = mobileAlbumPreview.matches;
-
           panels.forEach((panel, panelIndex) => {
             const isActive = panelIndex === activeIndex;
             panel.classList.toggle('active', isActive);
-            panel.setAttribute('aria-hidden', showAllAlbums || isActive ? 'false' : 'true');
+            panel.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+            panel.inert = !isActive;
+            const offset = (panelIndex - activeIndex + panels.length) % panels.length;
+            panel.classList.toggle('album-before', panels.length > 2 && offset === panels.length - 1);
+            panel.classList.toggle('album-after', panels.length > 1 && offset === 1);
           });
 
           dots.forEach((dot, dotIndex) => {
             const isActive = dotIndex === activeIndex;
             dot.classList.toggle('active', isActive);
             dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            dot.tabIndex = isActive ? 0 : -1;
           });
+          if (announcement) announcement.textContent = `${dots[activeIndex]?.textContent?.trim() ?? 'Album'} (${activeIndex + 1} of ${panels.length})`;
         };
 
-        mobileAlbumPreview.addEventListener('change', () => showAlbum(activeIndex));
         showAlbum(activeIndex);
 
         previous?.addEventListener('click', () => showAlbum(activeIndex - 1));
         next?.addEventListener('click', () => showAlbum(activeIndex + 1));
         dots.forEach((dot, index) => dot.addEventListener('click', () => showAlbum(index)));
+        dots.forEach((dot, index) => dot.addEventListener('keydown', (event) => {
+          let nextIndex;
+          if (event.key === 'ArrowRight') nextIndex = (index + 1) % dots.length;
+          else if (event.key === 'ArrowLeft') nextIndex = (index - 1 + dots.length) % dots.length;
+          else if (event.key === 'Home') nextIndex = 0;
+          else if (event.key === 'End') nextIndex = dots.length - 1;
+          else return;
+          event.preventDefault();
+          showAlbum(nextIndex);
+          dots[nextIndex].focus();
+        }));
 
         swipeArea?.addEventListener('keydown', (event) => {
-          if (mobileAlbumPreview.matches) return;
-          if (event.key === 'ArrowLeft') showAlbum(activeIndex - 1);
-          if (event.key === 'ArrowRight') showAlbum(activeIndex + 1);
+          if (event.target !== swipeArea) return;
+          if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+            event.preventDefault();
+            showAlbum(activeIndex + (event.key === 'ArrowLeft' ? -1 : 1));
+          }
         });
 
         swipeArea?.addEventListener('touchstart', (event) => {
-          if (mobileAlbumPreview.matches) return;
           touchStartX = event.touches[0]?.clientX ?? 0;
+          touchStartY = event.touches[0]?.clientY ?? 0;
         }, { passive: true });
 
         swipeArea?.addEventListener('touchend', (event) => {
-          if (mobileAlbumPreview.matches) return;
           const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX;
           const distance = touchEndX - touchStartX;
+          const verticalDistance = (event.changedTouches[0]?.clientY ?? touchStartY) - touchStartY;
 
-          if (Math.abs(distance) < 45) return;
+          if (Math.abs(distance) < 45 || Math.abs(distance) <= Math.abs(verticalDistance)) return;
           showAlbum(distance > 0 ? activeIndex - 1 : activeIndex + 1);
         });
       }

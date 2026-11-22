@@ -57,6 +57,18 @@ picture {
   display: contents;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .site-header {
   align-items: center;
   backdrop-filter: blur(18px);
@@ -1234,12 +1246,30 @@ footer p {
   }
 
   .album-controls {
-    display: none;
+    gap: 0.45rem;
+    grid-template-columns: 2.5rem minmax(0, 1fr) 2.5rem;
+    grid-row: 2;
+  }
+
+  .album-arrow {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+
+  .album-dots {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .album-dot {
+    flex: 0 0 auto;
+    font-size: 0.65rem;
+    padding: 0.55rem 0.65rem;
   }
 
   .albums {
-    display: grid;
-    gap: 1.25rem;
+    isolation: isolate;
+    position: relative;
     touch-action: pan-y;
   }
 
@@ -1249,7 +1279,56 @@ footer p {
     border: 1px solid rgba(216, 218, 211, 0.78);
     border-radius: calc(var(--image-radius) + 6px);
     display: block;
+    margin-inline: auto;
     padding: 1rem;
+    width: 84%;
+  }
+
+  .album:not(.active) {
+    position: absolute;
+    visibility: hidden;
+  }
+
+  .album.active {
+    position: relative;
+    z-index: 2;
+  }
+
+  .album.album-before,
+  .album.album-after {
+    height: 100%;
+    left: 8%;
+    opacity: 0.7;
+    overflow: hidden;
+    padding: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    transform: translateX(-79%) scale(0.88);
+    visibility: visible;
+    z-index: 1;
+  }
+
+  .album.album-before .album-heading,
+  .album.album-after .album-heading,
+  .album.album-before .album-actions,
+  .album.album-after .album-actions {
+    display: none;
+  }
+
+  .album.album-before .mobile-album-cover,
+  .album.album-after .mobile-album-cover {
+    aspect-ratio: auto;
+    border-radius: 0;
+    height: 100%;
+  }
+
+  .album.album-after {
+    transform: translateX(79%) scale(0.88);
+  }
+
+  .album-shell {
+    overflow: hidden;
   }
 
   .album-heading {
