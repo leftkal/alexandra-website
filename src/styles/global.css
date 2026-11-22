@@ -665,6 +665,10 @@ h3 {
   display: none;
 }
 
+.mobile-album-peek {
+  display: none;
+}
+
 .gallery {
   display: grid;
   gap: clamp(0.75rem, 2vw, 1.25rem);
@@ -1246,25 +1250,7 @@ footer p {
   }
 
   .album-controls {
-    gap: 0.45rem;
-    grid-template-columns: 2.5rem minmax(0, 1fr) 2.5rem;
-    grid-row: 2;
-  }
-
-  .album-arrow {
-    height: 2.5rem;
-    width: 2.5rem;
-  }
-
-  .album-dots {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-  }
-
-  .album-dot {
-    flex: 0 0 auto;
-    font-size: 0.65rem;
-    padding: 0.55rem 0.65rem;
+    display: none;
   }
 
   .albums {
@@ -1284,32 +1270,38 @@ footer p {
     margin-inline: auto;
     min-width: 0;
     opacity: 0;
-    overflow: hidden;
     padding: 1rem;
     pointer-events: none;
     position: relative;
     transform: translateX(0) scale(0.88);
     transition: transform 380ms ease, opacity 380ms ease;
-    visibility: hidden;
     width: 84%;
   }
 
-  .album::before {
-    background: var(--album-cover) center / cover no-repeat;
-    content: '';
+  .mobile-album-peek {
+    border-radius: calc(var(--image-radius) + 6px);
+    display: block;
     inset: 0;
     opacity: 0;
+    overflow: hidden;
     pointer-events: none;
     position: absolute;
     transition: opacity 380ms ease;
     z-index: 1;
   }
 
+  .mobile-album-peek picture,
+  .mobile-album-peek img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
   .album.active {
     opacity: 1;
     pointer-events: auto;
     transform: translateX(0) scale(1);
-    visibility: visible;
     z-index: 2;
   }
 
@@ -1318,12 +1310,20 @@ footer p {
     opacity: 0.88;
     pointer-events: none;
     transform: translateX(-79%) scale(0.88);
-    visibility: visible;
     z-index: 1;
   }
 
-  .album.album-before::before,
-  .album.album-after::before {
+  .album.album-before .mobile-album-peek,
+  .album.album-after .mobile-album-peek {
+    opacity: 1;
+  }
+
+  .album.album-exiting {
+    opacity: 0.88;
+    z-index: 1;
+  }
+
+  .album.album-exiting .mobile-album-peek {
     opacity: 1;
   }
 
@@ -1421,7 +1421,7 @@ footer p {
 
 @media (prefers-reduced-motion: reduce) {
   .album,
-  .album::before,
+  .mobile-album-peek,
   .album .album-heading,
   .album .album-actions,
   .album .mobile-album-cover {

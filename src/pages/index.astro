@@ -197,7 +197,7 @@ const structuredData = {
           {albums.length > 1 && <span class="sr-only" aria-live="polite" aria-atomic="true" data-album-announcement></span>}
           <div class="albums" tabindex={albums.length > 1 ? '0' : undefined} role={albums.length > 1 ? 'region' : undefined} aria-roledescription={albums.length > 1 ? 'carousel' : undefined} aria-label={albums.length > 1 ? 'Albums; use left and right arrow keys to change albums' : undefined}>
             {albums.map((album, albumIndex) => (
-              <article class:list={['album', albumIndex === 0 && 'active']} id={album.slug} data-album-panel={albumIndex} aria-hidden={albumIndex === 0 ? 'false' : 'true'} inert={albumIndex !== 0} style={album.photos[0] ? { '--album-cover': `url("${getWebpImageUrl(getAlbumImagePath(album, album.photos[0])) ?? getImageUrl(getAlbumImagePath(album, album.photos[0]))}")` } : undefined}>
+              <article class:list={['album', albumIndex === 0 && 'active']} id={album.slug} data-album-panel={albumIndex} aria-hidden={albumIndex === 0 ? 'false' : 'true'} inert={albumIndex !== 0}>
               <div class="album-heading">
                 <div>
                   <p class="eyebrow">{album.photos.length} photographs</p>
@@ -207,9 +207,12 @@ const structuredData = {
               </div>
 
               {album.photos[0] && (
-                <a class="mobile-album-cover" href={getAlbumUrl(album.slug)} aria-label={`View full album: ${album.title}`}>
-                  <Picture src={getAlbumImagePath(album, album.photos[0])} alt={getAlbumPhotoAlt(album, album.photos[0], 0)} loading={albumIndex === 0 ? 'eager' : 'lazy'} />
-                </a>
+                <>
+                  <div class="mobile-album-peek" aria-hidden="true"><Picture src={getAlbumImagePath(album, album.photos[0])} alt="" loading="eager" /></div>
+                  <a class="mobile-album-cover" href={getAlbumUrl(album.slug)} aria-label={`View full album: ${album.title}`}>
+                    <Picture src={getAlbumImagePath(album, album.photos[0])} alt={getAlbumPhotoAlt(album, album.photos[0], 0)} loading={albumIndex === 0 ? 'eager' : 'lazy'} />
+                  </a>
+                </>
               )}
 
               <div class="gallery">
@@ -414,11 +417,22 @@ const structuredData = {
         let activeIndex = 0;
         let touchStartX = 0;
         let touchStartY = 0;
+        let touchId = null;
+        let transitioning = false;
+        let transitionTimer;
+        const motionDuration = () => window.matchMedia('(max-width: 560px) and (prefers-reduced-motion: no-preference)').matches ? 380 : 0;
 
         const showAlbum = (index) => {
-          activeIndex = (index + panels.length) % panels.length;
+          const nextIndex = (index + panels.length) % panels.length;
+          if (transitioning || nextIndex === activeIndex && carousel.dataset.albumReady) return;
+          const oldIndex = activeIndex;
+          activeIndex = nextIndex;
+          carousel.dataset.albumReady = 'true';
+          const duration = motionDuration();
+          transitioning = duration > 0 && oldIndex !== activeIndex;
           panels.forEach((panel, panelIndex) => {
             const isActive = panelIndex === activeIndex;
+            panel.classList.toggle('album-exiting', transitioning && panelIndex === oldIndex);
             panel.classList.toggle('active', isActive);
             panel.setAttribute('aria-hidden', isActive ? 'false' : 'true');
             panel.inert = !isActive;
@@ -426,6 +440,11 @@ const structuredData = {
             panel.classList.toggle('album-before', panels.length > 2 && offset === panels.length - 1);
             panel.classList.toggle('album-after', panels.length > 1 && offset === 1);
           });
+          clearTimeout(transitionTimer);
+          if (transitioning) transitionTimer = setTimeout(() => {
+            panels[oldIndex].classList.remove('album-exiting');
+            transitioning = false;
+          }, duration);
 
           dots.forEach((dot, dotIndex) => {
             const isActive = dotIndex === activeIndex;
@@ -462,14 +481,25 @@ const structuredData = {
         });
 
         swipeArea?.addEventListener('touchstart', (event) => {
-          touchStartX = event.touches[0]?.clientX ?? 0;
-          touchStartY = event.touches[0]?.clientY ?? 0;
+          if (event.touches.length !== 1) { touchId = null; return; }
+          touchId = event.touches[0].identifier;
+          touchStartX = event.touches[0].clientX;
+          touchStartY = event.touches[0].clientY;
         }, { passive: true });
 
+        swipeArea?.addEventListener('touchmove', (event) => {
+          if (event.touches.length !== 1) touchId = null;
+        }, { passive: true });
+
+        swipeArea?.addEventListener('touchcancel', () => { touchId = null; }, { passive: true });
+
         swipeArea?.addEventListener('touchend', (event) => {
-          const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX;
-          const distance = touchEndX - touchStartX;
-          const verticalDistance = (event.changedTouches[0]?.clientY ?? touchStartY) - touchStartY;
+          if (touchId === null || event.touches.length) { touchId = null; return; }
+          const touch = Array.from(event.changedTouches).find((item) => item.identifier === touchId);
+          touchId = null;
+          if (!touch) return;
+          const distance = touch.clientX - touchStartX;
+          const verticalDistance = touch.clientY - touchStartY;
 
           if (Math.abs(distance) < 45 || Math.abs(distance) <= Math.abs(verticalDistance)) return;
           showAlbum(distance > 0 ? activeIndex - 1 : activeIndex + 1);
