@@ -197,7 +197,7 @@ const structuredData = {
           {albums.length > 1 && <span class="sr-only" aria-live="polite" aria-atomic="true" data-album-announcement></span>}
           <div class="albums" tabindex={albums.length > 1 ? '0' : undefined} role={albums.length > 1 ? 'region' : undefined} aria-roledescription={albums.length > 1 ? 'carousel' : undefined} aria-label={albums.length > 1 ? 'Albums; use left and right arrow keys to change albums' : undefined}>
             {albums.map((album, albumIndex) => (
-              <article class:list={['album', albumIndex === 0 && 'active']} id={album.slug} data-album-panel={albumIndex} aria-hidden={albumIndex === 0 ? 'false' : 'true'} inert={albumIndex !== 0}>
+              <article class:list={['album', albumIndex === 0 && 'active']} id={album.slug} data-album-panel={albumIndex} aria-hidden={albumIndex === 0 ? 'false' : 'true'} inert={albumIndex !== 0} style={album.photos[0] ? { '--album-cover': `url("${getWebpImageUrl(getAlbumImagePath(album, album.photos[0])) ?? getImageUrl(getAlbumImagePath(album, album.photos[0]))}")` } : undefined}>
               <div class="album-heading">
                 <div>
                   <p class="eyebrow">{album.photos.length} photographs</p>

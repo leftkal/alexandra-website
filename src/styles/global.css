@@ -1268,6 +1268,7 @@ footer p {
   }
 
   .albums {
+    display: grid;
     isolation: isolate;
     position: relative;
     touch-action: pan-y;
@@ -1275,52 +1276,73 @@ footer p {
 
   .album,
   .album.active {
-    background: rgba(239, 239, 232, 0.68);
+    background: rgba(239, 239, 232, 0.96);
     border: 1px solid rgba(216, 218, 211, 0.78);
     border-radius: calc(var(--image-radius) + 6px);
     display: block;
+    grid-area: 1 / 1;
     margin-inline: auto;
+    min-width: 0;
+    opacity: 0;
+    overflow: hidden;
     padding: 1rem;
+    pointer-events: none;
+    position: relative;
+    transform: translateX(0) scale(0.88);
+    transition: transform 380ms ease, opacity 380ms ease;
+    visibility: hidden;
     width: 84%;
   }
 
-  .album:not(.active) {
+  .album::before {
+    background: var(--album-cover) center / cover no-repeat;
+    content: '';
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
     position: absolute;
-    visibility: hidden;
+    transition: opacity 380ms ease;
+    z-index: 1;
   }
 
   .album.active {
-    position: relative;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0) scale(1);
+    visibility: visible;
     z-index: 2;
   }
 
   .album.album-before,
   .album.album-after {
-    height: 100%;
-    left: 8%;
-    opacity: 0.7;
-    overflow: hidden;
-    padding: 0;
+    opacity: 0.88;
     pointer-events: none;
-    position: absolute;
-    top: 0;
     transform: translateX(-79%) scale(0.88);
     visibility: visible;
     z-index: 1;
+  }
+
+  .album.album-before::before,
+  .album.album-after::before {
+    opacity: 1;
   }
 
   .album.album-before .album-heading,
   .album.album-after .album-heading,
   .album.album-before .album-actions,
   .album.album-after .album-actions {
-    display: none;
+    opacity: 0;
+  }
+
+  .album .album-heading,
+  .album .album-actions,
+  .album .mobile-album-cover {
+    transition: opacity 380ms ease;
   }
 
   .album.album-before .mobile-album-cover,
   .album.album-after .mobile-album-cover {
-    aspect-ratio: auto;
-    border-radius: 0;
-    height: 100%;
+    opacity: 0;
   }
 
   .album.album-after {
@@ -1398,6 +1420,14 @@ footer p {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .album,
+  .album::before,
+  .album .album-heading,
+  .album .album-actions,
+  .album .mobile-album-cover {
+    transition: none;
+  }
+
   .focus-wheel,
   .focus-wheel-ring.middle,
   .focus-wheel-pointer,
