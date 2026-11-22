@@ -1250,7 +1250,29 @@ footer p {
   }
 
   .album-controls {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .album-controls:focus-within {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+  }
+
+  .album-controls :focus-visible {
+    outline: 3px solid var(--color-deep-green);
+    outline-offset: 3px;
   }
 
   .albums {
