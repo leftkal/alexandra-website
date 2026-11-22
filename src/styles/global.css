@@ -1340,15 +1340,6 @@ footer p {
     opacity: 1;
   }
 
-  .album.album-exiting {
-    opacity: 0.88;
-    z-index: 1;
-  }
-
-  .album.album-exiting .mobile-album-peek {
-    opacity: 1;
-  }
-
   .album.album-before .album-heading,
   .album.album-after .album-heading,
   .album.album-before .album-actions,
@@ -1390,7 +1381,7 @@ footer p {
   }
 
   .mobile-album-cover {
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 4.6;
     background: var(--color-light-gray);
     border-radius: var(--image-radius);
     display: block;
